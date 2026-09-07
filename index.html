@@ -34,7 +34,8 @@
       --line: #e3dccf;
       --line-strong: #cfc6b6;
       --accent: #cf7a4e;        /* 포인트 컬러 (밝은 배경용, 가독성 위해 한 단계 진하게) */
-      --accent-soft: #e8a57c;   /* 포인트 컬러 원색 (어두운 배경용) */
+      --accent-soft: #e8a57c;   /* 포인트 컬러 원색 (버튼, 어두운 배경용) */
+      --accent-hover: #dd9566;  /* 버튼 호버 */
       --dark: #1f1b17;
       --dark-card: #2a2521;
       --dark-line: #3a342e;
@@ -95,14 +96,14 @@
       white-space: nowrap;
     }
     .btn:active { transform: translateY(1px); }
-    .btn-dark { background: var(--ink); color: #fff; }
-    .btn-dark:hover { background: #000; }
+    .btn-dark { background: var(--accent-soft); color: var(--ink); }
+    .btn-dark:hover { background: var(--accent-hover); }
     .btn-outline { background: transparent; color: var(--ink); border-color: var(--line-strong); }
-    .btn-outline:hover { border-color: var(--ink); }
-    .btn-light { background: var(--dark-text); color: var(--ink); }
-    .btn-light:hover { background: #fff; }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+    .btn-light { background: var(--accent-soft); color: var(--ink); }
+    .btn-light:hover { background: var(--accent-hover); }
     .btn-ghost-dark { background: transparent; color: var(--dark-text); border-color: var(--dark-line); }
-    .btn-ghost-dark:hover { border-color: var(--dark-muted); }
+    .btn-ghost-dark:hover { border-color: var(--accent-soft); color: var(--accent-soft); }
     .btn-sm { height: 42px; padding: 0 18px; font-size: 14px; }
 
     /* Image placeholder (교체 시 .ph 안에 <img>를 넣거나 .ph 자체를 <img>로 바꾸면 됩니다) */
@@ -239,18 +240,19 @@
       transition: border-color .15s, box-shadow .15s;
     }
     .field input::placeholder, .field textarea::placeholder { color: #a79e91; }
-    .field input:focus, .field textarea:focus { border-color: var(--ink); box-shadow: 0 0 0 3px rgba(30,26,22,.06); background: #fff; }
+    .field input:focus, .field textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(232,165,124,.28); background: #fff; }
     .field textarea { min-height: 132px; resize: vertical; }
     .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
     .seg { display: flex; gap: 8px; flex-wrap: wrap; }
+    .seg button:hover { border-color: var(--accent); color: var(--accent); }
     .seg button {
       height: 42px; padding: 0 18px; border-radius: 4px; border: 1px solid var(--line-strong);
       background: transparent; font-weight: 600; font-size: 14px; cursor: pointer;
       transition: background .15s, color .15s, border-color .15s;
     }
-    .seg button[aria-pressed="true"] { background: var(--ink); color: #fff; border-color: var(--ink); }
+    .seg button[aria-pressed="true"] { background: var(--accent-soft); color: var(--ink); border-color: var(--accent-soft); }
     .consent { display: flex; align-items: flex-start; gap: 10px; font-size: 13.5px; color: var(--ink-soft); margin: 4px 0 26px; }
-    .consent input { margin-top: 5px; width: 15px; height: 15px; accent-color: var(--ink); }
+    .consent input { margin-top: 5px; width: 15px; height: 15px; accent-color: var(--accent); }
     .form-note { margin-top: 16px; font-size: 13px; color: var(--ink-muted); }
 
     /* =========================================================
