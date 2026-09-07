@@ -278,8 +278,8 @@
        ========================================================= */
     .js .reveal {
       opacity: 0;
-      transform: translateY(22px);
-      transition: opacity .9s cubic-bezier(.22,.61,.36,1), transform .9s cubic-bezier(.22,.61,.36,1);
+      transform: translateY(30px);
+      transition: opacity 1.2s cubic-bezier(.16,1,.3,1), transform 1.2s cubic-bezier(.16,1,.3,1);
       transition-delay: var(--d, 0ms);
       will-change: opacity, transform;
     }
@@ -373,7 +373,8 @@
     </section>
 
     <!-- ================= Stats ================= -->
-    <div class="stats-band">
+    <!-- 지표 띠: 실제 수치가 생기면 hidden 속성을 지우고 다시 노출 -->
+    <div class="stats-band" hidden>
       <div class="wrap">
         <div class="stats">
           <div class="stat"><strong>2026</strong><span>설립</span></div>
@@ -603,26 +604,47 @@
       var root = document.documentElement;
       root.classList.add('js');
 
-      // [선택자, 그룹 내 항목 간 지연(ms)]
+      // [선택자, 그룹 내 항목 간 시차(ms), 섹션 안에서의 시작 지연(ms)]
+      // 각 섹션: 라벨 → 제목 → 본문 → 카드/이미지 순으로 차례로 나타남
       var groups = [
-        ['.hero .wrap > *', 140],
-        ['.stat', 90],
-        ['.about .head > *', 140],
-        ['.figures figure', 140],
-        ['.services .head > *', 140],
-        ['.svc', 160],
-        ['.services .tagline', 0],
-        ['.promise .eyebrow, .promise h2', 100],
-        ['.promise-item', 110],
-        ['.contact .wrap > *', 160],
-        ['.foot-grid > *', 80]
+        // 히어로
+        ['.hero .eyebrow', 0, 0],
+        ['.hero h1', 0, 160],
+        ['.hero .lede', 0, 320],
+        ['.hero .actions', 0, 480],
+        ['.hero .ph', 0, 280],
+        // 지표(숨김 상태여도 무해)
+        ['.stat', 120, 0],
+        // 회사 소개
+        ['.about .eyebrow', 0, 0],
+        ['.about h2', 0, 160],
+        ['.about .head .lede', 200, 320],
+        ['.figures figure', 220, 200],
+        // 서비스
+        ['.services .eyebrow', 0, 0],
+        ['.services h2', 0, 160],
+        ['.services .head > p', 0, 320],
+        ['.svc', 240, 160],
+        ['.services .tagline', 0, 240],
+        // 우리의 약속
+        ['.promise .eyebrow', 0, 0],
+        ['.promise h2', 0, 160],
+        ['.promise-item', 200, 280],
+        // 문의
+        ['.contact .eyebrow', 0, 0],
+        ['.contact h2', 0, 160],
+        ['.contact .lede', 0, 320],
+        ['.contact-lines', 0, 480],
+        ['.form-card', 0, 280],
+        // 푸터
+        ['.foot-grid > *', 140, 0]
       ];
       var targets = [];
       groups.forEach(function (g) {
         var els = document.querySelectorAll(g[0]);
         els.forEach(function (el, i) {
           el.classList.add('reveal');
-          el.style.setProperty('--d', (i * g[1]) + 'ms');
+          el.style.setProperty('--d', ((g[2] || 0) + i * g[1]) + 'ms');
           targets.push(el);
         });
       });
@@ -635,7 +657,7 @@
         entries.forEach(function (e) {
           if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
         });
-      }, { rootMargin: '0px 0px -10% 0px', threshold: 0.08 });
+      }, { rootMargin: '0px 0px -6% 0px', threshold: 0.05 });
       targets.forEach(function (el) { io.observe(el); });
 
       // 헤더: 스크롤 시 그림자 살짝
