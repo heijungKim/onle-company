@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>오늘 · 회사 소개</title>
+  <meta name="description" content="오늘(Onle)은 하루의 시작과 끝을 만드는 회사입니다. 여행 코스 추천 '오늘 어디가'와 푸드트럭 알림 '오늘 왔어요'를 만듭니다." />
+  <link rel="canonical" href="https://company.onle.kr/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="오늘 (Onle)" />
+  <meta property="og:title" content="오늘 · 회사 소개" />
+  <meta property="og:description" content="하루의 시작과 끝을 만드는 회사, 오늘." />
+  <meta property="og:url" content="https://company.onle.kr/" />
+  <meta property="og:locale" content="ko_KR" />
+
+  <!-- 제목: Noto Serif KR (Google Fonts) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;600&display=swap" rel="stylesheet" />
+  <!-- 본문·UI: Pretendard Variable (jsDelivr 동적 서브셋) -->
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+
+  <style>
+    /* =========================================================
+       Tokens
+       ========================================================= */
+    :root {
+      --bg: #faf8f3;
+      --bg-soft: #f3eee5;
+      --surface: #ffffff;
+      --ink: #1e1a16;
+      --ink-soft: #4a443d;
+      --ink-muted: #7d7469;
+      --line: #e3dccf;
+      --line-strong: #cfc6b6;
+      --accent: #c0562f;
+      --accent-soft: #e08a66;
+      --dark: #1f1b17;
+      --dark-card: #2a2521;
+      --dark-line: #3a342e;
+      --dark-text: #f2ede4;
+      --dark-muted: #b8ae9f;
+
+      --serif: "Noto Serif KR", "Nanum Myeongjo", Georgia, serif;
+      --sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+
+      --max: 1280px;
+      --gutter: 24px;
+      --radius: 6px;
+    }
+
+    /* =========================================================
+       Base
+       ========================================================= */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 1.85;
+      -webkit-font-smoothing: antialiased;
+      word-break: keep-all;
+    }
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+    img { max-width: 100%; display: block; }
+    button, input, textarea { font: inherit; color: inherit; }
+
+    .wrap { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
+
+    /* Typography rules */
+    h1, h2, h3 { font-family: var(--serif); font-weight: 500; letter-spacing: -0.02em; }
+    h1 { font-size: clamp(34px, 4.2vw, 50px); line-height: 1.3; }
+    h2 { font-size: 36px; line-height: 1.35; }
+    h3 { font-size: 28px; line-height: 1.35; }
+    p  { font-size: 16px; line-height: 1.85; }
+    .lede { font-size: 17px; line-height: 1.9; color: var(--ink-soft); }
+
+    .eyebrow {
+      font-family: var(--sans); font-weight: 600; font-size: 12.5px;
+      letter-spacing: 0.12em; color: var(--accent);
+      margin-bottom: 20px;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      height: 50px; padding: 0 26px; border-radius: 4px;
+      font-weight: 600; font-size: 15px; letter-spacing: -0.01em;
+      border: 1px solid transparent; cursor: pointer;
+      transition: background .15s, color .15s, border-color .15s, transform .1s;
+      white-space: nowrap;
+    }
+    .btn:active { transform: translateY(1px); }
+    .btn-dark { background: var(--ink); color: #fff; }
+    .btn-dark:hover { background: #000; }
+    .btn-outline { background: transparent; color: var(--ink); border-color: var(--line-strong); }
+    .btn-outline:hover { border-color: var(--ink); }
+    .btn-light { background: var(--dark-text); color: var(--ink); }
+    .btn-light:hover { background: #fff; }
+    .btn-ghost-dark { background: transparent; color: var(--dark-text); border-color: var(--dark-line); }
+    .btn-ghost-dark:hover { border-color: var(--dark-muted); }
+    .btn-sm { height: 42px; padding: 0 18px; font-size: 14px; }
+
+    /* Image placeholder (교체 시 .ph 안에 <img>를 넣거나 .ph 자체를 <img>로 바꾸면 됩니다) */
+    .ph {
+      position: relative; width: 100%; border-radius: var(--radius);
+      border: 1px dashed var(--line-strong); background: #e8e2d6;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 10px; color: var(--ink-muted); font-size: 14px; font-weight: 500;
+      letter-spacing: 0.02em; overflow: hidden;
+    }
+    .ph svg { width: 26px; height: 26px; opacity: .55; }
+    .ph img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .ph.dark { background: #3a342e; border-color: #4d453d; color: var(--dark-muted); }
+
+    /* =========================================================
+       Header
+       ========================================================= */
+    .site-header {
+      position: sticky; top: 0; z-index: 20;
+      background: rgba(250, 248, 243, 0.9);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--line);
+    }
+    .site-header .wrap {
+      display: flex; align-items: center; justify-content: space-between; height: 82px;
+    }
+    .brand { display: flex; align-items: baseline; gap: 10px; }
+    .brand .ko { font-family: var(--serif); font-weight: 500; font-size: 26px; letter-spacing: -0.02em; }
+    .brand .en { font-weight: 600; font-size: 12px; letter-spacing: 0.18em; color: var(--ink-muted); }
+    .nav { display: flex; align-items: center; gap: 36px; }
+    .nav a { font-weight: 500; font-size: 15px; color: var(--ink-soft); }
+    .nav a:hover { color: var(--ink); }
+    .nav .btn { margin-left: 4px; height: 44px; padding: 0 22px; }
+
+    /* =========================================================
+       Hero
+       ========================================================= */
+    .hero { padding: 110px 0 100px; }
+    .hero .wrap {
+      display: grid; grid-template-columns: 1.05fr 1fr; gap: 72px; align-items: center;
+    }
+    .hero h1 { margin-bottom: 28px; }
+    .hero .lede { max-width: 520px; margin-bottom: 44px; }
+    .hero .actions { display: flex; gap: 12px; flex-wrap: wrap; }
+    .hero .ph { aspect-ratio: 6 / 5; }
+
+    /* =========================================================
+       Stats band
+       ========================================================= */
+    .stats-band { background: var(--bg-soft); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .stats { display: grid; grid-template-columns: repeat(4, 1fr); }
+    .stat { padding: 44px 40px 40px; }
+    .stat + .stat { border-left: 1px solid var(--line); }
+    .stat strong {
+      display: block; font-family: var(--serif); font-weight: 500;
+      font-size: 30px; line-height: 1.2; letter-spacing: -0.01em; margin-bottom: 8px;
+    }
+    .stat span { font-size: 14px; font-weight: 500; color: var(--ink-muted); }
+
+    /* =========================================================
+       About
+       ========================================================= */
+    .about { padding: 110px 0; }
+    .about .head { display: grid; grid-template-columns: 1fr 1.3fr; gap: 64px; margin-bottom: 72px; }
+    .about .head p + p { margin-top: 22px; }
+    .figures { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .figures .ph { aspect-ratio: 16 / 10; }
+    .figures figcaption { margin-top: 18px; font-size: 15px; color: var(--ink-soft); }
+    .figures figcaption b { color: var(--accent); font-weight: 600; margin-right: 12px; }
+
+    /* =========================================================
+       Services (dark)
+       ========================================================= */
+    .services { background: var(--dark); color: var(--dark-text); padding: 110px 0 100px; }
+    .services .eyebrow { color: var(--accent-soft); }
+    .services .head { display: grid; grid-template-columns: 1fr 1.3fr; gap: 64px; align-items: end; margin-bottom: 64px; }
+    .services .head p { color: var(--dark-muted); max-width: 540px; font-size: 17px; }
+    .svc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .svc {
+      background: var(--dark-card); border-radius: 8px; overflow: hidden;
+      border: 1px solid var(--dark-line);
+    }
+    .svc .ph { aspect-ratio: 16 / 11; border-radius: 0; border: none; border-bottom: 1px dashed #4d453d; }
+    .svc .body { padding: 36px 36px 40px; }
+    .svc .tag { font-weight: 600; font-size: 12.5px; letter-spacing: 0.08em; color: var(--accent-soft); margin-bottom: 14px; }
+    .svc h3 { color: #fff; margin-bottom: 14px; }
+    .svc p { color: var(--dark-muted); font-size: 15.5px; }
+    .svc .actions {
+      display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+      margin-top: 28px; padding-top: 26px; border-top: 1px solid var(--dark-line);
+    }
+    .svc .hint { font-size: 13.5px; color: #8c8272; }
+    .services .tagline {
+      margin-top: 88px; text-align: center; font-family: var(--serif); font-weight: 500;
+      font-size: 28px; letter-spacing: -0.02em; color: var(--dark-text);
+    }
+
+    /* =========================================================
+       Promise
+       ========================================================= */
+    .promise { padding: 110px 0; }
+    .promise h2 { margin-bottom: 56px; }
+    .promise-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); overflow: hidden;
+    }
+    .promise-item { padding: 44px 40px 48px; }
+    .promise-item + .promise-item { border-left: 1px solid var(--line); }
+    .promise-item .num { font-family: var(--serif); font-weight: 500; font-size: 16px; color: var(--accent); margin-bottom: 20px; }
+    .promise-item h4 { font-family: var(--sans); font-weight: 600; font-size: 19px; letter-spacing: -0.02em; margin-bottom: 16px; }
+    .promise-item p { font-size: 15.5px; color: var(--ink-soft); }
+
+    /* =========================================================
+       Contact
+       ========================================================= */
+    .contact { background: var(--bg-soft); border-top: 1px solid var(--line); padding: 110px 0; }
+    .contact .wrap { display: grid; grid-template-columns: 1fr 1.15fr; gap: 88px; align-items: start; }
+    .contact h2 { margin-bottom: 22px; }
+    .contact .lede { max-width: 460px; margin-bottom: 40px; }
+    .contact-lines { font-size: 17px; font-weight: 500; line-height: 1.9; }
+    .contact-lines a:hover { text-decoration: underline; text-underline-offset: 4px; }
+    .contact-lines .addr { display: block; font-size: 15px; font-weight: 400; color: var(--ink-muted); margin-top: 4px; }
+
+    .form-card {
+      background: var(--surface); border-radius: 8px; padding: 44px 40px 40px;
+      border: 1px solid var(--line);
+    }
+    .field { margin-bottom: 22px; }
+    .field label, .field .lbl { display: block; font-weight: 600; font-size: 13.5px; margin-bottom: 8px; color: var(--ink); }
+    .field .opt { font-weight: 400; color: var(--ink-muted); margin-left: 4px; }
+    .field input, .field textarea {
+      width: 100%; border: 1px solid var(--line); background: var(--bg);
+      border-radius: 4px; padding: 13px 16px; font-size: 15px; outline: none;
+      transition: border-color .15s, box-shadow .15s;
+    }
+    .field input::placeholder, .field textarea::placeholder { color: #a79e91; }
+    .field input:focus, .field textarea:focus { border-color: var(--ink); box-shadow: 0 0 0 3px rgba(30,26,22,.06); background: #fff; }
+    .field textarea { min-height: 132px; resize: vertical; }
+    .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .seg { display: flex; gap: 8px; flex-wrap: wrap; }
+    .seg button {
+      height: 42px; padding: 0 18px; border-radius: 4px; border: 1px solid var(--line-strong);
+      background: transparent; font-weight: 600; font-size: 14px; cursor: pointer;
+      transition: background .15s, color .15s, border-color .15s;
+    }
+    .seg button[aria-pressed="true"] { background: var(--ink); color: #fff; border-color: var(--ink); }
+    .consent { display: flex; align-items: flex-start; gap: 10px; font-size: 13.5px; color: var(--ink-soft); margin: 4px 0 26px; }
+    .consent input { margin-top: 5px; width: 15px; height: 15px; accent-color: var(--ink); }
+    .form-note { margin-top: 16px; font-size: 13px; color: var(--ink-muted); }
+
+    /* =========================================================
+       Footer
+       ========================================================= */
+    .site-footer { background: var(--dark); color: var(--dark-text); padding: 72px 0 40px; }
+    .foot-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1.2fr; gap: 40px; }
+    .foot-brand .ko { font-family: var(--serif); font-weight: 500; font-size: 24px; margin-bottom: 18px; display: block; }
+    .foot-brand p { font-size: 15px; color: var(--dark-muted); }
+    .foot-col h5 { font-weight: 600; font-size: 12.5px; letter-spacing: 0.1em; color: #8c8272; margin-bottom: 18px; }
+    .foot-col li { margin-bottom: 10px; font-size: 15px; }
+    .foot-col a:hover { text-decoration: underline; text-underline-offset: 4px; }
+    .foot-bottom {
+      margin-top: 56px; padding-top: 28px; border-top: 1px solid var(--dark-line);
+      display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap;
+      font-size: 13px; color: #8c8272; line-height: 1.9;
+    }
+    .foot-bottom .sep { margin: 0 8px; opacity: .6; }
+
+    /* =========================================================
+       Responsive
+       ========================================================= */
+    @media (max-width: 1024px) {
+      h2 { font-size: 32px; }
+      .hero .wrap, .about .head, .services .head, .contact .wrap { grid-template-columns: 1fr; gap: 40px; }
+      .hero { padding: 80px 0 72px; }
+      .stats { grid-template-columns: repeat(2, 1fr); }
+      .stat:nth-child(3) { border-left: none; }
+      .stat:nth-child(n+3) { border-top: 1px solid var(--line); }
+      .promise-grid { grid-template-columns: 1fr; }
+      .promise-item + .promise-item { border-left: none; border-top: 1px solid var(--line); }
+      .foot-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 720px) {
+      h2 { font-size: 28px; }
+      h3 { font-size: 24px; }
+      .site-header .wrap { height: 68px; }
+      .nav a:not(.btn) { display: none; }
+      .brand .en { display: none; }
+      .figures, .svc-grid { grid-template-columns: 1fr; }
+      .stats { grid-template-columns: 1fr; }
+      .stat + .stat { border-left: none; border-top: 1px solid var(--line); }
+      .stat { padding: 28px 24px; }
+      .about, .services, .promise, .contact { padding: 72px 0; }
+      .services .tagline { font-size: 22px; margin-top: 56px; }
+      .form-card { padding: 28px 22px; }
+      .row-2 { grid-template-columns: 1fr; }
+      .foot-grid { grid-template-columns: 1fr; gap: 32px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ================= Header ================= -->
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="#top" aria-label="오늘 홈">
+        <span class="ko">오늘</span><span class="en">ONLE</span>
+      </a>
+      <nav class="nav" aria-label="주요 메뉴">
+        <a href="#about">회사 소개</a>
+        <a href="#services">서비스</a>
+        <a href="#promise">우리의 약속</a>
+        <a class="btn btn-dark" href="#contact">입점 · 제휴 문의</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+
+    <!-- ================= Hero ================= -->
+    <section class="hero">
+      <div class="wrap">
+        <div>
+          <p class="eyebrow">하루를 만드는 회사</p>
+          <h1>어떻게 하면 하루를 더<br />빛나게 할 수 있을까</h1>
+          <p class="lede">오늘은 이 질문에서 시작했습니다. 하루는 큰 사건이 아니라 작은 순간으로 기억됩니다.
+            우리는 그 순간이 하루의 시작과 끝에 있다고 믿고, 두 개의 서비스를 만듭니다.</p>
+          <div class="actions">
+            <a class="btn btn-dark" href="#services">서비스 살펴보기</a>
+            <a class="btn btn-outline" href="#about">회사 소개</a>
+          </div>
+        </div>
+        <div class="ph" role="img" aria-label="대표 이미지 · 해질 무렵 거리">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="M21 16l-5-5-8 8"/></svg>
+          <span>대표 이미지 · 해질 무렵 거리</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= Stats ================= -->
+    <div class="stats-band">
+      <div class="wrap">
+        <div class="stats">
+          <div class="stat"><strong>2026</strong><span>설립</span></div>
+          <div class="stat"><strong>2개</strong><span>운영 서비스</span></div>
+          <div class="stat"><strong>1인</strong><span>기획 · 개발 · 운영</span></div>
+          <div class="stat"><strong>0원</strong><span>사장님 등록 비용</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= About ================= -->
+    <section class="about" id="about">
+      <div class="wrap">
+        <div class="head">
+          <div>
+            <p class="eyebrow">회사 소개</p>
+            <h2>하루는 어디에서<br />빛나기 시작할까</h2>
+          </div>
+          <div>
+            <p class="lede">우연히 들어간 골목, 마침 열려 있던 가게, 생각보다 좋았던 저녁 한 끼.
+              하루를 바꿔놓는 것은 대개 두 순간이었습니다. 낯선 곳에서 눈을 뜬 아침에 어디로 나가야 할지
+              정하는 순간, 그리고 긴 하루 끝에 따뜻한 한 끼를 만나는 순간.</p>
+            <p class="lede">오늘은 이 두 순간을 더 자주, 더 확실하게 만나게 하는 서비스를 만듭니다.
+              하루의 시작과 끝이 빛나면 하루가 빛난다고 믿기 때문입니다.</p>
+          </div>
+        </div>
+
+        <div class="figures">
+          <figure>
+            <div class="ph" role="img" aria-label="이미지 · 낯선 도시의 아침">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="M21 16l-5-5-8 8"/></svg>
+              <span>이미지 · 낯선 도시의 아침</span>
+            </div>
+            <figcaption><b>아침</b>이 아침이 헤매지 않고 시작될 수 있다면.</figcaption>
+          </figure>
+          <figure>
+            <div class="ph" role="img" aria-label="이미지 · 저녁의 푸드트럭">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="M21 16l-5-5-8 8"/></svg>
+              <span>이미지 · 저녁의 푸드트럭</span>
+            </div>
+            <figcaption><b>저녁</b>그 우연이 우연으로만 남지 않게 할 수 있다면.</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= Services ================= -->
+    <section class="services" id="services">
+      <div class="wrap">
+        <div class="head">
+          <div>
+            <p class="eyebrow">서비스</p>
+            <h2>당신의 하루는 빛이<br />나야 하니까</h2>
+          </div>
+          <p>아침을 위한 서비스 하나, 저녁을 위한 서비스 하나.
+            하루의 시작과 끝이 완벽하도록 개발하였습니다.</p>
+        </div>
+
+        <div class="svc-grid">
+          <article class="svc">
+            <div class="ph dark" role="img" aria-label="서비스 이미지 · 오늘 어디가 화면">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="M21 16l-5-5-8 8"/></svg>
+              <span>서비스 이미지 · 오늘 어디가 화면</span>
+            </div>
+            <div class="body">
+              <p class="tag">하루의 시작 · 여행 코스 추천</p>
+              <h3>오늘 어디가.</h3>
+              <p>가고 싶은 지역과 남은 시간, 함께 가는 사람만 알려주세요. 오늘 하루의 순서를 대신 짜드립니다.</p>
+              <div class="actions">
+                <a class="btn btn-light btn-sm" href="https://odigaa.kr" target="_blank" rel="noopener">odigaa.kr 접속</a>
+                <span class="hint">설치 없이 웹에서 바로</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="svc">
+            <div class="ph dark" role="img" aria-label="서비스 이미지 · 오늘 왔어요 화면">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="M21 16l-5-5-8 8"/></svg>
+              <span>서비스 이미지 · 오늘 왔어요 화면</span>
+            </div>
+            <div class="body">
+              <p class="tag">하루의 끝 · 푸드트럭 알림</p>
+              <h3>오늘 왔어요.</h3>
+              <p>좋아하는 푸드트럭을 등록해두면 오늘 어디에 왔는지 알려드립니다. 우연히 만났던 그 한 끼를 원할 때 다시.</p>
+              <div class="actions">
+                <a class="btn btn-light btn-sm" href="#" aria-label="App Store에서 내려받기">App Store</a>
+                <a class="btn btn-ghost-dark btn-sm" href="#" aria-label="Google Play에서 내려받기">Google Play</a>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <p class="tagline">하루의 시작과 끝이 완벽하도록.</p>
+      </div>
+    </section>
+
+    <!-- ================= Promise ================= -->
+    <section class="promise" id="promise">
+      <div class="wrap">
+        <p class="eyebrow">우리의 약속</p>
+        <h2>작게, 매일, 정확하게</h2>
+
+        <div class="promise-grid">
+          <div class="promise-item">
+            <p class="num">01</p>
+            <h4>불편을 발견한 날, 고치기 시작합니다</h4>
+            <p>발견과 수정 사이의 시차를 최소로 둡니다. 새 기능은 2주 단위로 사용자에게 도착합니다.</p>
+          </div>
+          <div class="promise-item">
+            <p class="num">02</p>
+            <h4>문의에는 만든 사람이 답합니다</h4>
+            <p>고객센터를 거치지 않습니다. 어떤 화면의 어떤 버튼 이야기인지 바로 알아듣고 답합니다.</p>
+          </div>
+          <div class="promise-item">
+            <p class="num">03</p>
+            <h4>사장님용 등록 도구는 무료입니다</h4>
+            <p>푸드트럭과 가게의 위치 등록은 앞으로도 비용을 받지 않습니다. 광고를 억지로 넣지 않습니다.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= Contact ================= -->
+    <section class="contact" id="contact">
+      <div class="wrap">
+        <div>
+          <p class="eyebrow">입점 · 제휴 문의</p>
+          <h2>당신의 하루에도 함께할<br />수 있다면</h2>
+          <p class="lede">푸드트럭 사장님, 여행지의 가게, 함께 일하고 싶은 파트너.
+            아래 폼을 남겨주시면 영업일 2일 안에 회신드립니다.</p>
+          <div class="contact-lines">
+            <a href="mailto:onle0803@gmail.com">onle0803@gmail.com</a><br />
+            <a href="tel:0505-008-0803">0505-008-0803</a>
+            <span class="addr">경기도 양주시 덕계로 140, 4층 405호-A10 (덕계로, 진산메디프라자)</span>
+          </div>
+        </div>
+
+        <form class="form-card" id="inquiry" action="https://formsubmit.co/onle0803@gmail.com" method="POST" novalidate>
+          <!-- FormSubmit 설정 (AJAX 실패 시 일반 POST 폴백에도 사용) -->
+          <input type="hidden" name="_subject" value="[오늘] 입점·제휴 문의" />
+          <input type="hidden" name="_template" value="table" />
+          <input type="hidden" name="_captcha" value="false" />
+          <input type="hidden" name="문의구분" id="f-type" value="오늘 어디가?" />
+          <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" />
+          <div class="field">
+            <span class="lbl">문의 구분</span>
+            <div class="seg" role="group" aria-label="문의 구분">
+              <button type="button" aria-pressed="true" data-type="오늘 어디가?">오늘 어디가?</button>
+              <button type="button" aria-pressed="false" data-type="오늘 왔어요!">오늘 왔어요!</button>
+            </div>
+          </div>
+          <div class="row-2">
+            <div class="field">
+              <label for="f-name">이름</label>
+              <input id="f-name" name="이름" type="text" placeholder="홍길동" required autocomplete="name" />
+            </div>
+            <div class="field">
+              <label for="f-phone">연락처</label>
+              <input id="f-phone" name="연락처" type="tel" placeholder="010-0000-0000" required autocomplete="tel" />
+            </div>
+          </div>
+          <div class="field">
+            <label for="f-email">이메일<span class="opt">(선택)</span></label>
+            <input id="f-email" name="이메일" type="email" placeholder="name@example.com" autocomplete="email" />
+          </div>
+          <div class="field">
+            <label for="f-msg">문의 내용</label>
+            <textarea id="f-msg" name="문의내용" placeholder="문의하실 내용을 자유롭게 적어주세요." required></textarea>
+          </div>
+          <label class="consent">
+            <input type="checkbox" id="f-consent" required />
+            <span>남겨주신 정보는 문의 답변 목적으로만 사용하며, 답변 후 파기합니다.</span>
+          </label>
+          <button class="btn btn-dark" type="submit" id="f-submit">문의 보내기</button>
+          <p class="form-note" id="form-note" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ================= Footer ================= -->
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="foot-grid">
+        <div class="foot-brand">
+          <span class="ko">오늘</span>
+          <p>하루의 시작과 끝을 만드는 회사.<br />오늘 어디가 · 오늘 왔어요</p>
+        </div>
+        <div class="foot-col">
+          <h5>회사</h5>
+          <ul>
+            <li><a href="#about">회사 소개</a></li>
+            <li><a href="#promise">우리의 약속</a></li>
+            <li><a href="#contact">입점 · 제휴</a></li>
+          </ul>
+        </div>
+        <div class="foot-col">
+          <h5>서비스</h5>
+          <ul>
+            <li><a href="https://odigaa.kr" target="_blank" rel="noopener">오늘 어디가</a></li>
+            <li><a href="#">오늘 왔어요 · App Store</a></li>
+            <li><a href="#">오늘 왔어요 · Google Play</a></li>
+          </ul>
+        </div>
+        <div class="foot-col">
+          <h5>연락</h5>
+          <ul>
+            <li><a href="mailto:onle0803@gmail.com">onle0803@gmail.com</a></li>
+            <li><a href="tel:0505-008-0803">0505-008-0803</a></li>
+            <li>경기도 양주시 덕계로 140, 4층 405호-A10<br />(덕계로, 진산메디프라자)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="foot-bottom">
+        <div>
+          상호명 오늘 (Onle)<span class="sep">·</span>대표자 김희중<span class="sep">·</span>사업자등록번호 603-42-61451<span class="sep">·</span>설립 2026년
+        </div>
+        <div>© 2026 Onle</div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      // FormSubmit (https://formsubmit.co) 무료 폼 → onle0803@gmail.com 으로 전송
+      // 첫 전송 후 해당 메일함에 오는 "Activate Form" 인증 메일을 한 번 승인해야 이후 문의가 정상 수신됩니다.
+      var ENDPOINT = 'https://formsubmit.co/ajax/onle0803@gmail.com';
+      var TO = 'onle0803@gmail.com';
+
+      var form = document.getElementById('inquiry');
+      var note = document.getElementById('form-note');
+      var submitBtn = document.getElementById('f-submit');
+      var seg = form.querySelector('.seg');
+      var typeInput = document.getElementById('f-type');
+
+      seg.addEventListener('click', function (e) {
+        var b = e.target.closest('button');
+        if (!b) return;
+        seg.querySelectorAll('button').forEach(function (x) { x.setAttribute('aria-pressed', 'false'); });
+        b.setAttribute('aria-pressed', 'true');
+        typeInput.value = b.dataset.type;
+      });
+
+      function val(id) { return document.getElementById(id).value.trim(); }
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var type = typeInput.value;
+        var name = val('f-name');
+        var phone = val('f-phone');
+        var email = val('f-email');
+        var msg = val('f-msg');
+        var consent = document.getElementById('f-consent').checked;
+
+        if (!name || !phone || !msg) { note.textContent = '이름, 연락처, 문의 내용을 입력해주세요.'; return; }
+        if (!consent) { note.textContent = '개인정보 이용에 동의해주세요.'; return; }
+
+        var payload = {
+          _subject: '[오늘] ' + type + ' 문의 - ' + name,
+          _template: 'table',
+          _captcha: 'false',
+          '문의구분': type,
+          '이름': name,
+          '연락처': phone,
+          '이메일': email || '(미입력)',
+          '문의내용': msg
+        };
+        if (email) payload._replyto = email;
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = '전송 중…';
+        note.textContent = '';
+
+        fetch(ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify(payload)
+        })
+        .then(function (r) { return r.json().then(function (d) { return { ok: r.ok, data: d }; }); })
+        .then(function (res) {
+          if (!res.ok || String(res.data.success) !== 'true') throw new Error(res.data.message || 'send failed');
+          form.reset();
+          typeInput.value = '오늘 어디가?';
+          seg.querySelectorAll('button').forEach(function (x, i) { x.setAttribute('aria-pressed', i === 0 ? 'true' : 'false'); });
+          note.textContent = '문의가 접수되었습니다. 영업일 2일 안에 회신드리겠습니다.';
+        })
+        .catch(function () {
+          var subject = '[오늘] ' + type + ' 문의 - ' + name;
+          var body = '문의 구분: ' + type + '\n이름: ' + name + '\n연락처: ' + phone +
+                     (email ? '\n이메일: ' + email : '') + '\n\n문의 내용:\n' + msg;
+          note.innerHTML = '전송에 실패했습니다. <a href="mailto:' + TO + '?subject=' + encodeURIComponent(subject) +
+                           '&body=' + encodeURIComponent(body) + '" style="text-decoration:underline">' +
+                           TO + '</a>으로 직접 보내주세요.';
+        })
+        .finally(function () {
+          submitBtn.disabled = false;
+          submitBtn.textContent = '문의 보내기';
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
