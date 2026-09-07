@@ -35,7 +35,8 @@
       --line-strong: #cfc6b6;
       --accent: #cf7a4e;        /* 포인트 컬러 (밝은 배경용, 가독성 위해 한 단계 진하게) */
       --accent-soft: #e8a57c;   /* 포인트 컬러 원색 (버튼, 어두운 배경용) */
-      --accent-hover: #dd9566;  /* 버튼 호버 */
+      --accent-btn: #d47a47;    /* 버튼 바탕 (포인트 컬러보다 한 단계 진하게, 흰 글자용) */
+      --accent-hover: #c46a38;  /* 버튼 호버 */
       --dark: #1f1b17;
       --dark-card: #2a2521;
       --dark-line: #3a342e;
@@ -96,11 +97,11 @@
       white-space: nowrap;
     }
     .btn:active { transform: translateY(1px); }
-    .btn-dark { background: var(--accent-soft); color: var(--ink); }
+    .btn-dark { background: var(--accent-btn); color: #fff; }
     .btn-dark:hover { background: var(--accent-hover); }
     .btn-outline { background: transparent; color: var(--ink); border-color: var(--line-strong); }
     .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
-    .btn-light { background: var(--accent-soft); color: var(--ink); }
+    .btn-light { background: var(--accent-btn); color: #fff; }
     .btn-light:hover { background: var(--accent-hover); }
     .btn-ghost-dark { background: transparent; color: var(--dark-text); border-color: var(--dark-line); }
     .btn-ghost-dark:hover { border-color: var(--accent-soft); color: var(--accent-soft); }
@@ -250,7 +251,7 @@
       background: transparent; font-weight: 600; font-size: 14px; cursor: pointer;
       transition: background .15s, color .15s, border-color .15s;
     }
-    .seg button[aria-pressed="true"] { background: var(--accent-soft); color: var(--ink); border-color: var(--accent-soft); }
+    .seg button[aria-pressed="true"] { background: var(--accent-btn); color: #fff; border-color: var(--accent-btn); }
     .consent { display: flex; align-items: flex-start; gap: 10px; font-size: 13.5px; color: var(--ink-soft); margin: 4px 0 26px; }
     .consent input { margin-top: 5px; width: 15px; height: 15px; accent-color: var(--accent); }
     .form-note { margin-top: 16px; font-size: 13px; color: var(--ink-muted); }
