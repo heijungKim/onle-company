@@ -123,7 +123,7 @@
     .site-header {
       position: sticky; top: 0; z-index: 20;
       background: rgba(250, 248, 243, 0.9);
-      backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px); transition: box-shadow .3s ease;
       border-bottom: 1px solid var(--line);
     }
     .site-header .wrap {
@@ -269,6 +269,34 @@
       font-size: 13px; color: #8c8272; line-height: 1.9;
     }
     .foot-bottom .sep { margin: 0 8px; opacity: .6; }
+
+    /* =========================================================
+       Motion (스크롤 진입 시 부드럽게 나타남)
+       ========================================================= */
+    .js .reveal {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity .9s cubic-bezier(.22,.61,.36,1), transform .9s cubic-bezier(.22,.61,.36,1);
+      transition-delay: var(--d, 0ms);
+      will-change: opacity, transform;
+    }
+    .js .reveal.in { opacity: 1; transform: none; }
+    .js .reveal-fade { transform: none; }
+
+    .svc, .promise-item, .form-card, .stat {
+      transition: transform .5s cubic-bezier(.22,.61,.36,1), box-shadow .5s cubic-bezier(.22,.61,.36,1),
+                  opacity .9s cubic-bezier(.22,.61,.36,1);
+    }
+    .svc:hover { transform: translateY(-4px); box-shadow: 0 18px 40px rgba(0,0,0,.28); }
+    .promise-item:hover { background: #fffdf9; }
+    .ph { transition: transform .8s cubic-bezier(.22,.61,.36,1); }
+    figure:hover .ph, .svc:hover .ph { transform: scale(1.015); }
+
+    @media (prefers-reduced-motion: reduce) {
+      .js .reveal { opacity: 1; transform: none; transition: none; }
+      .svc, .promise-item, .ph { transition: none; }
+      html { scroll-behavior: auto; }
+    }
 
     /* =========================================================
        Responsive
@@ -567,6 +595,52 @@
   </footer>
 
   <script>
+    // 섹션별 스크롤 진입 애니메이션
+    (function () {
+      var root = document.documentElement;
+      root.classList.add('js');
+
+      // [선택자, 그룹 내 항목 간 지연(ms)]
+      var groups = [
+        ['.hero .wrap > *', 140],
+        ['.stat', 90],
+        ['.about .head > *', 140],
+        ['.figures figure', 140],
+        ['.services .head > *', 140],
+        ['.svc', 160],
+        ['.services .tagline', 0],
+        ['.promise .eyebrow, .promise h2', 100],
+        ['.promise-item', 110],
+        ['.contact .wrap > *', 160],
+        ['.foot-grid > *', 80]
+      ];
+      var targets = [];
+      groups.forEach(function (g) {
+        var els = document.querySelectorAll(g[0]);
+        els.forEach(function (el, i) {
+          el.classList.add('reveal');
+          el.style.setProperty('--d', (i * g[1]) + 'ms');
+          targets.push(el);
+        });
+      });
+
+      if (!('IntersectionObserver' in window)) {
+        targets.forEach(function (el) { el.classList.add('in'); });
+        return;
+      }
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+        });
+      }, { rootMargin: '0px 0px -10% 0px', threshold: 0.08 });
+      targets.forEach(function (el) { io.observe(el); });
+
+      // 헤더: 스크롤 시 그림자 살짝
+      var header = document.querySelector('.site-header');
+      var onScroll = function () { header.style.boxShadow = window.scrollY > 8 ? '0 6px 24px rgba(30,26,22,.06)' : 'none'; };
+      window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+    })();
+
     (function () {
       // FormSubmit (https://formsubmit.co) 무료 폼 → onle0803@gmail.com 으로 전송
       // 첫 전송 후 해당 메일함에 오는 "Activate Form" 인증 메일을 한 번 승인해야 이후 문의가 정상 수신됩니다.
