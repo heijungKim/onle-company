@@ -666,6 +666,65 @@
 
       function val(id) { return document.getElementById(id).value.trim(); }
 
+      /* ---------- 연락처 자동 하이픈 ---------- */
+      function formatPhone(raw) {
+        var d = raw.replace(/\D/g, '').slice(0, 12);
+        if (!d) return '';
+        if (d.slice(0, 2) === '02') {                       // 서울: 02-XXX-XXXX / 02-XXXX-XXXX
+          if (d.length <= 2) return d;
+          if (d.length <= 5) return d.slice(0, 2) + '-' + d.slice(2);
+          if (d.length <= 9) return d.slice(0, 2) + '-' + d.slice(2, 5) + '-' + d.slice(5);
+          return d.slice(0, 2) + '-' + d.slice(2, 6) + '-' + d.slice(6, 10);
+        }
+        if (/^1[5-9]\d\d/.test(d)) {                        // 대표번호: 1588-XXXX
+          if (d.length <= 4) return d;
+          return d.slice(0, 4) + '-' + d.slice(4, 8);
+        }
+        if (/^050\d/.test(d)) {                             // 안심번호: 0505-XXX-XXXX / 0505-XXXX-XXXX
+          if (d.length <= 4) return d;
+          if (d.length <= 7) return d.slice(0, 4) + '-' + d.slice(4);
+          if (d.length <= 11) return d.slice(0, 4) + '-' + d.slice(4, 7) + '-' + d.slice(7);
+          return d.slice(0, 4) + '-' + d.slice(4, 8) + '-' + d.slice(8, 12);
+        }
+        d = d.slice(0, 11);                                 // 휴대폰·지역번호: XXX-XXX-XXXX / XXX-XXXX-XXXX
+        if (d.length <= 3) return d;
+        if (d.length <= 6) return d.slice(0, 3) + '-' + d.slice(3);
+        if (d.length <= 10) return d.slice(0, 3) + '-' + d.slice(3, 6) + '-' + d.slice(6);
+        return d.slice(0, 3) + '-' + d.slice(3, 7) + '-' + d.slice(7);
+      }
+      var phoneInput = document.getElementById('f-phone');
+      phoneInput.setAttribute('inputmode', 'numeric');
+      phoneInput.addEventListener('input', function () {
+        var v = formatPhone(this.value);
+        if (v !== this.value) { this.value = v; try { this.setSelectionRange(v.length, v.length); } catch (_) {} }
+      });
+
+      /* ---------- 도배·매크로 방지 (클라이언트 측) ---------- */
+      var MIN_FILL_MS = 4000;          // 페이지 로드 후 4초 안에 제출하면 봇으로 간주
+      var COOLDOWN_MS = 60 * 1000;     // 연속 제출 간격 1분
+      var WINDOW_MS = 60 * 60 * 1000;  // 1시간 동안
+      var MAX_PER_WINDOW = 3;          // 최대 3건
+      var loadedAt = Date.now();
+      var LS_KEY = 'onle_inquiry_log';
+
+      function readLog() {
+        try { var a = JSON.parse(localStorage.getItem(LS_KEY) || '[]'); return Array.isArray(a) ? a : []; }
+        catch (_) { return []; }
+      }
+      function writeLog(a) { try { localStorage.setItem(LS_KEY, JSON.stringify(a)); } catch (_) {} }
+      function rateCheck() {
+        var now = Date.now();
+        var log = readLog().filter(function (t) { return now - t < WINDOW_MS; });
+        if (log.length && now - log[log.length - 1] < COOLDOWN_MS) {
+          return '잠시 후 다시 시도해주세요. (연속 제출은 1분 간격으로 가능합니다)';
+        }
+        if (log.length >= MAX_PER_WINDOW) {
+          return '문의가 너무 많이 접수되었습니다. 1시간 뒤 다시 시도하시거나 ' + TO + '으로 보내주세요.';
+        }
+        return '';
+      }
+      function rateRecord() { var log = readLog(); log.push(Date.now()); writeLog(log.slice(-10)); }
+
       form.addEventListener('submit', function (e) {
         e.preventDefault();
         var type = typeInput.value;
@@ -674,9 +733,16 @@
         var email = val('f-email');
         var msg = val('f-msg');
         var consent = document.getElementById('f-consent').checked;
+        var honey = form.querySelector('input[name="_honey"]').value;
 
+        if (honey) { note.textContent = '문의가 접수되었습니다.'; return; }   // 봇: 조용히 무시
+        if (Date.now() - loadedAt < MIN_FILL_MS) { note.textContent = '입력 내용을 확인한 뒤 다시 눌러주세요.'; return; }
         if (!name || !phone || !msg) { note.textContent = '이름, 연락처, 문의 내용을 입력해주세요.'; return; }
+        if (phone.replace(/\D/g, '').length < 9) { note.textContent = '연락처를 정확히 입력해주세요.'; return; }
+        if (name.length > 40 || msg.length > 2000) { note.textContent = '입력 길이가 너무 깁니다. (문의 내용 2,000자 이내)'; return; }
         if (!consent) { note.textContent = '개인정보 이용에 동의해주세요.'; return; }
+        var limited = rateCheck();
+        if (limited) { note.textContent = limited; return; }
 
         var payload = {
           _subject: '[오늘] ' + type + ' 문의 - ' + name,
@@ -708,6 +774,7 @@
             return;
           }
           if (!res.ok || String(res.data.success) !== 'true') throw new Error(m || 'send failed');
+          rateRecord();
           form.reset();
           typeInput.value = '오늘 어디가?';
           seg.querySelectorAll('button').forEach(function (x, i) { x.setAttribute('aria-pressed', i === 0 ? 'true' : 'false'); });
