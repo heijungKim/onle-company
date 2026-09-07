@@ -148,14 +148,43 @@
     /* =========================================================
        Hero
        ========================================================= */
-    .hero { padding: 110px 0 100px; }
-    .hero .wrap {
-      display: grid; grid-template-columns: 1.05fr 1fr; gap: 72px; align-items: center;
+    /* 통이미지 배경 위에 텍스트. images/hero.jpg 가 없으면 아래 그라데이션이 배경으로 보임 */
+    .hero {
+      position: relative; isolation: isolate; overflow: hidden;
+      min-height: clamp(560px, 84vh, 860px);
+      display: flex; align-items: center;
+      padding: 120px 0 110px;
+      color: var(--dark-text);
     }
-    .hero h1 { margin-bottom: 28px; }
-    .hero .lede { max-width: 520px; margin-bottom: 44px; }
+    .hero::before {
+      content: ""; position: absolute; inset: 0; z-index: -2;
+      background:
+        url("images/hero.jpg") center / cover no-repeat,
+        radial-gradient(120% 80% at 80% 20%, #5a4638 0%, rgba(90,70,56,0) 60%),
+        linear-gradient(135deg, #3a2f28 0%, #221d19 55%, #2b2320 100%);
+      transform: scale(1.08);
+      animation: heroZoom 10s cubic-bezier(.16,1,.3,1) forwards;
+    }
+    .hero::after {
+      content: ""; position: absolute; inset: 0; z-index: -1;
+      background:
+        linear-gradient(90deg, rgba(18,14,11,.82) 0%, rgba(18,14,11,.58) 42%, rgba(18,14,11,.18) 100%),
+        linear-gradient(180deg, rgba(18,14,11,.25) 0%, rgba(18,14,11,0) 35%, rgba(18,14,11,.55) 100%);
+    }
+    @keyframes heroZoom { to { transform: scale(1); } }
+    .hero .wrap { width: 100%; }
+    .hero .hero-content { max-width: 720px; }
+    .hero .eyebrow { color: var(--accent-soft); }
+    .hero h1 { color: #fff; margin-bottom: 28px; text-shadow: 0 2px 28px rgba(0,0,0,.35); }
+    .hero .lede { color: rgba(242,237,228,.86); max-width: 560px; margin-bottom: 44px; }
     .hero .actions { display: flex; gap: 12px; flex-wrap: wrap; }
-    .hero .ph { aspect-ratio: 6 / 5; }
+    .hero .btn-outline { color: #fff; border-color: rgba(255,255,255,.5); }
+    .hero .btn-outline:hover { color: #fff; border-color: #fff; background: rgba(255,255,255,.08); }
+    .hero .img-hint {
+      position: absolute; right: 24px; bottom: 16px; z-index: 1;
+      font-size: 12px; letter-spacing: .02em; color: rgba(242,237,228,.5); display: none;
+    }
+    .hero.no-img .img-hint { display: block; }
 
     /* =========================================================
        Stats band
@@ -302,6 +331,7 @@
     @media (prefers-reduced-motion: reduce) {
       .js .reveal { opacity: 1; transform: none; transition: none; }
       .svc, .promise-item, .ph { transition: none; }
+      .hero::before { animation: none; transform: none; }
       html { scroll-behavior: auto; }
     }
 
@@ -311,7 +341,7 @@
     @media (max-width: 1024px) {
       h2 { font-size: 32px; }
       .hero .wrap, .about .head, .services .head, .contact .wrap { grid-template-columns: 1fr; gap: 40px; }
-      .hero { padding: 80px 0 72px; }
+      .hero { padding: 96px 0 84px; min-height: clamp(520px, 70vh, 720px); }
       .stats { grid-template-columns: repeat(2, 1fr); }
       .stat:nth-child(3) { border-left: none; }
       .stat:nth-child(n+3) { border-top: 1px solid var(--line); }
@@ -360,7 +390,7 @@
     <!-- ================= Hero ================= -->
     <section class="hero">
       <div class="wrap">
-        <div>
+        <div class="hero-content">
           <p class="eyebrow">하루를 만드는 회사</p>
           <h1>어떻게 하면 하루를 더<br />빛나게 할 수 있을까</h1>
           <p class="lede">오늘은 이 질문에서 시작했습니다. 하루는 큰 사건이 아니라 작은 순간으로 기억됩니다.
@@ -370,12 +400,8 @@
             <a class="btn btn-outline" href="#about">회사 소개</a>
           </div>
         </div>
-        <div class="ph" role="img" aria-label="대표 이미지 · 해질 무렵 거리">
-          <img src="images/hero.jpg" alt="대표 이미지 · 해질 무렵 거리" loading="eager" onerror="this.remove()" />
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="M21 16l-5-5-8 8"/></svg>
-          <span>대표 이미지 · 해질 무렵 거리</span>
-        </div>
       </div>
+      <span class="img-hint">images/hero.jpg 를 넣으면 배경 사진으로 표시됩니다</span>
     </section>
 
     <!-- ================= Stats ================= -->
@@ -621,7 +647,6 @@
         ['.hero h1', 0, 160],
         ['.hero .lede', 0, 320],
         ['.hero .actions', 0, 480],
-        ['.hero .ph', 0, 280],
         // 지표(숨김 상태여도 무해)
         ['.stat', 120, 0],
         // 회사 소개
@@ -668,6 +693,11 @@
         });
       }, { rootMargin: '0px 0px -6% 0px', threshold: 0.05 });
       targets.forEach(function (el) { io.observe(el); });
+
+      // 히어로 배경 사진 유무 확인 (없으면 안내 문구 표시)
+      var heroImg = new Image();
+      heroImg.onerror = function () { var h = document.querySelector('.hero'); if (h) h.classList.add('no-img'); };
+      heroImg.src = 'images/hero.jpg';
 
       // 헤더: 스크롤 시 그림자 살짝
       var header = document.querySelector('.site-header');
