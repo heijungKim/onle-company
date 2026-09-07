@@ -76,6 +76,9 @@
     .wrap { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
 
     /* Typography rules */
+    /* 줄바꿈: 한글 단어 단위 유지(keep-all) + 제목은 줄 길이 균형(balance), 본문은 고아·과부 줄 방지(pretty) */
+    h1, h2, h3, h4 { text-wrap: balance; overflow-wrap: break-word; }
+    p, li, figcaption, .lede, .hint, .form-note, .consent span { text-wrap: pretty; overflow-wrap: break-word; }
     h1, h2, h3 { font-family: var(--serif); font-weight: 500; letter-spacing: -0.02em; }
     h1 { font-size: clamp(34px, 4.2vw, 50px); line-height: 1.3; }
     h2 { font-size: 36px; line-height: 1.35; }
@@ -318,6 +321,7 @@
       .foot-grid { grid-template-columns: 1fr 1fr; }
     }
     @media (max-width: 720px) {
+      h1 br, h2 br { display: none; }   /* 좁은 화면: 강제 줄바꿈 대신 균형 줄바꿈 */
       h2 { font-size: 28px; }
       h3 { font-size: 24px; }
       .site-header .wrap { height: 68px; }
@@ -429,7 +433,7 @@
         <div class="head">
           <div>
             <p class="eyebrow">서비스</p>
-            <h2>당신의 하루는 빛이<br />나야 하니까</h2>
+            <h2>당신의 하루는<br />빛이 나야 하니까</h2>
           </div>
           <p>아침을 위한 서비스 하나, 저녁을 위한 서비스 하나.
             하루의 시작과 끝이 완벽하도록 개발하였습니다.</p>
@@ -504,7 +508,7 @@
       <div class="wrap">
         <div>
           <p class="eyebrow">입점 · 제휴 문의</p>
-          <h2>당신의 하루에도 함께할<br />수 있다면</h2>
+          <h2>당신의 하루에도<br />함께할 수 있다면</h2>
           <p class="lede">푸드트럭 사장님, 여행지의 가게, 함께 일하고 싶은 파트너.
             아래 폼을 남겨주시면 영업일 2일 안에 회신드립니다.</p>
           <div class="contact-lines">

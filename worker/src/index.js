@@ -5,18 +5,51 @@
  *
  * 하는 일
  *  1. 허용된 출처(company.onle.kr)에서 온 요청만 받음 (CORS)
- *  2. Cloudflare Turnstile 토큰을 서버에서 검증 (봇·매크로 차단)
- *  3. IP당 분당 3건으로 제한 (Rate Limiting 바인딩)
+ *  2. IP당 1분 3건 · 1시간 10건 제한 (Durable Object로 정확히 카운트)
+ *  3. Cloudflare Turnstile 토큰을 서버에서 검증 (봇·매크로 차단)
  *  4. 입력값 검증·정리 후 FormSubmit으로 전달
  */
 
 const TURNSTILE_VERIFY = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
+
+// [허용 건수, 기간(ms)]
+const RATE_LIMITS = [
+  [3, 60 * 1000],        // 1분에 3건
+  [10, 60 * 60 * 1000],  // 1시간에 10건
+];
 
 const LIMITS = { name: 40, phone: 20, email: 120, message: 2000, type: 20 };
 
 // 제어문자(개행·탭 제외) 제거용
 const CONTROL_CHARS = new RegExp('[\\u0000-\\u0008\\u000B\\u000C\\u000E-\\u001F\\u007F]', 'g');
 
+/* ---------- IP별 속도 제한 Durable Object ---------- */
+export class RateLimiter {
+  constructor(state) {
+    this.state = state;
+    this.hits = []; // 타임스탬프 목록 (IP 하나당 객체 하나)
+  }
+  async fetch(request) {
+    const { limits, dry } = await request.json();
+    const now = Date.now();
+    const longest = Math.max(...limits.map((l) => l[1]));
+    this.hits = this.hits.filter((t) => now - t < longest);
+
+    let allowed = true;
+    let retryAfter = 0;
+    for (const [limit, windowMs] of limits) {
+      const inWindow = this.hits.filter((t) => now - t < windowMs);
+      if (inWindow.length >= limit) {
+        allowed = false;
+        retryAfter = Math.max(retryAfter, Math.ceil((inWindow[0] + windowMs - now) / 1000));
+      }
+    }
+    if (allowed && !dry) this.hits.push(now);
+    return Response.json({ allowed, retryAfter });
+  }
+}
+
+/* ---------- 유틸 ---------- */
 function allowedOrigins(env) {
   return (env.ALLOWED_ORIGINS || '').split(',').map((s) => s.trim()).filter(Boolean);
 }
@@ -44,23 +77,45 @@ function clean(v, max) {
   return String(v == null ? '' : v).replace(CONTROL_CHARS, '').trim().slice(0, max);
 }
 
+async function checkRate(env, ip, dry) {
+  if (!env.LIMITER) return { allowed: true, retryAfter: 0, limiter: 'missing' };
+  const stub = env.LIMITER.get(env.LIMITER.idFromName('ip:' + ip));
+  const r = await stub.fetch('https://limiter/check', {
+    method: 'POST',
+    body: JSON.stringify({ limits: RATE_LIMITS, dry: !!dry }),
+  }).then((res) => res.json()).catch(() => ({ allowed: true, retryAfter: 0 }));
+  return { ...r, limiter: 'ok' };
+}
+
+/* ---------- 메인 ---------- */
 export default {
   async fetch(request, env) {
     const origin = request.headers.get('Origin') || '';
     const cors = corsHeaders(origin, env);
     const allowed = allowedOrigins(env);
+    const ip = request.headers.get('CF-Connecting-IP') || 'unknown';
 
     if (request.method === 'OPTIONS') return new Response(null, { status: 204, headers: cors });
+
+    if (request.method === 'GET' && new URL(request.url).pathname === '/health') {
+      // 상태 확인용 (비밀값 노출 없음, 카운트 소모 없음)
+      const r = await checkRate(env, ip, true);
+      return json({ ok: true, rateLimiter: r.limiter, allowedNow: r.allowed, turnstileSecret: env.TURNSTILE_SECRET ? 'set' : 'missing' }, 200, cors);
+    }
+
     if (request.method !== 'POST') return json({ ok: false, error: 'method' }, 405, cors);
 
     // 1) 출처 확인
     if (!allowed.includes(origin)) return json({ ok: false, error: 'origin' }, 403, cors);
 
     // 2) IP 기준 속도 제한
-    const ip = request.headers.get('CF-Connecting-IP') || 'unknown';
-    if (env.RATE_LIMITER) {
-      const { success } = await env.RATE_LIMITER.limit({ key: ip });
-      if (!success) return json({ ok: false, error: 'rate', message: '잠시 후 다시 시도해주세요.' }, 429, cors);
+    const rate = await checkRate(env, ip, false);
+    if (!rate.allowed) {
+      return json(
+        { ok: false, error: 'rate', message: '문의가 너무 자주 접수되었습니다. ' + (rate.retryAfter >= 60 ? Math.ceil(rate.retryAfter / 60) + '분' : rate.retryAfter + '초') + ' 뒤 다시 시도해주세요.' },
+        429,
+        { ...cors, 'Retry-After': String(rate.retryAfter || 60) },
+      );
     }
 
     // 3) 본문 파싱
