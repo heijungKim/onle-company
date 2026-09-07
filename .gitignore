@@ -1,2 +1,8 @@
-# PNG 원본은 로컬에만 두고, 사이트에는 압축한 JPG만 배포
-images/*.png
+# 사진 PNG 원본은 로컬에만 두고, 사이트에는 압축한 JPG만 배포
+# (favicon.png, logo.png, logo-white.png 는 PNG 그대로 배포되므로 제외하지 않음)
+images/hero.png
+images/morning.png
+images/evening.png
+images/service-odigaa.png
+images/service-wasseoyo.png
+images/contact.png

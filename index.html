@@ -6,6 +6,9 @@
   <title>당신의 '오늘'</title>
   <meta name="description" content="오늘(Onle)은 하루의 시작과 끝을 만드는 회사입니다. 여행 코스 추천 '오늘 어디가'와 푸드트럭 알림 '오늘 왔어요'를 만듭니다." />
   <link rel="canonical" href="https://company.onle.kr/" />
+  <!-- 파비콘: images/favicon.png (정사각형 PNG, 512×512 권장) -->
+  <link rel="icon" type="image/png" href="images/favicon.png" />
+  <link rel="apple-touch-icon" href="images/favicon.png" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="오늘 (Onle)" />
   <meta property="og:title" content="당신의 '오늘'" />
@@ -146,6 +149,8 @@
     }
     .brand { display: flex; align-items: baseline; gap: 10px; }
     .brand .ko { font-family: var(--serif); font-weight: 500; font-size: 26px; letter-spacing: -0.02em; }
+    .brand .logo-img { height: 30px; width: auto; display: block; }
+    .brand.has-logo .ko, .brand.has-logo .en { display: none; }   /* 로고 이미지가 있으면 글자 숨김 */
     .brand .en { font-weight: 600; font-size: 12px; letter-spacing: 0.18em; color: var(--ink-muted); }
     .nav { display: flex; align-items: center; gap: 36px; }
     .nav a { font-weight: 500; font-size: 15px; color: var(--ink-soft); }
@@ -303,6 +308,8 @@
     .site-footer { background: var(--dark); color: var(--dark-text); padding: 72px 0 40px; }
     .foot-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1.2fr; gap: 40px; }
     .foot-brand .ko { font-family: var(--serif); font-weight: 500; font-size: 24px; margin-bottom: 18px; display: block; }
+    .foot-brand .logo-img { height: 28px; width: auto; display: block; margin-bottom: 18px; }
+    .foot-brand.has-logo .ko { display: none; }
     .foot-brand p { font-size: 15px; color: var(--dark-muted); }
     .foot-col h5 { font-weight: 600; font-size: 12.5px; letter-spacing: 0.1em; color: #8c8272; margin-bottom: 18px; }
     .foot-col li { margin-bottom: 10px; font-size: 15px; }
@@ -382,6 +389,7 @@
   <header class="site-header">
     <div class="wrap">
       <a class="brand" href="#top" aria-label="오늘 홈">
+        <img class="logo-img" src="images/logo.png" alt="오늘" onload="this.parentNode.classList.add('has-logo')" onerror="this.remove()" />
         <span class="ko">오늘</span><span class="en">ONLE</span>
       </a>
       <nav class="nav" aria-label="주요 메뉴">
@@ -604,6 +612,7 @@
     <div class="wrap">
       <div class="foot-grid">
         <div class="foot-brand">
+          <img class="logo-img" src="images/logo-white.png" alt="오늘" loading="lazy" onload="this.parentNode.classList.add('has-logo')" onerror="this.remove()" />
           <span class="ko">오늘</span>
           <p>하루의 시작과 끝을 만드는 회사.<br />오늘 어디가 · 오늘 왔어요</p>
         </div>
