@@ -700,7 +700,13 @@
         })
         .then(function (r) { return r.json().then(function (d) { return { ok: r.ok, data: d }; }); })
         .then(function (res) {
-          if (!res.ok || String(res.data.success) !== 'true') throw new Error(res.data.message || 'send failed');
+          var m = String(res.data && res.data.message || '');
+          if (/activat/i.test(m)) {
+            // FormSubmit 최초 활성화 전: 운영자 메일함의 'Activate Form' 링크를 눌러야 수신 시작
+            note.textContent = '문의 접수 시스템이 아직 준비 중입니다. 잠시 후 다시 시도하시거나 ' + TO + '으로 직접 보내주세요.';
+            return;
+          }
+          if (!res.ok || String(res.data.success) !== 'true') throw new Error(m || 'send failed');
           form.reset();
           typeInput.value = '오늘 어디가?';
           seg.querySelectorAll('button').forEach(function (x, i) { x.setAttribute('aria-pressed', i === 0 ? 'true' : 'false'); });
