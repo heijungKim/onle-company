@@ -1,0 +1,15 @@
+name = "onle-inquiry"
+main = "src/index.js"
+compatibility_date = "2026-09-01"
+
+# 공개 설정값. 비밀값(TURNSTILE_SECRET)은 `wrangler secret put TURNSTILE_SECRET`으로 등록
+[vars]
+ALLOWED_ORIGINS = "https://company.onle.kr,https://heijungkim.github.io"
+TO_EMAIL = "onle0803@gmail.com"
+
+# IP당 60초에 3건 (Workers 무료 플랜 포함)
+[[unsafe.bindings]]
+name = "RATE_LIMITER"
+type = "ratelimit"
+namespace_id = "1001"
+simple = { limit = 3, period = 60 }

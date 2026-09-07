@@ -19,6 +19,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;600&display=swap" rel="stylesheet" />
   <!-- 본문·UI: Pretendard Variable (jsDelivr 동적 서브셋) -->
   <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+  <!-- 문의 폼 봇 방지: Cloudflare Turnstile -->
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 
   <style>
     /* =========================================================
@@ -548,6 +550,9 @@
             <input type="checkbox" id="f-consent" required />
             <span>남겨주신 정보는 문의 답변 목적으로만 사용하며, 답변 후 파기합니다.</span>
           </label>
+          <div class="field turnstile-field">
+            <div class="cf-turnstile" data-sitekey="0x4AAAAAAEqwO3eUJXTK7gvC" data-theme="light" data-language="ko" data-size="flexible"></div>
+          </div>
           <button class="btn btn-dark" type="submit" id="f-submit">문의 보내기</button>
           <p class="form-note" id="form-note" aria-live="polite"></p>
         </form>
@@ -667,9 +672,9 @@
     })();
 
     (function () {
-      // FormSubmit (https://formsubmit.co) 무료 폼 → onle0803@gmail.com 으로 전송
-      // 첫 전송 후 해당 메일함에 오는 "Activate Form" 인증 메일을 한 번 승인해야 이후 문의가 정상 수신됩니다.
-      var ENDPOINT = 'https://formsubmit.co/ajax/onle0803@gmail.com';
+      // 문의 전송 경로: 브라우저 → Cloudflare Worker(Turnstile 검증 + IP 속도 제한) → FormSubmit → onle0803@gmail.com
+      // Worker 소스: /worker/src/index.js
+      var ENDPOINT = 'https://onle-inquiry.onle.workers.dev';
       var TO = 'onle0803@gmail.com';
 
       var form = document.getElementById('inquiry');
@@ -766,17 +771,11 @@
         var limited = rateCheck();
         if (limited) { note.textContent = limited; return; }
 
-        var payload = {
-          _subject: '[오늘] ' + type + ' 문의 - ' + name,
-          _template: 'table',
-          _captcha: 'false',
-          '문의구분': type,
-          '이름': name,
-          '연락처': phone,
-          '이메일': email || '(미입력)',
-          '문의내용': msg
-        };
-        if (email) payload._replyto = email;
+        var tokenEl = form.querySelector('input[name="cf-turnstile-response"]');
+        var token = tokenEl ? tokenEl.value : '';
+        if (!token) { note.textContent = '보안 확인이 끝날 때까지 잠시 기다려주세요.'; return; }
+
+        var payload = { token: token, type: type, name: name, phone: phone, email: email, message: msg, website: honey };
 
         submitBtn.disabled = true;
         submitBtn.textContent = '전송 중…';
@@ -787,16 +786,15 @@
           headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
           body: JSON.stringify(payload)
         })
-        .then(function (r) { return r.json().then(function (d) { return { ok: r.ok, data: d }; }); })
+        .then(function (r) { return r.json().catch(function () { return {}; }).then(function (d) { return { ok: r.ok, data: d }; }); })
         .then(function (res) {
-          var m = String(res.data && res.data.message || '');
-          if (/activat/i.test(m)) {
-            // FormSubmit 최초 활성화 전: 운영자 메일함의 'Activate Form' 링크를 눌러야 수신 시작
-            note.textContent = '문의 접수 시스템이 아직 준비 중입니다. 잠시 후 다시 시도하시거나 ' + TO + '으로 직접 보내주세요.';
-            return;
+          if (!res.ok || !res.data.ok) {
+            var m = String(res.data && res.data.message || '');
+            if (m) { note.textContent = m; if (window.turnstile) turnstile.reset(); return; }
+            throw new Error('send failed');
           }
-          if (!res.ok || String(res.data.success) !== 'true') throw new Error(m || 'send failed');
           rateRecord();
+          if (window.turnstile) turnstile.reset();
           form.reset();
           typeInput.value = '오늘 어디가?';
           seg.querySelectorAll('button').forEach(function (x, i) { x.setAttribute('aria-pressed', i === 0 ? 'true' : 'false'); });
