@@ -50,6 +50,8 @@
       --accent-soft: #e8a57c;   /* 포인트 컬러 원색 (버튼, 어두운 배경용) */
       --accent-btn: #d47a47;    /* 버튼 바탕 (포인트 컬러보다 한 단계 진하게, 흰 글자용) */
       --accent-hover: #c46a38;  /* 버튼 호버 */
+      --brand: #a27a4f;         /* 로고 갈색 (헤더 타이틀 글자색) */
+      --brand-soft: #b8956c;    /* 로고 갈색 옅은 톤 (헤더 영문) */
       --dark: #1f1b17;
       --dark-card: #2a2521;
       --dark-line: #3a342e;
@@ -145,13 +147,13 @@
       border-bottom: 1px solid var(--line);
     }
     .site-header .wrap {
-      display: flex; align-items: center; justify-content: space-between; height: 82px;
+      display: flex; align-items: center; justify-content: space-between; height: 88px;
     }
     .brand { display: flex; align-items: center; gap: 12px; }
     .brand .ko { font-family: var(--serif); font-weight: 500; font-size: 26px; letter-spacing: -0.02em; }
-    .brand .logo-img { height: 44px; width: auto; display: block; }
-    .brand .ko { line-height: 1; }   /* 심볼 + 글자 나란히 */
-    .brand .en { font-weight: 600; font-size: 12px; letter-spacing: 0.18em; color: var(--ink-muted); }
+    .brand .logo-img { height: 56px; width: auto; display: block; }
+    .brand .ko { line-height: 1; color: var(--brand); }   /* 심볼 + 글자 나란히, 로고 색과 통일 */
+    .brand .en { font-weight: 600; font-size: 12px; letter-spacing: 0.18em; color: var(--brand-soft); }
     .nav { display: flex; align-items: center; gap: 36px; }
     .nav a { font-weight: 500; font-size: 15px; color: var(--ink-soft); }
     .nav a:hover { color: var(--ink); }
@@ -309,7 +311,7 @@
     .foot-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1.2fr; gap: 40px; }
     .foot-brand .brand-row { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
     .foot-brand .ko { font-family: var(--serif); font-weight: 500; font-size: 24px; line-height: 1; display: block; }
-    .foot-brand .logo-img { height: 40px; width: auto; display: block; }
+    .foot-brand .logo-img { height: 48px; width: auto; display: block; }
     .foot-brand p { font-size: 15px; color: var(--dark-muted); }
     .foot-col h5 { font-weight: 600; font-size: 12.5px; letter-spacing: 0.1em; color: #8c8272; margin-bottom: 18px; }
     .foot-col li { margin-bottom: 10px; font-size: 15px; }
@@ -368,10 +370,10 @@
       h1 br, h2 br { display: none; }   /* 좁은 화면: 강제 줄바꿈 대신 균형 줄바꿈 */
       h2 { font-size: 28px; }
       h3 { font-size: 24px; }
-      .site-header .wrap { height: 68px; }
+      .site-header .wrap { height: 72px; }
       .nav a:not(.btn) { display: none; }
       .brand .en { display: none; }
-      .brand .logo-img { height: 36px; }
+      .brand .logo-img { height: 44px; }
       .figures, .svc-grid { grid-template-columns: 1fr; }
       .stats { grid-template-columns: 1fr; }
       .stat + .stat { border-left: none; border-top: 1px solid var(--line); }
