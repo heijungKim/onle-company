@@ -124,6 +124,10 @@
     .btn-ghost-dark { background: transparent; color: var(--dark-text); border-color: var(--dark-line); }
     .btn-ghost-dark:hover { border-color: var(--accent-soft); color: var(--accent-soft); }
     .btn-sm { height: 42px; padding: 0 18px; font-size: 14px; }
+    .btn-disabled { opacity: .55; cursor: default; pointer-events: none; gap: 8px; }
+    .btn-disabled small { font-size: 11.5px; font-weight: 500; opacity: .85; letter-spacing: .02em; }
+    .foot-muted { color: #8c8272; }
+    .foot-muted small { font-size: 12px; margin-left: 4px; }
 
     /* Image placeholder (교체 시 .ph 안에 <img>를 넣거나 .ph 자체를 <img>로 바꾸면 됩니다) */
     .ph {
@@ -515,8 +519,8 @@
               <h3>오늘 왔어요.</h3>
               <p>좋아하는 푸드트럭을 등록해두면 오늘 어디에 왔는지 알려드립니다. 우연히 만났던 그 한 끼를 원할 때 다시.</p>
               <div class="actions">
-                <a class="btn btn-light btn-sm" href="#" aria-label="App Store에서 내려받기">App Store</a>
-                <a class="btn btn-ghost-dark btn-sm" href="#" aria-label="Google Play에서 내려받기">Google Play</a>
+                <a class="btn btn-light btn-sm" href="https://play.google.com/store/apps/details?id=com.onle.imhere&hl=ko" target="_blank" rel="noopener" aria-label="Google Play에서 내려받기">Google Play</a>
+                <span class="btn btn-ghost-dark btn-sm btn-disabled" aria-disabled="true" title="App Store 출시 준비중">App Store <small>출시 준비중</small></span>
               </div>
             </div>
           </article>
@@ -633,8 +637,8 @@
           <h5>서비스</h5>
           <ul>
             <li><a href="https://onle.kr" target="_blank" rel="noopener">오늘 어디가</a></li>
-            <li><a href="#">오늘 왔어요 · App Store</a></li>
-            <li><a href="#">오늘 왔어요 · Google Play</a></li>
+            <li><a href="https://play.google.com/store/apps/details?id=com.onle.imhere&hl=ko" target="_blank" rel="noopener">오늘 왔어요 · Google Play</a></li>
+            <li><span class="foot-muted">오늘 왔어요 · App Store <small>출시 준비중</small></span></li>
           </ul>
         </div>
         <div class="foot-col">
