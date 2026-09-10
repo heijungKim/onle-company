@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>오늘 왔어요! 사용 매뉴얼</title>
+  <meta name="description" content="오늘 왔어요! 앱 사용 매뉴얼. 손님, 푸드트럭 사장님, 행사 운영사별로 필요한 기능을 순서대로 안내합니다." />
+  <link rel="canonical" href="https://company.onle.kr/manual/" />
+  <link rel="icon" type="image/png" href="../images/favicon.png" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="오늘 (Onle)" />
+  <meta property="og:title" content="오늘 왔어요! 사용 매뉴얼" />
+  <meta property="og:description" content="우리 동네 푸드트럭부터 야시장·플리마켓까지, 오늘의 맛있는 순간을 더 가까이." />
+  <meta property="og:url" content="https://company.onle.kr/manual/" />
+  <meta property="og:image" content="https://company.onle.kr/manual/images/og.jpg" />
+  <meta property="og:locale" content="ko_KR" />
+
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+
+  <style>
+    :root {
+      --bg: #f5eee3;
+      --bg-deep: #ede3d3;
+      --card: #fdfbf7;
+      --ink: #2b2420;
+      --ink-soft: #55493f;
+      --muted: #7d7065;
+      --line: #e6dccb;
+      --accent: #e8562b;
+      --accent-deep: #d3461e;
+      --accent-soft: #fbe3d6;
+      --brown: #3d3128;
+      --brown-card: #4a3c31;
+      --brown-text: #f5ede2;
+      --sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      --max: 1120px;
+      --r: 22px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--sans); background: var(--bg); color: var(--ink);
+      font-size: 16px; line-height: 1.8; -webkit-font-smoothing: antialiased; word-break: keep-all;
+    }
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+    img { max-width: 100%; display: block; }
+    button { font: inherit; color: inherit; cursor: pointer; }
+    h1, h2, h3, h4 { text-wrap: balance; letter-spacing: -0.02em; line-height: 1.3; }
+    p, li { text-wrap: pretty; }
+    .wrap { max-width: var(--max); margin: 0 auto; padding: 0 24px; }
+
+    /* ---------- header ---------- */
+    .top {
+      position: sticky; top: 0; z-index: 30;
+      background: rgba(245,238,227,.92); backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--line);
+    }
+    .top .wrap { display: flex; align-items: center; justify-content: space-between; height: 72px; gap: 16px; }
+    .brand { display: flex; align-items: center; gap: 12px; }
+    .brand img { height: 44px; width: 44px; object-fit: contain; }
+    .brand b { font-size: 18px; font-weight: 800; letter-spacing: -0.02em; }
+    .brand span { font-size: 13px; color: var(--muted); font-weight: 500; margin-left: 6px; }
+    .top-actions { display: flex; align-items: center; gap: 10px; }
+    .top-actions .home { font-size: 14px; font-weight: 500; color: var(--ink-soft); padding: 8px 10px; }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      height: 46px; padding: 0 20px; border-radius: 12px; font-weight: 700; font-size: 15px;
+      border: 1px solid transparent; transition: background .15s, color .15s, border-color .15s, transform .1s;
+      white-space: nowrap;
+    }
+    .btn:active { transform: translateY(1px); }
+    .btn-accent { background: var(--accent); color: #fff; }
+    .btn-accent:hover { background: var(--accent-deep); }
+    .btn-outline { background: transparent; border-color: #d8ccb9; color: var(--ink); }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+    .btn svg { width: 18px; height: 18px; }
+
+    /* ---------- cover ---------- */
+    .cover { padding: 72px 0 56px; }
+    .cover .wrap { display: grid; grid-template-columns: 1.2fr 1fr; gap: 48px; align-items: center; }
+    .eyebrow { font-size: 13px; font-weight: 700; letter-spacing: .14em; color: var(--muted); margin-bottom: 14px; }
+    .cover h1 { font-size: clamp(38px, 5vw, 56px); font-weight: 800; color: var(--accent); margin-bottom: 22px; }
+    .cover .lede { font-size: 18px; color: var(--ink-soft); max-width: 520px; }
+    .cover .logo { justify-self: center; width: min(360px, 80%); filter: drop-shadow(0 18px 40px rgba(232,86,43,.18)); }
+
+    /* ---------- role selector ---------- */
+    .roles { padding: 24px 0 64px; }
+    .roles h2 { font-size: 32px; font-weight: 800; margin-bottom: 12px; }
+    .roles .sub { color: var(--ink-soft); margin-bottom: 32px; font-size: 16.5px; }
+    .role-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .role-card {
+      text-align: left; background: var(--card); border-radius: var(--r); padding: 34px 32px 32px;
+      border: 2px solid transparent; box-shadow: 0 8px 30px rgba(61,49,40,.05);
+      transition: border-color .2s, transform .2s, box-shadow .2s;
+    }
+    .role-card:hover { transform: translateY(-3px); box-shadow: 0 16px 40px rgba(61,49,40,.09); }
+    .role-card.on { border-color: var(--accent); }
+    .role-card .part { font-size: 13px; font-weight: 800; color: var(--accent); margin-bottom: 14px; }
+    .role-card h3 { font-size: 24px; font-weight: 800; margin-bottom: 14px; }
+    .role-card p { color: var(--ink-soft); font-size: 15.5px; }
+    .role-card .go { margin-top: 18px; font-size: 14px; font-weight: 700; color: var(--accent); opacity: 0; transition: opacity .2s; }
+    .role-card.on .go { opacity: 1; }
+
+    /* sticky sub nav */
+    .subnav { position: sticky; top: 72px; z-index: 20; background: var(--bg); border-bottom: 1px solid var(--line); }
+    .subnav .wrap { display: flex; align-items: center; justify-content: space-between; gap: 12px; height: 60px; }
+    .pills { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; }
+    .pills::-webkit-scrollbar { display: none; }
+    .pill {
+      height: 38px; padding: 0 16px; border-radius: 999px; background: transparent; border: 1px solid #d8ccb9;
+      font-weight: 700; font-size: 14px; color: var(--ink-soft); white-space: nowrap;
+    }
+    .pill.on { background: var(--accent); border-color: var(--accent); color: #fff; }
+    .subnav .btn { height: 40px; padding: 0 16px; font-size: 14px; border-radius: 10px; }
+
+    /* ---------- parts ---------- */
+    .part { display: none; }
+    .part.active { display: block; }
+
+    .part-hero {
+      position: relative; overflow: hidden; border-radius: 28px; margin: 40px auto 0;
+      max-width: var(--max); min-height: 340px; display: flex; align-items: center;
+      padding: 56px 56px; color: #fff; isolation: isolate;
+      background: linear-gradient(100deg, #e9531f 0%, #f07a3a 55%, #f9a66b 100%);
+    }
+    .part-hero::before {
+      content: ""; position: absolute; inset: 0; z-index: -1;
+      background: var(--hero-img) right center / cover no-repeat;
+      opacity: .9;
+    }
+    .part-hero::after {
+      content: ""; position: absolute; inset: 0; z-index: -1;
+      background: linear-gradient(90deg, rgba(226,78,24,.96) 0%, rgba(230,95,40,.82) 42%, rgba(240,130,70,.18) 100%);
+    }
+    .part-hero .tag { font-size: 15px; font-weight: 800; opacity: .9; margin-bottom: 12px; }
+    .part-hero h2 { font-size: clamp(34px, 4.6vw, 54px); font-weight: 800; margin-bottom: 20px; }
+    .part-hero p { font-size: 19px; opacity: .95; max-width: 520px; line-height: 1.7; }
+
+    .sec { padding: 72px 0 8px; }
+    .sec-head { margin-bottom: 30px; }
+    .sec-head h2 { font-size: clamp(24px, 3vw, 32px); font-weight: 800; }
+    .sec-head p { color: var(--ink-soft); margin-top: 12px; font-size: 16.5px; }
+    .closing { margin-top: 32px; font-weight: 700; font-size: 17px; color: var(--ink); }
+
+    .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .cards.two { grid-template-columns: repeat(2, 1fr); }
+    .card {
+      background: var(--card); border-radius: var(--r); padding: 30px 30px 28px;
+      box-shadow: 0 8px 30px rgba(61,49,40,.05);
+    }
+    .card .n { font-size: 13px; font-weight: 800; color: var(--accent); margin-bottom: 12px; }
+    .card h4 { font-size: 19px; font-weight: 800; margin-bottom: 12px; }
+    .card p { color: var(--ink-soft); font-size: 15.5px; }
+    .card.top-line { border-top: 4px solid var(--accent); border-radius: 12px 12px var(--r) var(--r); }
+    .card.accent { background: var(--accent); color: #fff; }
+    .card.accent h4, .card.accent p, .card.accent .n { color: #fff; }
+    .card.accent .big { font-size: 22px; font-weight: 800; margin-bottom: 10px; }
+    .card.soft { background: var(--bg-deep); box-shadow: none; }
+
+    /* step block */
+    .step { display: grid; grid-template-columns: 1.15fr .85fr; gap: 56px; align-items: center; padding: 56px 0; border-top: 1px solid var(--line); }
+    .step:first-of-type { border-top: 0; }
+    .step .badge { display: inline-flex; align-items: center; gap: 12px; margin-bottom: 18px; }
+    .step .badge b {
+      width: 44px; height: 44px; border-radius: 50%; background: var(--accent); color: #fff;
+      display: inline-flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800;
+    }
+    .step .badge span { font-size: 14px; font-weight: 700; color: var(--muted); letter-spacing: .08em; }
+    .step .label { font-size: 13px; font-weight: 800; color: var(--accent); letter-spacing: .12em; margin-bottom: 14px; }
+    .step h3 { font-size: clamp(26px, 3.2vw, 36px); font-weight: 800; margin-bottom: 18px; }
+    .step .desc { color: var(--ink-soft); font-size: 16.5px; margin-bottom: 20px; }
+    .step .desc + .desc { margin-top: -8px; }
+    .bul li { position: relative; padding-left: 16px; color: var(--ink-soft); font-size: 16px; margin-bottom: 6px; }
+    .bul li::before { content: ""; position: absolute; left: 0; top: 13px; width: 5px; height: 5px; border-radius: 50%; background: var(--accent); }
+    .rows { display: grid; gap: 10px; margin-top: 8px; }
+    .row { background: var(--card); border-radius: 14px; padding: 16px 20px; font-size: 16px; color: var(--ink-soft); display: flex; align-items: center; gap: 12px; box-shadow: 0 6px 20px rgba(61,49,40,.04); }
+    .row b { color: var(--accent); font-weight: 800; }
+    .row .dot { width: 9px; height: 9px; border-radius: 50%; flex: none; }
+    .note { margin-top: 18px; font-size: 14.5px; color: var(--muted); }
+    .callout { background: var(--card); border-radius: 18px; padding: 24px 26px; margin-top: 8px; box-shadow: 0 6px 20px rgba(61,49,40,.04); }
+    .callout .k { font-size: 14px; font-weight: 800; color: var(--ink-soft); margin-bottom: 6px; }
+    .callout .q { font-size: 24px; font-weight: 800; color: var(--accent); margin-bottom: 6px; }
+    .callout p { color: var(--ink-soft); font-size: 15.5px; }
+    .chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px; }
+    .chip { background: var(--card); border-radius: 14px; padding: 14px 20px; font-size: 15px; color: var(--ink-soft); box-shadow: 0 6px 20px rgba(61,49,40,.04); }
+    .big-btn { display: inline-block; background: var(--accent); color: #fff; font-weight: 800; padding: 18px 40px; border-radius: 16px; font-size: 17px; margin: 6px 0 14px; }
+    .big-btn.ghost { background: var(--card); color: var(--ink); box-shadow: 0 6px 20px rgba(61,49,40,.05); }
+
+    /* device slots (스크린샷 파일을 넣으면 자동 표시) */
+    .device { position: relative; justify-self: center; background: var(--card); border: 3px solid #2b2420; overflow: hidden; }
+    .device.phone { width: min(300px, 100%); aspect-ratio: 9 / 19; border-radius: 34px; }
+    .device.pc { width: 100%; aspect-ratio: 16 / 10; border-radius: 18px; }
+    .device img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .device .hint { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; text-align: center; padding: 20px; font-size: 13px; color: #b3a596; }
+    .step.pc-layout { grid-template-columns: 1fr 1.2fr; }
+
+    /* flow */
+    .flow { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; align-items: start; }
+    .flow .f { text-align: center; }
+    .flow .box { background: var(--card); border-radius: 18px; padding: 24px 10px; box-shadow: 0 8px 30px rgba(61,49,40,.05); }
+    .flow .box.dark { background: var(--brown); color: #fff; }
+    .flow .box small { display: block; font-size: 12px; font-weight: 800; color: var(--accent); margin-bottom: 8px; }
+    .flow .box.dark small { color: #f2b58f; }
+    .flow .box b { font-size: 20px; font-weight: 800; }
+    .flow .f p { margin-top: 12px; font-size: 14px; color: var(--ink-soft); }
+    .arrows { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; align-items: stretch; }
+    .arrows .card { position: relative; }
+    .arrows .card + .card::before { content: "→"; position: absolute; left: -22px; top: 50%; transform: translateY(-50%); color: var(--accent); font-size: 26px; font-weight: 800; }
+    .arrows .who { font-size: 14px; font-weight: 700; color: var(--muted); margin-bottom: 6px; }
+    .arrows h4 { margin-bottom: 0; }
+
+    /* table */
+    .tbl { background: var(--card); border-radius: var(--r); padding: 10px 30px; box-shadow: 0 8px 30px rgba(61,49,40,.05); }
+    .tbl table { width: 100%; border-collapse: collapse; font-size: 16px; }
+    .tbl th, .tbl td { text-align: left; padding: 18px 6px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    .tbl th { font-weight: 800; }
+    .tbl td:first-child { font-weight: 800; width: 34%; }
+    .tbl tr:last-child td { border-bottom: 0; }
+    .tbl td:last-child { color: var(--ink-soft); }
+
+    /* dark section */
+    .dark-sec { background: var(--brown); color: var(--brown-text); border-radius: 28px; padding: 56px; margin-top: 64px; }
+    .dark-sec h2 { font-size: clamp(24px, 3vw, 32px); font-weight: 800; color: #fff; margin-bottom: 12px; }
+    .dark-sec > p { color: #d8ccbd; margin-bottom: 32px; }
+    .dark-sec .card { background: var(--brown-card); box-shadow: none; }
+    .dark-sec .card h4 { color: #fff; }
+    .dark-sec .card p { color: #d8ccbd; }
+    .dark-sec .closing { color: #f2b58f; }
+
+    /* FAQ */
+    .faq { display: grid; gap: 14px; }
+    .faq details { background: var(--card); border-radius: 18px; box-shadow: 0 8px 30px rgba(61,49,40,.05); }
+    .faq summary { list-style: none; cursor: pointer; padding: 22px 28px; font-weight: 800; font-size: 18px; display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+    .faq summary::-webkit-details-marker { display: none; }
+    .faq summary::after { content: "+"; font-size: 24px; color: var(--accent); font-weight: 400; transition: transform .2s; }
+    .faq details[open] summary::after { transform: rotate(45deg); }
+    .faq .a { padding: 0 28px 24px; color: var(--ink-soft); font-size: 16px; }
+
+    /* download cta */
+    .dl { margin: 72px auto 0; background: var(--card); border-radius: 28px; padding: 44px 48px; display: flex; align-items: center; justify-content: space-between; gap: 24px; box-shadow: 0 8px 30px rgba(61,49,40,.05); }
+    .dl h3 { font-size: 24px; font-weight: 800; margin-bottom: 8px; }
+    .dl p { color: var(--ink-soft); }
+    .dl .btns { display: flex; gap: 10px; flex-wrap: wrap; }
+
+    /* contact / footer */
+    .contact { padding: 80px 0 24px; }
+    .contact .grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 40px; align-items: center; }
+    .contact h2 { font-size: clamp(26px, 3.4vw, 40px); font-weight: 800; margin-bottom: 16px; }
+    .contact p.lede { color: var(--ink-soft); margin-bottom: 26px; }
+    .contact .rows .row { justify-content: space-between; }
+    .contact .row a { color: var(--accent); font-weight: 700; }
+    footer { padding: 40px 0 56px; color: var(--muted); font-size: 14px; }
+    footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; border-top: 1px solid var(--line); padding-top: 28px; }
+    footer a:hover { text-decoration: underline; text-underline-offset: 4px; }
+
+    /* reveal */
+    .js .rv { opacity: 0; transform: translateY(20px); transition: opacity .9s cubic-bezier(.16,1,.3,1), transform .9s cubic-bezier(.16,1,.3,1); transition-delay: var(--d, 0ms); }
+    .js .rv.in { opacity: 1; transform: none; }
+
+    /* ---------- responsive ---------- */
+    @media (max-width: 960px) {
+      .cover .wrap { grid-template-columns: 1fr; gap: 28px; text-align: left; }
+      .cover .logo { justify-self: start; width: 220px; }
+      .role-grid, .cards, .arrows { grid-template-columns: 1fr; }
+      .arrows .card + .card::before { content: "↓"; left: 50%; top: -22px; transform: translateX(-50%); }
+      .step, .step.pc-layout { grid-template-columns: 1fr; gap: 28px; }
+      .device.phone { width: min(260px, 100%); justify-self: start; }
+      .flow { grid-template-columns: repeat(3, 1fr); }
+      .contact .grid { grid-template-columns: 1fr; }
+      .dl { flex-direction: column; align-items: flex-start; }
+      .part-hero { padding: 40px 28px; min-height: 280px; border-radius: 22px; margin-left: 16px; margin-right: 16px; }
+      .dark-sec { padding: 36px 24px; }
+    }
+    @media (max-width: 640px) {
+      .top .wrap { height: 64px; }
+      .brand span, .top-actions .home { display: none; }
+      .subnav { top: 64px; }
+      .subnav .btn span { display: none; }
+      .cover { padding: 48px 0 32px; }
+      .cards.two { grid-template-columns: 1fr; }
+      .flow { grid-template-columns: repeat(2, 1fr); }
+      .sec { padding: 56px 0 8px; }
+      .step { padding: 40px 0; }
+      .dl { padding: 30px 24px; }
+    }
+
+    /* ---------- print (PDF) ---------- */
+    @page { size: A4; margin: 14mm 12mm; }
+    body.print { background: #fff; }
+    body.print .top, body.print .subnav, body.print .roles, body.print .dl, body.print footer .no-print, body.print .cover .btns { display: none !important; }
+    body.print .cover { padding: 24px 0 16px; }
+    body.print .part { display: block; }
+    body.print .part + .part { break-before: page; }
+    body.print .part-hero { min-height: 220px; padding: 40px; border-radius: 18px; margin-top: 16px; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    body.print .sec { padding: 36px 0 4px; break-inside: avoid; }
+    body.print .step { padding: 28px 0; break-inside: avoid; gap: 28px; }
+    body.print .device.phone { width: 180px; }
+    body.print .card, body.print .callout, body.print .tbl, body.print .dark-sec { box-shadow: none; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    body.print .card { border: 1px solid var(--line); }
+    body.print .faq details { border: 1px solid var(--line); box-shadow: none; }
+    body.print .faq summary::after { display: none; }
+    body.print .js .rv, body.print .rv { opacity: 1 !important; transform: none !important; transition: none !important; }
+    body.print .dark-sec { border-radius: 18px; padding: 32px; }
+    body.print .contact { padding: 40px 0 8px; break-inside: avoid; }
+    body.print .cover h1 { font-size: 44px; }
+    body.print .cover .wrap { grid-template-columns: 1.3fr .7fr; gap: 24px; }
+    body.print .cover .logo { width: 170px; justify-self: end; }
+    /* A4 폭에서도 화면과 같은 다열 배치를 유지 */
+    body.print .cards { grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    body.print .cards.two { grid-template-columns: repeat(2, 1fr); }
+    body.print .card { padding: 20px 20px 18px; }
+    body.print .card h4 { font-size: 16px; }
+    body.print .card p { font-size: 13.5px; }
+    body.print .step { grid-template-columns: 1.25fr .75fr; gap: 28px; }
+    body.print .step.pc-layout { grid-template-columns: 1fr 1fr; }
+    body.print .step h3 { font-size: 24px; }
+    body.print .step .desc, body.print .bul li, body.print .row { font-size: 14px; }
+    body.print .device.phone { width: 150px; justify-self: center; }
+    body.print .flow { grid-template-columns: repeat(6, 1fr); gap: 8px; }
+    body.print .flow .box { padding: 16px 6px; }
+    body.print .flow .box b { font-size: 15px; }
+    body.print .flow .f p { font-size: 12px; }
+    body.print .arrows { grid-template-columns: repeat(3, 1fr); }
+    body.print .arrows .card + .card::before { content: "→"; left: -18px; top: 50%; transform: translateY(-50%); }
+    body.print .contact .grid { grid-template-columns: 1.1fr .9fr; }
+    body.print .part-hero { margin-left: 0; margin-right: 0; }
+    body.print .sec-head h2 { font-size: 24px; }
+    body.print .faq summary { font-size: 15px; padding: 14px 20px; }
+    body.print .faq .a { font-size: 14px; padding: 0 20px 16px; }
+    body.print footer { padding: 24px 0 0; font-size: 12px; }
+  </style>
+</head>
+<body>
+
+  <!-- ================= header ================= -->
+  <header class="top">
+    <div class="wrap">
+      <a class="brand" href="./">
+        <img src="images/app-logo.png" alt="오늘 왔어요!" />
+        <b>오늘 왔어요!</b><span>사용 매뉴얼</span>
+      </a>
+      <div class="top-actions">
+        <a class="home" href="../">회사 소개</a>
+        <a class="btn btn-accent" id="dl-top" href="pdf/onle-imhere-manual-customer.pdf" download="오늘왔어요_사용매뉴얼_손님용.pdf">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M4 19h16"/></svg>
+          <span>PDF 다운로드</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= cover ================= -->
+  <section class="cover">
+    <div class="wrap">
+      <div>
+        <p class="eyebrow">사용 매뉴얼</p>
+        <h1>오늘 왔어요!</h1>
+        <p class="lede">우리 동네 푸드트럭부터 야시장·플리마켓까지,<br />오늘의 맛있는 순간을 더 가까이.</p>
+      </div>
+      <img class="logo" src="images/app-logo.png" alt="오늘 왔어요! 로고" />
+    </div>
+  </section>
+
+  <!-- ================= role selector ================= -->
+  <section class="roles" id="roles">
+    <div class="wrap">
+      <h2>이 매뉴얼에서 알려드릴게요</h2>
+      <p class="sub">손님부터 푸드트럭 사장님, 행사 운영자까지<br />필요한 기능을 순서대로 확인해보세요. 아래에서 해당하는 항목을 선택하세요.</p>
+      <div class="role-grid">
+        <button class="role-card" data-role="customer">
+          <p class="part">1부</p>
+          <h3>손님용</h3>
+          <p>트럭 찾기 · 단골 맺기 · 예약 주문</p>
+          <p class="go">보고 있는 매뉴얼 ✓</p>
+        </button>
+        <button class="role-card" data-role="seller">
+          <p class="part">2부</p>
+          <h3>푸드트럭 사장님용</h3>
+          <p>가입부터 영업 종료까지 단계별 안내</p>
+          <p class="go">보고 있는 매뉴얼 ✓</p>
+        </button>
+        <button class="role-card" data-role="organizer">
+          <p class="part">3부</p>
+          <h3>행사 운영사용</h3>
+          <p>모집부터 집계 · 전자 팜플릿까지</p>
+          <p class="go">보고 있는 매뉴얼 ✓</p>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <div class="subnav" id="subnav">
+    <div class="wrap">
+      <div class="pills">
+        <button class="pill" data-role="customer">1부 · 손님용</button>
+        <button class="pill" data-role="seller">2부 · 사장님용</button>
+        <button class="pill" data-role="organizer">3부 · 운영사용</button>
+      </div>
+      <a class="btn btn-outline" id="dl-sub" href="pdf/onle-imhere-manual-customer.pdf" download="오늘왔어요_사용매뉴얼_손님용.pdf">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M4 19h16"/></svg>
+        <span>이 매뉴얼 PDF</span>
+      </a>
+    </div>
+  </div>
+
+  <main id="content">
+
+  <!-- =====================================================
+       1부 · 손님용
+       ===================================================== -->
+  <article class="part" id="part-customer" data-role="customer">
+    <div class="part-hero" style="--hero-img: url('images/hero-customer.jpg')">
+      <div>
+        <p class="tag">1부</p>
+        <h2>손님용</h2>
+        <p>찾고, 주문하고, 즐기는<br />가장 쉬운 방법</p>
+      </div>
+    </div>
+
+    <section class="sec">
+      <div class="wrap">
+        <div class="sec-head rv"><h2>푸드트럭 찾으러 갔다가<br />이런 적 있으셨죠?</h2></div>
+        <div class="cards">
+          <div class="card rv"><p class="n">01</p><h4>좋아하는 트럭이<br />오늘 어디 있는지 모름</h4><p>지난주 그 자리에 갔는데 없어요.</p></div>
+          <div class="card rv" style="--d:120ms"><p class="n">02</p><h4>줄이 길어<br />한참 기다림</h4><p>앞에 열 명, 뒤에 스무 명.</p></div>
+          <div class="card rv" style="--d:240ms"><p class="n">03</p><h4>도착했더니<br />오늘은 마감</h4><p>재료 소진, 다음에 오세요.</p></div>
+        </div>
+        <p class="closing rv">가기 전에 확인하면,<br />헛걸음과 기다림을 줄일 수 있어요.</p>
+      </div>
+    </section>
+
+    <section class="sec">
+      <div class="wrap">
+        <div class="step rv">
+          <div>
+            <div class="badge"><b>01</b><span>시작하기</span></div>
+            <h3>간편하게 로그인하고<br />바로 시작하세요</h3>
+            <p class="desc">앱을 설치한 뒤,<br />쓰시던 계정으로 로그인하면 됩니다.</p>
+            <div class="rows">
+              <div class="row"><i class="dot" style="background:#F7D200"></i>카카오로 시작하기</div>
+              <div class="row"><i class="dot" style="background:#2DB400"></i>네이버로 시작하기</div>
+              <div class="row"><i class="dot" style="background:#4285F4"></i>구글로 시작하기</div>
+            </div>
+          </div>
+          <div class="device phone"><img src="images/customer-01.png" alt="" loading="lazy" onerror="this.remove()" /><span class="hint">로그인 화면</span></div>
+        </div>
+
+        <div class="step rv">
+          <div>
+            <div class="badge"><b>02</b><span>지도에서 찾기</span></div>
+            <h3>지금 문 연 푸드트럭이<br />지도에 보여요</h3>
+            <p class="desc">앱을 열면 내 주변 지도가 바로 보여요.<br />마커를 누르면 메뉴와 영업 정보를 확인할 수 있어요.</p>
+            <ul class="bul">
+              <li>지금 영업 중인 트럭만 골라 보기</li>
+              <li>축제·야시장은 축제 마커 하나로 모아 보기</li>
+            </ul>
+          </div>
+          <div class="device phone"><img src="images/customer-02.png" alt="" loading="lazy" onerror="this.remove()" /><span class="hint">지도 화면</span></div>
+        </div>
+
+        <div class="step rv">
+          <div>
+            <div class="badge"><b>03</b><span>단골 맺기</span></div>
+            <h3>좋아하는 트럭은<br />하트 하나면 충분해요</h3>
+            <p class="desc">단골로 등록하면 오픈 전에<br />오늘 어디에서 만날 수 있는지 알려드려요.</p>
+            <div class="callout">
+              <p class="k">오픈 30분 전 알림</p>
+              <p class="q">“곧 오픈해요!”</p>
+              <p>오늘 어디에 서는지도 함께 알려드려요.</p>
+            </div>
+          </div>
+          <div class="device phone"><img src="images/customer-03.png" alt="" loading="lazy" onerror="this.remove()" /><span class="hint">단골 등록 화면</span></div>
+        </div>
+
+        <div class="step rv" style="display:block">
+          <div class="badge"><b>04</b><span>예약 주문</span></div>
+          <h3>미리 주문하고,<br />준비되면 편하게 픽업하세요</h3>
+          <div class="cards" style="margin-top:24px">
+            <div class="card"><p class="n">1</p><h4>메뉴 골라 주문</h4><p>수량을 정하고 결제하면 주문 완료.</p></div>
+            <div class="card"><p class="n">2</p><h4>준비 완료 알림</h4><p>준비가 끝나면 알림이 와요.</p></div>
+            <div class="card"><p class="n">3</p><h4>가서 받아오기</h4><p>기다리는 시간을 줄이고<br />편하게 받아가세요.</p></div>
+          </div>
+        </div>
+
+        <div class="step rv">
+          <div>
+            <div class="badge"><b>05</b><span>축제 즐기기</span></div>
+            <h3>축제는 가기 전에<br />미리 둘러보세요</h3>
+            <p class="desc">행사 일정과 장소, 참가 푸드트럭은 물론<br />행사장 배치도까지 한눈에 확인할 수 있어요.</p>
+            <ul class="bul">
+              <li>기간·장소·참가 트럭 목록 한눈에</li>
+              <li>행사장 배치도로 어느 자리인지 미리 보기</li>
+            </ul>
+          </div>
+          <div class="device phone"><img src="images/customer-05.png" alt="" loading="lazy" onerror="this.remove()" /><span class="hint">축제 화면</span></div>
+        </div>
+
+        <div class="step rv" style="display:block">
+          <div class="badge"><b>06</b><span>쿠폰·마감 세일</span></div>
+          <h3>쿠폰도 받고,<br />마감 세일도 놓치지 않고</h3>
+          <div class="cards two" style="margin-top:24px">
+            <div class="card"><h4>쿠폰 받기</h4><p>받아둔 쿠폰은 주문할 때<br />편리하게 확인하고 사용할 수 있어요.</p></div>
+            <div class="card"><h4>마감 세일 알림</h4><p>사장님이 마감 세일을 시작하면<br />즐겨찾기한 손님에게 바로 알려드려요.</p></div>
+          </div>
+        </div>
+
+        <div class="step rv">
+          <div>
+            <div class="badge"><b>07</b><span>리뷰 남기기</span></div>
+            <h3>맛있었던 오늘을<br />리뷰로 남겨주세요</h3>
+            <p class="desc">주문 내역에서 바로 남길 수 있어요.<br />짧은 한 줄이 사장님께 큰 힘이 됩니다.</p>
+            <p style="color:#E7A33E;font-size:26px;letter-spacing:4px">★★★★★</p>
+          </div>
+          <div class="device phone"><img src="images/customer-07.png" alt="" loading="lazy" onerror="this.remove()" /><span class="hint">리뷰 화면</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec">
+      <div class="wrap">
+        <div class="sec-head rv"><h2>알림이 오지 않는다면?</h2><p>두 가지만 확인해 주세요.<br />대부분 간단하게 해결할 수 있어요.</p></div>
+        <div class="cards two">
+          <div class="card rv"><p class="n">첫 번째</p><h4>마이페이지 → 알림 설정</h4><p>오픈 알림과 주문 알림이<br />켜져 있는지 확인해 주세요.</p></div>
+          <div class="card rv" style="--d:120ms"><p class="n">두 번째</p><h4>휴대폰 알림 허용</h4><p>설정 → 앱 → 오늘 왔어요! → 알림에서<br />알림 허용을 켜 주세요.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec">
+      <div class="wrap">
+        <div class="sec-head rv"><h2>이것도 궁금하셨나요?</h2></div>
+        <div class="faq rv">
+          <details><summary>회원가입을 꼭 해야 하나요?</summary><div class="a">카카오·네이버·구글 계정으로 로그인하면 됩니다.<br />별도의 복잡한 가입 절차는 없어요.</div></details>
+          <details><summary>주문을 취소할 수 있나요?</summary><div class="a">사장님이 조리를 시작하기 전이라면<br />주문 내역에서 취소할 수 있어요.</div></details>
+          <details><summary>지도에 트럭이 안 보여요.</summary><div class="a">현재 영업 중인 트럭만 표시됩니다.<br />위치 권한도 함께 확인해 주세요.</div></details>
+        </div>
+      </div>
+    </section>
+
+    <div class="wrap">
+      <div class="dl rv">
+        <div><h3>손님용 매뉴얼을 PDF로 저장하세요</h3><p>인쇄하거나 카카오톡으로 공유할 때 편리합니다.</p></div>
+        <div class="btns">
+          <a class="btn btn-accent" href="pdf/onle-imhere-manual-customer.pdf" download="오늘왔어요_사용매뉴얼_손님용.pdf">손님용 PDF</a>
+          <a class="btn btn-outline" href="pdf/onle-imhere-manual-all.pdf" download="오늘왔어요_사용매뉴얼_전체.pdf">전체 매뉴얼 PDF</a>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- =====================================================
+       2부 · 푸드트럭 사장님용
+       ===================================================== -->
+  <article class="part" id="part-seller" data-role="seller">
+    <div class="part-hero" style="--hero-img: url('images/hero-seller.jpg')">
+      <div>
+        <p class="tag">2부</p>
+        <h2>푸드트럭 사장님용</h2>
+        <p>오늘 위치부터 주문·단골 관리까지,<br />사장님의 장사를 더 편하게</p>
+      </div>
+    </div>
+
+    <section class="sec">
+      <div class="wrap">
+        <div class="sec-head rv"><h2>푸드트럭 운영하면서<br />이런 고민 있으셨죠?</h2></div>
+        <div class="cards">
+          <div class="card rv"><p class="n">01</p><h4>매일 자리가 바뀌어<br />단골이 못 찾아옴</h4><p>오늘 어디 계신지<br />아는 사람이 몇 안 됩니다.</p></div>
+          <div class="card rv" style="--d:120ms"><p class="n">02</p><h4>장사하면서<br />홍보까지 하기 어려움</h4><p>장사하면서 매일 글 올리기가 쉽지 않습니다.</p></div>
+          <div class="card rv" style="--d:240ms"><p class="n">03</p><h4>손님이 몰리면<br />주문이 한꺼번에 밀림</h4><p>줄은 길어지고 손님은 그냥 돌아갑니다.</p></div>
+        </div>
+        <p class="closing rv">사장님은 맛있는 음식에 집중하세요.<br />손님을 만나는 과정은 더 쉽게 만들어드립니다.</p>
+      </div>
+    </section>
+
+    <section class="sec">
+      <div class="wrap">
+        <div class="step rv">
+          <div>
+            <p class="label">STEP 1</p>
+            <h3>내 푸드트럭을<br />등록하세요</h3>
+            <p class="desc">앱을 설치한 뒤,<br />쓰시던 계정으로 로그인하면 됩니다.</p>
+            <div class="rows">
+              <div class="row">가입 → 판매자 선택</div>
+              <div class="row">매장 이름과 사진 등록</div>
+              <div class="row">메뉴와 카테고리 입력</div>
+            </div>
+          </div>
+          <div class="device phone"><img src="images/seller-01.png" alt="" loading="lazy" onerror="this.remove()" /><span class="hint">매장 등록 화면</span></div>
+        </div>
+
+        <div class="step rv">
+          <div>
+            <p class="label">STEP 2</p>
+            <h3>도착하면 [영업 시작]만<br />눌러주세요</h3>
+            <p class="desc">버튼을 누르면 현재 위치가 손님 지도에 표시되어<br />오늘 어디에 계신지 바로 보여요.</p>
+            <span class="big-btn">영업 시작</span>
+            <p class="note">위치가 정확하지 않으면 휴대폰의 위치 권한을 켜 주세요.</p>
+          </div>
+          <div class="device phone"><img src="images/seller-02.png" alt="" loading="lazy" onerror="this.remove()" /><span class="hint">영업 시작 화면</span></div>
+        </div>
+
+        <div class="step rv">
+          <div>
+            <p class="label">STEP 3</p>
+            <h3>오늘 어디에서 만나는지<br />단골에게 자동으로 알려드려요</h3>
+            <p class="desc">영업 시간을 한 번 정해두면<br />오픈 30분 전에 단골 손님에게 알림이 발송됩니다.</p>
+            <div class="callout">
+              <p class="k">단골 손님 휴대폰에 뜨는 알림</p>
+              <p class="q">“곧 오픈해요!”</p>
+            </div>
+            <p class="note"><b style="color:var(--ink)">영업 시간을 등록해 두면<br />사장님이 따로 알림을 보낼 필요가 없습니다.</b></p>
+          </div>
+          <div class="device phone"><img src="images/seller-03.png" alt="" loading="lazy" onerror="this.remove()" /><span class="hint">영업 시간 설정 화면</span></div>
+        </div>
+
+        <div class="step rv" style="display:block">
+          <p class="label">STEP 4</p>
+          <h3>주문 확인부터 픽업까지<br />한 흐름으로</h3>
+          <p class="desc">주문이 들어오면 알림으로 확인하고,<br />준비가 끝난 뒤 [준비 완료]만 눌러주세요.</p>
+          <div class="cards">
+            <div class="card"><p class="n">1</p><h4>주문 알림 확인</h4><p>메뉴와 수량이 함께 표시됩니다.</p></div>
+            <div class="card"><p class="n">2</p><h4>[준비 완료] 누르기</h4><p>손님에게 픽업 알림이 나갑니다.</p></div>
+            <div class="card"><p class="n">3</p><h4>손님이 받아감</h4><p>손님은 준비 완료 알림을 받고<br />편하게 픽업합니다.</p></div>
+          </div>
+        </div>
+
+        <div class="step rv">
+          <div>
+            <p class="label">STEP 5</p>
+            <h3>남은 메뉴는<br />마감 세일로 알려보세요</h3>
+            <p class="desc">마감 전에 할인 소식을 올리면 단골에게 바로 전해져<br />남는 재료를 줄이는 데 도움이 됩니다.</p>
+            <div class="callout"><p>할인 메뉴와 수량을 정하고<br />[마감 세일 시작]을 누르면 됩니다.</p></div>
+          </div>
+          <div class="device phone"><img src="images/seller-05.png" alt="" loading="lazy" onerror="this.remove()" /><span class="hint">마감 세일 화면</span></div>
+        </div>
+
+        <div class="step rv">
+          <div>
+            <p class="label">STEP 6</p>
+            <h3>쿠폰으로 다시 찾는<br />단골을 만드세요</h3>
+            <p class="desc">할인 금액과 사용 기간을 정해 발행하면<br />손님 쿠폰함에 담겨 주문할 때 사용할 수 있습니다.</p>
+            <div class="chips"><span class="chip">첫 방문 쿠폰</span><span class="chip">재방문 쿠폰</span><span class="chip">행사 기간 쿠폰</span></div>
+          </div>
+          <div class="device phone"><img src="images/seller-06.png" alt="" loading="lazy" onerror="this.remove()" /><span class="hint">쿠폰 발행 화면</span></div>
+        </div>
+
+        <div class="step rv" style="display:block">
+          <p class="label">STEP 7</p>
+          <h3>오늘 매출,<br />바로 확인하세요</h3>
+          <div class="rows" style="max-width:720px;margin-top:24px">
+            <div class="row" style="display:block"><b style="color:var(--ink);display:block;margin-bottom:4px">오늘 매출</b>주문 건수와 금액을 실시간으로 확인</div>
+            <div class="row" style="display:block"><b style="color:var(--ink);display:block;margin-bottom:4px">기간별 집계</b>주간·월간으로 묶어 보고 잘 팔린 메뉴를 확인합니다.</div>
+            <div class="row" style="display:block"><b style="color:var(--ink);display:block;margin-bottom:4px">정산</b>간편결제 정산 내역을 확인합니다.</div>
+          </div>
+        </div>
+
+        <div class="step rv" style="display:block">
+          <p class="label">STEP 8</p>
+          <h3>행사 참가도<br />앱에서 간편하게</h3>
+          <div class="arrows" style="margin-top:24px">
+            <div class="card"><h4>참가 코드 받기</h4><p>운영사에게 참가 코드를 받습니다.</p></div>
+            <div class="card"><h4>코드 입력·신청</h4><p>행사 메뉴에서 코드를 입력해 신청합니다.</p></div>
+            <div class="card"><h4>승인·배치 포함</h4><p>승인되면 행사장 배치에 연결됩니다.</p></div>
+          </div>
+          <div class="card soft" style="margin-top:20px"><h4>등록된 서류는 신청서에 자동 첨부됩니다</h4><p>사업자등록증과 영업신고증이 신청서에 자동으로 첨부되어<br />운영사가 바로 확인할 수 있습니다.</p></div>
+        </div>
+
+        <div class="step rv" style="display:block">
+          <p class="label">서류는 한 번 등록하고, 필요할 때 간편하게</p>
+          <p class="desc" style="font-size:18px;color:var(--ink)">서류는 간편결제 이용 시 필요하며, 등록하면 인증 매장으로 표시됩니다.</p>
+          <div class="cards two">
+            <div class="card"><h4>필요한 서류</h4><p><b style="color:var(--ink)">사업자등록증 · 영업신고증</b></p><p style="margin-top:14px">한 번 등록해두면 축제 참가 신청 때<br />자동으로 첨부됩니다.</p></div>
+            <div class="card accent"><h4>인증 매장 혜택</h4><p class="big">3,000P 지급</p><p>목록에서 우선 노출되어<br />손님에게 더 먼저 보일 수 있습니다.</p></div>
+          </div>
+        </div>
+
+        <div class="step rv">
+          <div>
+            <p class="label">STEP 9</p>
+            <h3>하루가 끝나면<br />[영업 종료]</h3>
+            <p class="desc">종료를 누르면 지도에서 내려갑니다.<br />깜빡한 경우 30분 뒤 확인 알림을 보내드려요.</p>
+            <span class="big-btn ghost">영업 종료</span>
+          </div>
+          <div class="device phone"><img src="images/seller-09.png" alt="" loading="lazy" onerror="this.remove()" /><span class="hint">영업 종료 화면</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec">
+      <div class="wrap">
+        <div class="sec-head rv"><h2>사장님들이 자주 묻는 질문</h2></div>
+        <div class="faq rv">
+          <details><summary>위치가 잘 안 잡혀요.</summary><div class="a">휴대폰 설정에서 위치 권한을 허용해 주세요.<br />실내나 지하에서는 위치 오차가 생길 수 있습니다.</div></details>
+          <details><summary>단골에게 알림이 안 가는 것 같아요.</summary><div class="a">영업 시간이 등록되어 있어야 오픈 예고가 발송됩니다.<br />매장 설정에서 확인해 주세요.</div></details>
+          <details><summary>사진은 어떻게 올리나요?</summary><div class="a">매장 관리에서 대표 사진과 메뉴 사진을 등록할 수 있습니다.<br />밝은 곳에서 촬영한 사진을 추천합니다.</div></details>
+        </div>
+      </div>
+    </section>
+
+    <div class="wrap">
+      <div class="dl rv">
+        <div><h3>사장님용 매뉴얼을 PDF로 저장하세요</h3><p>인쇄해서 트럭에 두거나 직원과 공유할 때 편리합니다.</p></div>
+        <div class="btns">
+          <a class="btn btn-accent" href="pdf/onle-imhere-manual-seller.pdf" download="오늘왔어요_사용매뉴얼_사장님용.pdf">사장님용 PDF</a>
+          <a class="btn btn-outline" href="pdf/onle-imhere-manual-all.pdf" download="오늘왔어요_사용매뉴얼_전체.pdf">전체 매뉴얼 PDF</a>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- =====================================================
+       3부 · 행사 운영사용
+       ===================================================== -->
+  <article class="part" id="part-organizer" data-role="organizer">
+    <div class="part-hero" style="--hero-img: url('images/hero-organizer.jpg')">
+      <div>
+        <p class="tag">3부</p>
+        <h2>행사 운영자님용</h2>
+        <p>모집부터 참가 승인·배치·운영<br />·집계·홍보까지 한 곳에서</p>
+        <p style="font-size:15px;margin-top:14px;opacity:.85">흩어진 행사 운영 업무를 하나로 연결해보세요.</p>
+      </div>
+    </div>
+
+    <section class="sec">
+      <div class="wrap">
+        <div class="sec-head rv"><h2>행사 운영,<br />아직도 전화와 엑셀로 관리하시나요?</h2></div>
+        <div class="cards">
+          <div class="card top-line rv"><h4>전화와 엑셀로<br />업체 관리</h4><p>연락처와 참가 여부가<br />여러 파일에 흩어집니다.</p></div>
+          <div class="card top-line rv" style="--d:120ms"><h4>서류 취합은<br />전부 수작업</h4><p>사업자등록증과 영업신고증을<br />메일로 받아 따로 정리합니다.</p></div>
+          <div class="card top-line rv" style="--d:240ms"><h4>행사 성과를<br />숫자로 보기 어려움</h4><p>행사가 끝난 뒤<br />성과를 정리하는 데 시간이 걸립니다.</p></div>
+        </div>
+        <p class="closing rv">흩어진 행사 운영 업무를<br />하나의 행사 안에서 연결해보세요.</p>
+      </div>
+    </section>
+
+    <section class="sec">
+      <div class="wrap">
+        <div class="sec-head rv"><h2>행사 운영의 전체 흐름을<br />한눈에</h2></div>
+        <div class="flow rv">
+          <div class="f"><div class="box"><small>01</small><b>모집</b></div><p>공고 등록과 지원 접수</p></div>
+          <div class="f"><div class="box"><small>02</small><b>선정</b></div><p>서류 확인과 승인</p></div>
+          <div class="f"><div class="box"><small>03</small><b>배치</b></div><p>지도 위 배치도 작성</p></div>
+          <div class="f"><div class="box"><small>04</small><b>운영</b></div><p>실시간 주문·매출</p></div>
+          <div class="f"><div class="box"><small>05</small><b>집계</b></div><p>기간별 보고서</p></div>
+          <div class="f"><div class="box dark"><small>06</small><b>홍보물</b></div><p>전자 팜플릿 발행</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec">
+      <div class="wrap">
+        <div class="step pc-layout rv">
+          <div>
+            <p class="label">시작하기</p>
+            <h3>운영 시작까지<br />단 세 단계</h3>
+            <div class="rows">
+              <div class="row"><b>01</b><a href="https://food.onle.kr" target="_blank" rel="noopener" style="color:var(--accent);font-weight:700">food.onle.kr</a> 가입</div>
+              <div class="row"><b>02</b>행사 운영사 신청</div>
+              <div class="row"><b>03</b>승인 후 운영 화면 접속</div>
+            </div>
+            <p class="note">배치도 작성과 집계는 PC 웹 사용을 권장합니다.<br />모바일에서도 현황을 확인할 수 있습니다.</p>
+          </div>
+          <div class="device pc"><img src="images/organizer-01.png" alt="" loading="lazy" onerror="this.remove()" /><span class="hint">운영사 신청 화면</span></div>
+        </div>
+
+        <div class="step pc-layout rv">
+          <div>
+            <p class="label">행사 등록</p>
+            <h3>행사 하나만 만들면<br />모든 관리가 연결됩니다</h3>
+            <p class="desc">행사명·기간·장소를 등록하면<br />모집부터 참가 업체 관리, 배치, 매출 집계까지 이어집니다.</p>
+            <div class="chips"><span class="chip">행사명</span><span class="chip">기간</span><span class="chip">장소</span></div>
+          </div>
+          <div class="device pc"><img src="images/organizer-02.png" alt="" loading="lazy" onerror="this.remove()" /><span class="hint">행사 등록 화면</span></div>
+        </div>
+
+        <div class="step pc-layout rv">
+          <div>
+            <p class="label">모집</p>
+            <h3>전화 섭외 대신,<br />모집 공고와 지원 목록으로</h3>
+            <p class="desc">모집 공고를 등록하면 지원한 트럭이 한 목록에 모입니다.<br />메뉴·사진·리뷰를 확인한 뒤 원하는 업체를 선정하세요.</p>
+            <ul class="bul"><li>모집 공고 등록</li><li>지원 트럭 확인</li><li>선정 처리</li></ul>
+          </div>
+          <div class="device pc"><img src="images/organizer-03.png" alt="" loading="lazy" onerror="this.remove()" /><span class="hint">모집 공고 화면</span></div>
+        </div>
+
+        <div class="step rv" style="display:block">
+          <p class="label">참가 코드</p>
+          <h3>이미 섭외한 업체도<br />참가 코드 하나로</h3>
+          <p class="desc">행사마다 발급되는 참가 코드를 전달하면<br />푸드트럭 사장님이 직접 참가 신청을 완료합니다.</p>
+          <div class="arrows">
+            <div class="card"><p class="who">운영사</p><h4>참가 코드 발급</h4></div>
+            <div class="card"><p class="who">운영사</p><h4>섭외한 트럭에 전달</h4></div>
+            <div class="card"><p class="who">푸드트럭</p><h4>코드 입력 후 신청</h4></div>
+          </div>
+        </div>
+
+        <div class="step pc-layout rv">
+          <div>
+            <p class="label">참가 승인</p>
+            <h3>참가 서류,<br />따로 메일로 받지 마세요</h3>
+            <p class="desc">대표자 정보와 사업자등록증·영업신고증이<br />신청서에 자동으로 첨부되어 바로 확인할 수 있습니다.</p>
+            <div class="rows"><div class="row">대표자 정보</div><div class="row">사업자등록증</div><div class="row">영업신고증</div></div>
+            <p class="note"><b style="color:var(--ink)">승인하면 해당 푸드트럭에<br />자동으로 알림이 전달됩니다.</b></p>
+          </div>
+          <div class="device pc"><img src="images/organizer-05.png" alt="" loading="lazy" onerror="this.remove()" /><span class="hint">참가 승인 화면</span></div>
+        </div>
+
+        <div class="step pc-layout rv">
+          <div>
+            <p class="label">행사장 배치도</p>
+            <h3>지도 위에 끌어다 놓으면<br />배치도가 완성됩니다</h3>
+            <p class="desc">참가 트럭을 원하는 위치로 옮겨 배치하세요.<br />되돌리기를 지원해 편하게 조정할 수 있습니다.</p>
+            <p class="note"><b style="color:var(--ink)">완성된 배치도는<br />손님 앱에도 그대로 표시됩니다.</b></p>
+          </div>
+          <div class="device pc"><img src="images/organizer-06.png" alt="" loading="lazy" onerror="this.remove()" /><span class="hint">배치도 화면</span></div>
+        </div>
+
+        <div class="step rv" style="display:block">
+          <p class="label">운영 현황</p>
+          <h3>행사 중에도 운영 현황이<br />숫자로 보입니다</h3>
+          <div class="cards" style="margin-top:24px">
+            <div class="card"><h4>트럭별</h4><p>트럭별 주문 건수와 매출</p></div>
+            <div class="card"><h4>일별</h4><p>행사 기간의 매출 흐름</p></div>
+            <div class="card"><h4>실시간</h4><p>행사가 끝나기 전에도<br />필요한 대응 가능</p></div>
+          </div>
+        </div>
+
+        <div class="step rv" style="display:block">
+          <p class="label">집계·보고</p>
+          <h3>행사가 끝나면<br />보고할 숫자가 바로 나옵니다</h3>
+          <div class="tbl" style="margin-top:24px">
+            <table>
+              <thead><tr><th>집계 항목</th><th>내용</th></tr></thead>
+              <tbody>
+                <tr><td>기간별 매출</td><td>일·주·행사 전체 단위로 확인</td></tr>
+                <tr><td>트럭별 점유율</td><td>트럭별 매출 기여도 비교</td></tr>
+                <tr><td>CSV 내려받기</td><td>CSV로 내려받아 엑셀에서 편집</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="step pc-layout rv">
+          <div>
+            <p class="label">전자 팜플릿</p>
+            <h3>홍보 이미지를<br />전자 팜플릿으로</h3>
+            <p class="desc">제작한 홍보 이미지를 순서대로 등록하면<br />넘겨보는 전자 팜플릿으로 완성됩니다. 인쇄와 PDF 저장도 가능합니다.</p>
+            <div class="chips"><span class="chip">미리보기</span><span class="chip">인쇄</span><span class="chip">PDF 저장</span></div>
+          </div>
+          <div class="device pc"><img src="images/organizer-09.png" alt="" loading="lazy" onerror="this.remove()" /><span class="hint">전자 팜플릿 화면</span></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="wrap">
+      <div class="dark-sec rv">
+        <h2>운영사가 등록하면<br />손님 화면까지 연결됩니다</h2>
+        <p>행사 위치부터 참가 트럭, 메뉴, 배치도까지<br />방문객 화면에 그대로 이어집니다.</p>
+        <div class="cards">
+          <div class="card"><h4>축제 마커</h4><p>지도에서 행사 위치를<br />한눈에 확인합니다.</p></div>
+          <div class="card"><h4>참가 트럭 목록</h4><p>승인된 푸드트럭과 메뉴가<br />함께 노출됩니다.</p></div>
+          <div class="card"><h4>행사장 배치도</h4><p>방문 전에 행사장 동선을<br />미리 확인할 수 있습니다.</p></div>
+        </div>
+        <p class="closing">행사 정보를 앱 이용자에게 자연스럽게 노출해<br />방문객 안내와 홍보에 활용할 수 있습니다.</p>
+      </div>
+    </div>
+
+    <section class="sec contact">
+      <div class="wrap">
+        <div class="grid">
+          <div class="rv">
+            <p class="label" style="font-size:13px;font-weight:800;color:var(--muted);letter-spacing:.12em;margin-bottom:14px">도입 문의</p>
+            <h2>행사에 맞는 도입 방법을<br />함께 안내해드립니다</h2>
+            <p class="lede">행사 규모와 일정, 운영 방식에 맞춰<br />필요한 기능과 준비 절차를 함께 정리해드립니다.</p>
+            <div class="rows">
+              <div class="row"><span>카카오 채널 : 오늘 왔어요!</span><a href="http://pf.kakao.com/_mYxjSX/chat" target="_blank" rel="noopener">문의하기 →</a></div>
+              <div class="row"><span>제휴 및 사용 문의</span><a href="mailto:onle0803@gmail.com">onle0803@gmail.com</a></div>
+            </div>
+          </div>
+          <div class="card accent rv" style="padding:40px 38px">
+            <p class="n" style="color:#fff;opacity:.9">오픈 기념</p>
+            <p class="big">창립 멤버 혜택</p>
+            <p>초기 도입 기관에는 별도 혜택을 안내해드립니다.<br />문의 시 함께 확인해 주세요.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="wrap">
+      <div class="dl rv">
+        <div><h3>운영사용 매뉴얼을 PDF로 저장하세요</h3><p>담당자와 공유하거나 결재 자료로 활용할 때 편리합니다.</p></div>
+        <div class="btns">
+          <a class="btn btn-accent" href="pdf/onle-imhere-manual-organizer.pdf" download="오늘왔어요_사용매뉴얼_운영사용.pdf">운영사용 PDF</a>
+          <a class="btn btn-outline" href="pdf/onle-imhere-manual-all.pdf" download="오늘왔어요_사용매뉴얼_전체.pdf">전체 매뉴얼 PDF</a>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <div>
+        카카오 채널 : <a href="http://pf.kakao.com/_mYxjSX/chat" target="_blank" rel="noopener">오늘 왔어요! (문의하기)</a>
+        <span class="no-print"> · </span>
+        <span class="no-print">제휴 및 사용 문의 : <a href="mailto:onle0803@gmail.com">onle0803@gmail.com</a></span>
+      </div>
+      <div>© 2026 Onle · <a href="../" class="no-print">company.onle.kr</a></div>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      var ROLES = ['customer', 'seller', 'organizer'];
+      var FILES = {
+        customer:  ['pdf/onle-imhere-manual-customer.pdf',  '오늘왔어요_사용매뉴얼_손님용.pdf'],
+        seller:    ['pdf/onle-imhere-manual-seller.pdf',    '오늘왔어요_사용매뉴얼_사장님용.pdf'],
+        organizer: ['pdf/onle-imhere-manual-organizer.pdf', '오늘왔어요_사용매뉴얼_운영사용.pdf'],
+        all:       ['pdf/onle-imhere-manual-all.pdf',       '오늘왔어요_사용매뉴얼_전체.pdf']
+      };
+      var q = new URLSearchParams(location.search);
+      var isPrint = q.get('print') === '1';
+      var role = q.get('role') || (location.hash || '').replace('#', '');
+      if (role === 'all' && !isPrint) role = 'customer';
+      if (ROLES.indexOf(role) < 0 && role !== 'all') role = 'customer';
+
+      if (isPrint) {
+        document.body.classList.add('print');
+        document.querySelectorAll('.part').forEach(function (p) {
+          p.style.display = (role === 'all' || p.dataset.role === role) ? 'block' : 'none';
+        });
+        document.querySelectorAll('.faq details').forEach(function (d) { d.open = true; });
+        return; // 인쇄 모드에서는 탭·애니메이션 없음
+      }
+
+      document.documentElement.classList.add('js');
+
+      function setRole(r, scroll) {
+        role = r;
+        document.querySelectorAll('.part').forEach(function (p) { p.classList.toggle('active', p.dataset.role === r); });
+        document.querySelectorAll('[data-role]').forEach(function (el) {
+          if (el.classList.contains('role-card') || el.classList.contains('pill')) el.classList.toggle('on', el.dataset.role === r);
+        });
+        var f = FILES[r];
+        ['dl-top', 'dl-sub'].forEach(function (id) { var a = document.getElementById(id); a.href = f[0]; a.download = f[1]; });
+        try { history.replaceState(null, '', '?role=' + r); } catch (_) {}
+        observeAll();
+        if (scroll) {
+          var y = document.getElementById('subnav').getBoundingClientRect().top + window.scrollY - 72;
+          window.scrollTo({ top: y, behavior: 'smooth' });
+        }
+      }
+
+      document.querySelectorAll('.role-card, .pill').forEach(function (b) {
+        b.addEventListener('click', function () { setRole(b.dataset.role, true); });
+      });
+
+      var io = ('IntersectionObserver' in window) ? new IntersectionObserver(function (es) {
+        es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+      }, { rootMargin: '0px 0px -8% 0px', threshold: 0.05 }) : null;
+      function observeAll() {
+        document.querySelectorAll('.part.active .rv:not(.in)').forEach(function (el) { io ? io.observe(el) : el.classList.add('in'); });
+      }
+
+      setRole(role, false);
+    })();
+  </script>
+</body>
+</html>
