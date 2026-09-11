@@ -198,6 +198,7 @@
     .device.pc { width: 100%; aspect-ratio: 16 / 10; border-radius: 18px; }
     .device img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
     .device .hint { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; text-align: center; padding: 20px; font-size: 13px; color: #b3a596; }
+    .device img ~ .hint { display: none; }   /* 이미지가 있으면 자리표시 문구 숨김 (없으면 img가 제거되어 문구가 보임) */
     .step.pc-layout { grid-template-columns: 1fr 1.2fr; }
 
     /* 단계 슬라이드 (예약 주문 1·2·3) */
