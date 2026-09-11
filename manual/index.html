@@ -203,9 +203,11 @@
 
     /* 단계 슬라이드 (예약 주문 1·2·3) */
     .slider { justify-self: center; display: flex; flex-direction: column; align-items: center; gap: 14px; width: min(300px, 100%); }
-    .slide-track { position: relative; width: 100%; aspect-ratio: 9 / 19; }
-    .slide-track .slide { position: absolute; inset: 0; width: 100%; opacity: 0; transform: translateX(28px); transition: opacity .55s cubic-bezier(.16,1,.3,1), transform .55s cubic-bezier(.16,1,.3,1); pointer-events: none; }
-    .slide-track .slide.on { opacity: 1; transform: none; pointer-events: auto; }
+    /* 트랙이 폰 틀 역할을 하고, 각 장은 틀 안에서 옆으로 밀려 넘어간다 (겹침 없음) */
+    .slide-track { position: relative; width: 100%; aspect-ratio: 9 / 19; overflow: hidden; border-radius: 34px; border: 3px solid #2b2420; background: var(--card); }
+    .slide-track .slide { position: absolute; inset: 0; width: 100%; border: 0; border-radius: 0; aspect-ratio: auto; transform: translateX(100%); transition: transform .5s cubic-bezier(.16,1,.3,1); pointer-events: none; }
+    .slide-track .slide.on { transform: none; pointer-events: auto; }
+    .slide-track .slide.prev { transform: translateX(-100%); }
     .slider-nav { display: flex; align-items: center; gap: 14px; }
     .slider-nav button { width: 36px; height: 36px; border-radius: 50%; border: 1px solid #d8ccb9; background: var(--card); font-size: 20px; line-height: 1; color: var(--ink-soft); display: inline-flex; align-items: center; justify-content: center; }
     .slider-nav button:hover { border-color: var(--accent); color: var(--accent); }
@@ -358,8 +360,8 @@
     /* 인쇄: 슬라이드 3장을 나란히 */
     body.print .step.has-slider { grid-template-columns: 1fr 1.15fr; }
     body.print .slider { width: 100%; }
-    body.print .slide-track { display: flex; gap: 10px; aspect-ratio: auto; width: 100%; justify-content: center; }
-    body.print .slide-track .slide { position: static; opacity: 1; transform: none; width: 110px; flex: none; }
+    body.print .slide-track { display: flex; gap: 10px; aspect-ratio: auto; width: 100%; justify-content: center; overflow: visible; border: 0; border-radius: 0; background: none; }
+    body.print .slide-track .slide { position: static; opacity: 1; transform: none; width: 110px; flex: none; border: 3px solid #2b2420; border-radius: 34px; aspect-ratio: 9 / 19; }
     body.print .slide-track .slide .hint { font-size: 10px; padding: 8px; }
     body.print .slider-nav { display: none; }
     body.print .slide-cards .card.on { border-color: transparent; }
@@ -1068,8 +1070,12 @@
         var cards = step.querySelectorAll('.slide-cards .card');
         var idx = 0, timer = null;
         function show(i) {
+          var prev = idx;
           idx = (i + slides.length) % slides.length;
-          slides.forEach(function (s, k) { s.classList.toggle('on', k === idx); });
+          slides.forEach(function (s, k) {
+            s.classList.toggle('on', k === idx);
+            s.classList.toggle('prev', k === prev && k !== idx);   // 나가는 장은 왼쪽으로, 나머지는 오른쪽 대기
+          });
           dots.forEach(function (d, k) { d.classList.toggle('on', k === idx); });
           cards.forEach(function (c, k) { c.classList.toggle('on', k === idx); });
         }
