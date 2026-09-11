@@ -329,6 +329,11 @@
     /* A4 폭에서도 화면과 같은 다열 배치를 유지 */
     body.print .cards { grid-template-columns: repeat(3, 1fr); gap: 12px; }
     body.print .cards.two { grid-template-columns: repeat(2, 1fr); }
+    body.print .cards.stack { grid-template-columns: 1fr; gap: 8px; }
+    body.print .cards.stack .card { padding: 12px 16px 10px; }
+    body.print .cards.stack .card h4 { font-size: 14px; margin-bottom: 4px; }
+    body.print .cards.stack .card p { font-size: 12.5px; }
+    body.print .cards.stack .card .n { margin-bottom: 2px; }
     body.print .card { padding: 20px 20px 18px; }
     body.print .card h4 { font-size: 16px; }
     body.print .card p { font-size: 13.5px; }
