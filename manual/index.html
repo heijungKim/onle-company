@@ -655,7 +655,7 @@
       <div class="wrap">
         <div class="step rv">
           <div>
-            <p class="label">STEP 1</p>
+            <div class="badge"><b>01</b><span>시작하기</span></div>
             <h3>간편하게 로그인하고<br />바로 시작하세요</h3>
             <p class="desc">앱을 설치한 뒤,<br />쓰시던 계정으로 로그인하면 됩니다.</p>
             <div class="rows">
@@ -667,23 +667,34 @@
           <div class="device phone"><img src="images/customer-01.png" alt="" loading="lazy" onerror="this.remove()" /><span class="hint">로그인 화면</span></div>
         </div>
 
-        <div class="step rv">
+        <div class="step has-slider rv">
           <div>
-            <p class="label">STEP 2</p>
+            <div class="badge"><b>02</b><span>매장 등록</span></div>
             <h3>내 푸드트럭을<br />등록하세요</h3>
             <p class="desc">로그인 후 판매자를 선택하고<br />매장 정보를 순서대로 채워주세요.</p>
-            <div class="rows">
-              <div class="row">가입 → 판매자 선택</div>
-              <div class="row">매장 이름과 사진 등록</div>
-              <div class="row">메뉴와 카테고리 입력</div>
+            <div class="cards stack slide-cards">
+              <button type="button" class="card on" data-slide="0"><p class="n">1</p><h4>가입 → 판매자 선택</h4><p>로그인 후 판매자로 가입합니다.</p></button>
+              <button type="button" class="card" data-slide="1"><p class="n">2</p><h4>매장 이름과 사진 등록</h4><p>대표 사진과 매장 이름을 넣습니다.</p></button>
+              <button type="button" class="card" data-slide="2"><p class="n">3</p><h4>메뉴와 카테고리 입력</h4><p>메뉴·가격과 카테고리를 정합니다.</p></button>
             </div>
           </div>
-          <div class="device phone"><img src="images/seller-02.png" alt="" loading="lazy" onerror="this.remove()" /><span class="hint">매장 등록 화면</span></div>
+          <div class="slider">
+            <div class="slide-track">
+              <div class="device phone slide on"><img src="images/seller-02-1.png" alt="" loading="lazy" onerror="this.remove()" /><span class="hint">1 · 판매자 선택</span></div>
+              <div class="device phone slide"><img src="images/seller-02-2.png" alt="" loading="lazy" onerror="this.remove()" /><span class="hint">2 · 매장 이름·사진</span></div>
+              <div class="device phone slide"><img src="images/seller-02-3.png" alt="" loading="lazy" onerror="this.remove()" /><span class="hint">3 · 메뉴·카테고리</span></div>
+            </div>
+            <div class="slider-nav">
+              <button type="button" class="s-prev" aria-label="이전 화면">‹</button>
+              <span class="s-dots"><i class="on"></i><i></i><i></i></span>
+              <button type="button" class="s-next" aria-label="다음 화면">›</button>
+            </div>
+          </div>
         </div>
 
         <div class="step rv">
           <div>
-            <p class="label">STEP 3</p>
+            <div class="badge"><b>03</b><span>영업 시작</span></div>
             <h3>도착하면 [영업 시작]만<br />눌러주세요</h3>
             <p class="desc">버튼을 누르면 현재 위치가 손님 지도에 표시되어<br />오늘 어디에 계신지 바로 보여요.</p>
             <span class="big-btn">영업 시작</span>
@@ -694,7 +705,7 @@
 
         <div class="step rv">
           <div>
-            <p class="label">STEP 4</p>
+            <div class="badge"><b>04</b><span>오픈 알림</span></div>
             <h3>오늘 어디에서 만나는지<br />단골에게 자동으로 알려드려요</h3>
             <p class="desc">영업 시간을 한 번 정해두면<br />오픈 30분 전에 단골 손님에게 알림이 발송됩니다.</p>
             <div class="callout">
@@ -706,20 +717,34 @@
           <div class="device phone"><img src="images/seller-04.png" alt="" loading="lazy" onerror="this.remove()" /><span class="hint">영업 시간 설정 화면</span></div>
         </div>
 
-        <div class="step rv" style="display:block">
-          <p class="label">STEP 5</p>
-          <h3>주문 확인부터 픽업까지<br />한 흐름으로</h3>
-          <p class="desc">주문이 들어오면 알림으로 확인하고,<br />준비가 끝난 뒤 [준비 완료]만 눌러주세요.</p>
-          <div class="cards">
-            <div class="card"><p class="n">1</p><h4>주문 알림 확인</h4><p>메뉴와 수량이 함께 표시됩니다.</p></div>
-            <div class="card"><p class="n">2</p><h4>[준비 완료] 누르기</h4><p>손님에게 픽업 알림이 나갑니다.</p></div>
-            <div class="card"><p class="n">3</p><h4>손님이 받아감</h4><p>손님은 준비 완료 알림을 받고<br />편하게 픽업합니다.</p></div>
+        <div class="step has-slider rv">
+          <div>
+            <div class="badge"><b>05</b><span>주문·픽업</span></div>
+            <h3>주문 확인부터 픽업까지<br />한 흐름으로</h3>
+            <p class="desc">주문이 들어오면 알림으로 확인하고,<br />준비가 끝난 뒤 [준비 완료]만 눌러주세요.</p>
+            <div class="cards stack slide-cards">
+              <button type="button" class="card on" data-slide="0"><p class="n">1</p><h4>주문 알림 확인</h4><p>메뉴와 수량이 함께 표시됩니다.</p></button>
+              <button type="button" class="card" data-slide="1"><p class="n">2</p><h4>[준비 완료] 누르기</h4><p>손님에게 픽업 알림이 나갑니다.</p></button>
+              <button type="button" class="card" data-slide="2"><p class="n">3</p><h4>손님이 받아감</h4><p>손님은 준비 완료 알림을 받고 편하게 픽업합니다.</p></button>
+            </div>
+          </div>
+          <div class="slider">
+            <div class="slide-track">
+              <div class="device phone slide on"><img src="images/seller-05-1.png" alt="" loading="lazy" onerror="this.remove()" /><span class="hint">1 · 주문 알림 확인</span></div>
+              <div class="device phone slide"><img src="images/seller-05-2.png" alt="" loading="lazy" onerror="this.remove()" /><span class="hint">2 · 준비 완료</span></div>
+              <div class="device phone slide"><img src="images/seller-05-3.png" alt="" loading="lazy" onerror="this.remove()" /><span class="hint">3 · 손님 픽업</span></div>
+            </div>
+            <div class="slider-nav">
+              <button type="button" class="s-prev" aria-label="이전 화면">‹</button>
+              <span class="s-dots"><i class="on"></i><i></i><i></i></span>
+              <button type="button" class="s-next" aria-label="다음 화면">›</button>
+            </div>
           </div>
         </div>
 
         <div class="step rv">
           <div>
-            <p class="label">STEP 6</p>
+            <div class="badge"><b>06</b><span>마감 세일</span></div>
             <h3>남은 메뉴는<br />마감 세일로 알려보세요</h3>
             <p class="desc">마감 전에 할인 소식을 올리면 단골에게 바로 전해져<br />남는 재료를 줄이는 데 도움이 됩니다.</p>
             <div class="callout"><p>할인 메뉴와 수량을 정하고<br />[마감 세일 시작]을 누르면 됩니다.</p></div>
@@ -729,7 +754,7 @@
 
         <div class="step rv">
           <div>
-            <p class="label">STEP 7</p>
+            <div class="badge"><b>07</b><span>쿠폰 발행</span></div>
             <h3>쿠폰으로 다시 찾는<br />단골을 만드세요</h3>
             <p class="desc">할인 금액과 사용 기간을 정해 발행하면<br />손님 쿠폰함에 담겨 주문할 때 사용할 수 있습니다.</p>
             <div class="chips"><span class="chip">첫 방문 쿠폰</span><span class="chip">재방문 쿠폰</span><span class="chip">행사 기간 쿠폰</span></div>
@@ -738,7 +763,7 @@
         </div>
 
         <div class="step rv" style="display:block">
-          <p class="label">STEP 8</p>
+          <div class="badge"><b>08</b><span>매출 확인</span></div>
           <h3>오늘 매출,<br />바로 확인하세요</h3>
           <div class="rows" style="max-width:720px;margin-top:24px">
             <div class="row" style="display:block"><b style="color:var(--ink);display:block;margin-bottom:4px">오늘 매출</b>주문 건수와 금액을 실시간으로 확인</div>
@@ -747,15 +772,29 @@
           </div>
         </div>
 
-        <div class="step rv" style="display:block">
-          <p class="label">STEP 9</p>
-          <h3>행사 참가도<br />앱에서 간편하게</h3>
-          <div class="arrows" style="margin-top:24px">
-            <div class="card"><h4>참가 코드 받기</h4><p>운영사에게 참가 코드를 받습니다.</p></div>
-            <div class="card"><h4>코드 입력·신청</h4><p>행사 메뉴에서 코드를 입력해 신청합니다.</p></div>
-            <div class="card"><h4>승인·배치 포함</h4><p>승인되면 행사장 배치에 연결됩니다.</p></div>
+        <div class="step has-slider rv">
+          <div>
+            <div class="badge"><b>09</b><span>행사 참가</span></div>
+            <h3>행사 참가도<br />앱에서 간편하게</h3>
+            <div class="cards stack slide-cards" style="margin-top:20px">
+              <button type="button" class="card on" data-slide="0"><p class="n">1</p><h4>참가 코드 받기</h4><p>운영사에게 참가 코드를 받습니다.</p></button>
+              <button type="button" class="card" data-slide="1"><p class="n">2</p><h4>코드 입력·신청</h4><p>행사 메뉴에서 코드를 입력해 신청합니다.</p></button>
+              <button type="button" class="card" data-slide="2"><p class="n">3</p><h4>승인·배치 포함</h4><p>승인되면 행사장 배치에 연결됩니다.</p></button>
+            </div>
+            <div class="card soft" style="margin-top:14px;padding:18px 22px"><h4 style="font-size:16px">등록된 서류는 신청서에 자동 첨부됩니다</h4><p style="font-size:14.5px">사업자등록증과 영업신고증이 신청서에 자동으로 첨부되어<br />운영사가 바로 확인할 수 있습니다.</p></div>
           </div>
-          <div class="card soft" style="margin-top:20px"><h4>등록된 서류는 신청서에 자동 첨부됩니다</h4><p>사업자등록증과 영업신고증이 신청서에 자동으로 첨부되어<br />운영사가 바로 확인할 수 있습니다.</p></div>
+          <div class="slider">
+            <div class="slide-track">
+              <div class="device phone slide on"><img src="images/seller-09-1.png" alt="" loading="lazy" onerror="this.remove()" /><span class="hint">1 · 참가 코드 받기</span></div>
+              <div class="device phone slide"><img src="images/seller-09-2.png" alt="" loading="lazy" onerror="this.remove()" /><span class="hint">2 · 코드 입력·신청</span></div>
+              <div class="device phone slide"><img src="images/seller-09-3.png" alt="" loading="lazy" onerror="this.remove()" /><span class="hint">3 · 승인·배치</span></div>
+            </div>
+            <div class="slider-nav">
+              <button type="button" class="s-prev" aria-label="이전 화면">‹</button>
+              <span class="s-dots"><i class="on"></i><i></i><i></i></span>
+              <button type="button" class="s-next" aria-label="다음 화면">›</button>
+            </div>
+          </div>
         </div>
 
         <div class="step rv" style="display:block">
@@ -769,7 +808,7 @@
 
         <div class="step rv">
           <div>
-            <p class="label">STEP 10</p>
+            <div class="badge"><b>10</b><span>영업 종료</span></div>
             <h3>하루가 끝나면<br />[영업 종료]</h3>
             <p class="desc">종료를 누르면 지도에서 내려갑니다.<br />깜빡한 경우 30분 뒤 확인 알림을 보내드려요.</p>
             <span class="big-btn ghost">영업 종료</span>
