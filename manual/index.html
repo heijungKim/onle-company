@@ -200,6 +200,21 @@
     .device .hint { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; text-align: center; padding: 20px; font-size: 13px; color: #b3a596; }
     .step.pc-layout { grid-template-columns: 1fr 1.2fr; }
 
+    /* 단계 슬라이드 (예약 주문 1·2·3) */
+    .slider { justify-self: center; display: flex; flex-direction: column; align-items: center; gap: 14px; width: min(300px, 100%); }
+    .slide-track { position: relative; width: 100%; aspect-ratio: 9 / 19; }
+    .slide-track .slide { position: absolute; inset: 0; width: 100%; opacity: 0; transform: translateX(28px); transition: opacity .55s cubic-bezier(.16,1,.3,1), transform .55s cubic-bezier(.16,1,.3,1); pointer-events: none; }
+    .slide-track .slide.on { opacity: 1; transform: none; pointer-events: auto; }
+    .slider-nav { display: flex; align-items: center; gap: 14px; }
+    .slider-nav button { width: 36px; height: 36px; border-radius: 50%; border: 1px solid #d8ccb9; background: var(--card); font-size: 20px; line-height: 1; color: var(--ink-soft); display: inline-flex; align-items: center; justify-content: center; }
+    .slider-nav button:hover { border-color: var(--accent); color: var(--accent); }
+    .s-dots { display: inline-flex; gap: 8px; }
+    .s-dots i { width: 8px; height: 8px; border-radius: 50%; background: #d8ccb9; transition: background .2s, transform .2s; cursor: pointer; }
+    .s-dots i.on { background: var(--accent); transform: scale(1.25); }
+    .slide-cards .card { text-align: left; border: 2px solid transparent; cursor: pointer; font: inherit; color: inherit; transition: border-color .2s, transform .2s; }
+    .slide-cards .card:hover { transform: translateX(4px); }
+    .slide-cards .card.on { border-color: var(--accent); }
+
     /* flow */
     .flow { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; align-items: start; }
     .flow .f { text-align: center; }
@@ -334,6 +349,14 @@
     body.print .faq summary { font-size: 15px; padding: 14px 20px; }
     body.print .faq .a { font-size: 14px; padding: 0 20px 16px; }
     body.print footer { padding: 24px 0 0; font-size: 12px; }
+    /* 인쇄: 슬라이드 3장을 나란히 */
+    body.print .step.has-slider { grid-template-columns: 1fr 1.15fr; }
+    body.print .slider { width: 100%; }
+    body.print .slide-track { display: flex; gap: 10px; aspect-ratio: auto; width: 100%; justify-content: center; }
+    body.print .slide-track .slide { position: static; opacity: 1; transform: none; width: 110px; flex: none; }
+    body.print .slide-track .slide .hint { font-size: 10px; padding: 8px; }
+    body.print .slider-nav { display: none; }
+    body.print .slide-cards .card.on { border-color: transparent; }
   </style>
 </head>
 <body>
@@ -478,17 +501,28 @@
           <div class="device phone"><img src="images/customer-03.png" alt="" loading="lazy" onerror="this.remove()" /><span class="hint">단골 등록 화면</span></div>
         </div>
 
-        <div class="step rv">
+        <div class="step has-slider rv">
           <div>
             <div class="badge"><b>04</b><span>예약 주문</span></div>
             <h3>미리 주문하고,<br />준비되면 편하게 픽업하세요</h3>
-            <div class="cards stack" style="margin-top:20px">
-              <div class="card"><p class="n">1</p><h4>메뉴 골라 주문</h4><p>수량을 정하고 결제하면 주문 완료.</p></div>
-              <div class="card"><p class="n">2</p><h4>준비 완료 알림</h4><p>준비가 끝나면 알림이 와요.</p></div>
-              <div class="card"><p class="n">3</p><h4>가서 받아오기</h4><p>기다리는 시간을 줄이고 편하게 받아가세요.</p></div>
+            <div class="cards stack slide-cards" style="margin-top:20px">
+              <button type="button" class="card on" data-slide="0"><p class="n">1</p><h4>메뉴 골라 주문</h4><p>수량을 정하고 결제하면 주문 완료.</p></button>
+              <button type="button" class="card" data-slide="1"><p class="n">2</p><h4>준비 완료 알림</h4><p>준비가 끝나면 알림이 와요.</p></button>
+              <button type="button" class="card" data-slide="2"><p class="n">3</p><h4>가서 받아오기</h4><p>기다리는 시간을 줄이고 편하게 받아가세요.</p></button>
             </div>
           </div>
-          <div class="device phone"><img src="images/customer-04.png" alt="" loading="lazy" onerror="this.remove()" /><span class="hint">예약 주문 화면</span></div>
+          <div class="slider">
+            <div class="slide-track">
+              <div class="device phone slide on"><img src="images/customer-04-1.png" alt="" loading="lazy" onerror="this.remove()" /><span class="hint">1 · 메뉴 골라 주문</span></div>
+              <div class="device phone slide"><img src="images/customer-04-2.png" alt="" loading="lazy" onerror="this.remove()" /><span class="hint">2 · 준비 완료 알림</span></div>
+              <div class="device phone slide"><img src="images/customer-04-3.png" alt="" loading="lazy" onerror="this.remove()" /><span class="hint">3 · 가서 받아오기</span></div>
+            </div>
+            <div class="slider-nav">
+              <button type="button" class="s-prev" aria-label="이전 화면">‹</button>
+              <span class="s-dots"><i class="on"></i><i></i><i></i></span>
+              <button type="button" class="s-next" aria-label="다음 화면">›</button>
+            </div>
+          </div>
         </div>
 
         <div class="step rv">
@@ -504,16 +538,26 @@
           <div class="device phone"><img src="images/customer-05.png" alt="" loading="lazy" onerror="this.remove()" /><span class="hint">축제 화면</span></div>
         </div>
 
-        <div class="step rv">
+        <div class="step has-slider rv">
           <div>
             <div class="badge"><b>06</b><span>쿠폰·마감 세일</span></div>
             <h3>쿠폰도 받고,<br />마감 세일도 놓치지 않고</h3>
-            <div class="cards stack" style="margin-top:20px">
-              <div class="card"><h4>쿠폰 받기</h4><p>받아둔 쿠폰은 주문할 때<br />편리하게 확인하고 사용할 수 있어요.</p></div>
-              <div class="card"><h4>마감 세일 알림</h4><p>사장님이 마감 세일을 시작하면<br />즐겨찾기한 손님에게 바로 알려드려요.</p></div>
+            <div class="cards stack slide-cards" style="margin-top:20px">
+              <button type="button" class="card on" data-slide="0"><h4>쿠폰 받기</h4><p>받아둔 쿠폰은 주문할 때<br />편리하게 확인하고 사용할 수 있어요.</p></button>
+              <button type="button" class="card" data-slide="1"><h4>마감 세일 알림</h4><p>사장님이 마감 세일을 시작하면<br />즐겨찾기한 손님에게 바로 알려드려요.</p></button>
             </div>
           </div>
-          <div class="device phone"><img src="images/customer-06.png" alt="" loading="lazy" onerror="this.remove()" /><span class="hint">쿠폰·마감 세일 화면</span></div>
+          <div class="slider">
+            <div class="slide-track">
+              <div class="device phone slide on"><img src="images/customer-06-1.png" alt="" loading="lazy" onerror="this.remove()" /><span class="hint">쿠폰 받기</span></div>
+              <div class="device phone slide"><img src="images/customer-06-2.png" alt="" loading="lazy" onerror="this.remove()" /><span class="hint">마감 세일 알림</span></div>
+            </div>
+            <div class="slider-nav">
+              <button type="button" class="s-prev" aria-label="이전 화면">‹</button>
+              <span class="s-dots"><i class="on"></i><i></i></span>
+              <button type="button" class="s-next" aria-label="다음 화면">›</button>
+            </div>
+          </div>
         </div>
 
         <div class="step rv">
@@ -530,15 +574,25 @@
 
     <section class="sec">
       <div class="wrap">
-        <div class="step rv" style="border-top:0;padding-top:0">
+        <div class="step has-slider rv" style="border-top:0;padding-top:0">
           <div>
             <div class="sec-head"><h2>알림이 오지 않는다면?</h2><p>두 가지만 확인해 주세요.<br />대부분 간단하게 해결할 수 있어요.</p></div>
-            <div class="cards stack">
-              <div class="card"><p class="n">첫 번째</p><h4>마이페이지 → 알림 설정</h4><p>오픈 알림과 주문 알림이<br />켜져 있는지 확인해 주세요.</p></div>
-              <div class="card"><p class="n">두 번째</p><h4>휴대폰 알림 허용</h4><p>설정 → 앱 → 오늘 왔어요! → 알림에서<br />알림 허용을 켜 주세요.</p></div>
+            <div class="cards stack slide-cards">
+              <button type="button" class="card on" data-slide="0"><p class="n">첫 번째</p><h4>마이페이지 → 알림 설정</h4><p>오픈 알림과 주문 알림이<br />켜져 있는지 확인해 주세요.</p></button>
+              <button type="button" class="card" data-slide="1"><p class="n">두 번째</p><h4>휴대폰 알림 허용</h4><p>설정 → 앱 → 오늘 왔어요! → 알림에서<br />알림 허용을 켜 주세요.</p></button>
             </div>
           </div>
-          <div class="device phone"><img src="images/customer-08.png" alt="" loading="lazy" onerror="this.remove()" /><span class="hint">알림 설정 화면</span></div>
+          <div class="slider">
+            <div class="slide-track">
+              <div class="device phone slide on"><img src="images/customer-08-1.png" alt="" loading="lazy" onerror="this.remove()" /><span class="hint">마이페이지 · 알림 설정</span></div>
+              <div class="device phone slide"><img src="images/customer-08-2.png" alt="" loading="lazy" onerror="this.remove()" /><span class="hint">휴대폰 알림 허용</span></div>
+            </div>
+            <div class="slider-nav">
+              <button type="button" class="s-prev" aria-label="이전 화면">‹</button>
+              <span class="s-dots"><i class="on"></i><i></i></span>
+              <button type="button" class="s-next" aria-label="다음 화면">›</button>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -999,6 +1053,28 @@
 
       document.querySelectorAll('.role-card, .pill').forEach(function (b) {
         b.addEventListener('click', function () { setRole(b.dataset.role, true); });
+      });
+
+      // 단계 슬라이드 (카드 클릭·화살표·점·자동 넘김)
+      document.querySelectorAll('.step.has-slider').forEach(function (step) {
+        var slides = step.querySelectorAll('.slide-track .slide');
+        var dots = step.querySelectorAll('.s-dots i');
+        var cards = step.querySelectorAll('.slide-cards .card');
+        var idx = 0, timer = null;
+        function show(i) {
+          idx = (i + slides.length) % slides.length;
+          slides.forEach(function (s, k) { s.classList.toggle('on', k === idx); });
+          dots.forEach(function (d, k) { d.classList.toggle('on', k === idx); });
+          cards.forEach(function (c, k) { c.classList.toggle('on', k === idx); });
+        }
+        function auto() { clearInterval(timer); timer = setInterval(function () { show(idx + 1); }, 4000); }
+        step.querySelector('.s-prev').addEventListener('click', function () { show(idx - 1); auto(); });
+        step.querySelector('.s-next').addEventListener('click', function () { show(idx + 1); auto(); });
+        dots.forEach(function (d, k) { d.addEventListener('click', function () { show(k); auto(); }); });
+        cards.forEach(function (c) { c.addEventListener('click', function () { show(+c.dataset.slide); auto(); }); });
+        step.addEventListener('mouseenter', function () { clearInterval(timer); });
+        step.addEventListener('mouseleave', auto);
+        auto();
       });
 
       var io = ('IntersectionObserver' in window) ? new IntersectionObserver(function (es) {

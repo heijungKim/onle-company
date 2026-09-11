@@ -10,11 +10,17 @@
 | customer-01.png | 01 시작하기 · 로그인 |
 | customer-02.png | 02 지도에서 찾기 |
 | customer-03.png | 03 단골 맺기 |
-| customer-04.png | 04 예약 주문 |
+| customer-04-1.png | 04 예약 주문 · 1 메뉴 골라 주문 (슬라이드) |
+| customer-04-2.png | 04 예약 주문 · 2 준비 완료 알림 (슬라이드) |
+| customer-04-3.png | 04 예약 주문 · 3 가서 받아오기 (슬라이드) |
 | customer-05.png | 05 축제 즐기기 |
-| customer-06.png | 06 쿠폰·마감 세일 |
+| customer-06-1.png | 06 쿠폰·마감 세일 · 쿠폰 받기 (슬라이드) |
+| customer-06-2.png | 06 쿠폰·마감 세일 · 마감 세일 알림 (슬라이드) |
 | customer-07.png | 07 리뷰 남기기 |
-| customer-08.png | 알림이 오지 않는다면 · 알림 설정 |
+| customer-08-1.png | 알림이 오지 않는다면 · 마이페이지 알림 설정 (슬라이드) |
+| customer-08-2.png | 알림이 오지 않는다면 · 휴대폰 알림 허용 (슬라이드) |
+
+슬라이드 장수를 늘리려면 `index.html`의 해당 `.slide-track`에 `.device.phone.slide` 블록과 `.s-dots`의 `<i>`를 하나씩 추가하면 됩니다.
 
 ## 사장님용 · 폰 화면 (세로 9:19)
 
