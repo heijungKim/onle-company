@@ -26,7 +26,7 @@
 
 | 파일명 | 위치 |
 |---|---|
-| seller-01.png | STEP 1 · 로그인 |
+| (customer-01.png 공용) | STEP 1 · 로그인 — 손님용과 같은 화면을 씀 |
 | seller-02.png | STEP 2 · 매장 등록 |
 | seller-03.png | STEP 3 · 영업 시작 |
 | seller-04.png | STEP 4 · 영업 시간 설정 |
@@ -40,7 +40,7 @@
 
 | 파일명 | 위치 |
 |---|---|
-| organizer-01.png | 시작하기 · 로그인 |
+| (customer-01.png 공용) | 시작하기 · 로그인 — 손님용과 같은 화면을 씀 (폰 틀) |
 | organizer-02.png | 운영사 신청 |
 | organizer-03.png | 행사 등록 |
 | organizer-04.png | 모집 공고 |
