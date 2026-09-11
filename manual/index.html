@@ -217,6 +217,11 @@
     .slide-cards .card { text-align: left; border: 2px solid transparent; cursor: pointer; font: inherit; color: inherit; transition: border-color .2s, transform .2s; }
     .slide-cards .card:hover { transform: translateX(4px); }
     .slide-cards .card.on { border-color: var(--accent); }
+    .slide-cards .opt { display: inline-block; vertical-align: 2px; margin-left: 6px; padding: 1px 8px; border-radius: 999px; background: var(--accent-soft); color: var(--accent-deep); font-size: 11.5px; font-weight: 700; letter-spacing: 0; }
+    .callout.verified { margin-top: 14px; padding: 16px 20px; border-left: 4px solid var(--accent); border-radius: 12px; }
+    .callout.verified .k { color: var(--accent); margin-bottom: 4px; }
+    .callout.verified p { font-size: 14.5px; }
+    .callout.verified b { color: var(--ink); }
 
     /* flow */
     .flow { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; align-items: start; }
@@ -361,7 +366,7 @@
     body.print .step.has-slider { grid-template-columns: 1fr 1.15fr; }
     body.print .slider { width: 100%; }
     body.print .slide-track { display: flex; gap: 10px; aspect-ratio: auto; width: 100%; justify-content: center; overflow: visible; border: 0; border-radius: 0; background: none; }
-    body.print .slide-track .slide { position: relative; inset: auto; opacity: 1; transform: none; width: 110px; flex: none; border: 3px solid #2b2420; border-radius: 34px; aspect-ratio: 9 / 19; overflow: hidden; }
+    body.print .slide-track .slide { position: relative; inset: auto; opacity: 1; transform: none; width: auto; flex: 1 1 0; min-width: 0; max-width: 110px; border: 3px solid #2b2420; border-radius: 26px; aspect-ratio: 9 / 19; overflow: hidden; }
     body.print .slide-track .slide .hint { font-size: 10px; padding: 8px; }
     body.print .slider-nav { display: none; }
     body.print .slide-cards .card.on { border-color: transparent; }
@@ -674,19 +679,25 @@
             <p class="desc">로그인 후 판매자를 선택하고<br />매장 정보를 순서대로 채워주세요.</p>
             <div class="cards stack slide-cards">
               <button type="button" class="card on" data-slide="0"><p class="n">1</p><h4>가입 → 판매자 선택</h4><p>로그인 후 판매자로 가입합니다.</p></button>
-              <button type="button" class="card" data-slide="1"><p class="n">2</p><h4>매장 이름과 사진 등록</h4><p>대표 사진과 매장 이름을 넣습니다.</p></button>
-              <button type="button" class="card" data-slide="2"><p class="n">3</p><h4>메뉴와 카테고리 입력</h4><p>메뉴·가격과 카테고리를 정합니다.</p></button>
+              <button type="button" class="card" data-slide="1"><p class="n">2</p><h4>사업자등록증 업로드 <span class="opt">선택</span></h4><p>사업자등록증을 올려 인증하면 인증 업체로 등록됩니다.</p></button>
+              <button type="button" class="card" data-slide="2"><p class="n">3</p><h4>매장 이름과 사진 등록</h4><p>대표 사진과 매장 이름을 넣습니다.</p></button>
+              <button type="button" class="card" data-slide="3"><p class="n">4</p><h4>메뉴와 카테고리 입력</h4><p>메뉴·가격과 카테고리를 정합니다.</p></button>
+            </div>
+            <div class="callout verified">
+              <p class="k">인증 업체 혜택</p>
+              <p>사업자등록증 인증을 마친 인증 업체는 목록에서 <b>우선 노출</b>되어 손님에게 더 먼저 보일 수 있습니다. 나중에 매장 관리에서 등록해도 됩니다.</p>
             </div>
           </div>
           <div class="slider">
             <div class="slide-track">
               <div class="device phone slide on"><img src="images/seller-02-1.png" alt="" loading="lazy" onerror="this.remove()" /><span class="hint">1 · 판매자 선택</span></div>
-              <div class="device phone slide"><img src="images/seller-02-2.png" alt="" loading="lazy" onerror="this.remove()" /><span class="hint">2 · 매장 이름·사진</span></div>
-              <div class="device phone slide"><img src="images/seller-02-3.png" alt="" loading="lazy" onerror="this.remove()" /><span class="hint">3 · 메뉴·카테고리</span></div>
+              <div class="device phone slide"><img src="images/seller-02-2.png" alt="" loading="lazy" onerror="this.remove()" /><span class="hint">2 · 사업자등록증 업로드</span></div>
+              <div class="device phone slide"><img src="images/seller-02-3.png" alt="" loading="lazy" onerror="this.remove()" /><span class="hint">3 · 매장 이름·사진</span></div>
+              <div class="device phone slide"><img src="images/seller-02-4.png" alt="" loading="lazy" onerror="this.remove()" /><span class="hint">4 · 메뉴·카테고리</span></div>
             </div>
             <div class="slider-nav">
               <button type="button" class="s-prev" aria-label="이전 화면">‹</button>
-              <span class="s-dots"><i class="on"></i><i></i><i></i></span>
+              <span class="s-dots"><i class="on"></i><i></i><i></i><i></i></span>
               <button type="button" class="s-next" aria-label="다음 화면">›</button>
             </div>
           </div>
