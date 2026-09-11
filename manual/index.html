@@ -361,7 +361,7 @@
     body.print .step.has-slider { grid-template-columns: 1fr 1.15fr; }
     body.print .slider { width: 100%; }
     body.print .slide-track { display: flex; gap: 10px; aspect-ratio: auto; width: 100%; justify-content: center; overflow: visible; border: 0; border-radius: 0; background: none; }
-    body.print .slide-track .slide { position: static; opacity: 1; transform: none; width: 110px; flex: none; border: 3px solid #2b2420; border-radius: 34px; aspect-ratio: 9 / 19; }
+    body.print .slide-track .slide { position: relative; inset: auto; opacity: 1; transform: none; width: 110px; flex: none; border: 3px solid #2b2420; border-radius: 34px; aspect-ratio: 9 / 19; overflow: hidden; }
     body.print .slide-track .slide .hint { font-size: 10px; padding: 8px; }
     body.print .slider-nav { display: none; }
     body.print .slide-cards .card.on { border-color: transparent; }
