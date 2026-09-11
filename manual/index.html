@@ -146,6 +146,10 @@
 
     .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
     .cards.two { grid-template-columns: repeat(2, 1fr); }
+    .cards.stack { grid-template-columns: 1fr; gap: 12px; }
+    .cards.stack .card { padding: 20px 24px 18px; }
+    .cards.stack .card .n { margin-bottom: 6px; }
+    .cards.stack .card h4 { margin-bottom: 6px; font-size: 17px; }
     .card {
       background: var(--card); border-radius: var(--r); padding: 30px 30px 28px;
       box-shadow: 0 8px 30px rgba(61,49,40,.05);
@@ -474,14 +478,17 @@
           <div class="device phone"><img src="images/customer-03.png" alt="" loading="lazy" onerror="this.remove()" /><span class="hint">단골 등록 화면</span></div>
         </div>
 
-        <div class="step rv" style="display:block">
-          <div class="badge"><b>04</b><span>예약 주문</span></div>
-          <h3>미리 주문하고,<br />준비되면 편하게 픽업하세요</h3>
-          <div class="cards" style="margin-top:24px">
-            <div class="card"><p class="n">1</p><h4>메뉴 골라 주문</h4><p>수량을 정하고 결제하면 주문 완료.</p></div>
-            <div class="card"><p class="n">2</p><h4>준비 완료 알림</h4><p>준비가 끝나면 알림이 와요.</p></div>
-            <div class="card"><p class="n">3</p><h4>가서 받아오기</h4><p>기다리는 시간을 줄이고<br />편하게 받아가세요.</p></div>
+        <div class="step rv">
+          <div>
+            <div class="badge"><b>04</b><span>예약 주문</span></div>
+            <h3>미리 주문하고,<br />준비되면 편하게 픽업하세요</h3>
+            <div class="cards stack" style="margin-top:20px">
+              <div class="card"><p class="n">1</p><h4>메뉴 골라 주문</h4><p>수량을 정하고 결제하면 주문 완료.</p></div>
+              <div class="card"><p class="n">2</p><h4>준비 완료 알림</h4><p>준비가 끝나면 알림이 와요.</p></div>
+              <div class="card"><p class="n">3</p><h4>가서 받아오기</h4><p>기다리는 시간을 줄이고 편하게 받아가세요.</p></div>
+            </div>
           </div>
+          <div class="device phone"><img src="images/customer-04.png" alt="" loading="lazy" onerror="this.remove()" /><span class="hint">예약 주문 화면</span></div>
         </div>
 
         <div class="step rv">
@@ -497,13 +504,16 @@
           <div class="device phone"><img src="images/customer-05.png" alt="" loading="lazy" onerror="this.remove()" /><span class="hint">축제 화면</span></div>
         </div>
 
-        <div class="step rv" style="display:block">
-          <div class="badge"><b>06</b><span>쿠폰·마감 세일</span></div>
-          <h3>쿠폰도 받고,<br />마감 세일도 놓치지 않고</h3>
-          <div class="cards two" style="margin-top:24px">
-            <div class="card"><h4>쿠폰 받기</h4><p>받아둔 쿠폰은 주문할 때<br />편리하게 확인하고 사용할 수 있어요.</p></div>
-            <div class="card"><h4>마감 세일 알림</h4><p>사장님이 마감 세일을 시작하면<br />즐겨찾기한 손님에게 바로 알려드려요.</p></div>
+        <div class="step rv">
+          <div>
+            <div class="badge"><b>06</b><span>쿠폰·마감 세일</span></div>
+            <h3>쿠폰도 받고,<br />마감 세일도 놓치지 않고</h3>
+            <div class="cards stack" style="margin-top:20px">
+              <div class="card"><h4>쿠폰 받기</h4><p>받아둔 쿠폰은 주문할 때<br />편리하게 확인하고 사용할 수 있어요.</p></div>
+              <div class="card"><h4>마감 세일 알림</h4><p>사장님이 마감 세일을 시작하면<br />즐겨찾기한 손님에게 바로 알려드려요.</p></div>
+            </div>
           </div>
+          <div class="device phone"><img src="images/customer-06.png" alt="" loading="lazy" onerror="this.remove()" /><span class="hint">쿠폰·마감 세일 화면</span></div>
         </div>
 
         <div class="step rv">
@@ -520,10 +530,15 @@
 
     <section class="sec">
       <div class="wrap">
-        <div class="sec-head rv"><h2>알림이 오지 않는다면?</h2><p>두 가지만 확인해 주세요.<br />대부분 간단하게 해결할 수 있어요.</p></div>
-        <div class="cards two">
-          <div class="card rv"><p class="n">첫 번째</p><h4>마이페이지 → 알림 설정</h4><p>오픈 알림과 주문 알림이<br />켜져 있는지 확인해 주세요.</p></div>
-          <div class="card rv" style="--d:120ms"><p class="n">두 번째</p><h4>휴대폰 알림 허용</h4><p>설정 → 앱 → 오늘 왔어요! → 알림에서<br />알림 허용을 켜 주세요.</p></div>
+        <div class="step rv" style="border-top:0;padding-top:0">
+          <div>
+            <div class="sec-head"><h2>알림이 오지 않는다면?</h2><p>두 가지만 확인해 주세요.<br />대부분 간단하게 해결할 수 있어요.</p></div>
+            <div class="cards stack">
+              <div class="card"><p class="n">첫 번째</p><h4>마이페이지 → 알림 설정</h4><p>오픈 알림과 주문 알림이<br />켜져 있는지 확인해 주세요.</p></div>
+              <div class="card"><p class="n">두 번째</p><h4>휴대폰 알림 허용</h4><p>설정 → 앱 → 오늘 왔어요! → 알림에서<br />알림 허용을 켜 주세요.</p></div>
+            </div>
+          </div>
+          <div class="device phone"><img src="images/customer-08.png" alt="" loading="lazy" onerror="this.remove()" /><span class="hint">알림 설정 화면</span></div>
         </div>
       </div>
     </section>

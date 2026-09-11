@@ -10,10 +10,11 @@
 | customer-01.png | 01 시작하기 · 로그인 |
 | customer-02.png | 02 지도에서 찾기 |
 | customer-03.png | 03 단골 맺기 |
+| customer-04.png | 04 예약 주문 |
 | customer-05.png | 05 축제 즐기기 |
+| customer-06.png | 06 쿠폰·마감 세일 |
 | customer-07.png | 07 리뷰 남기기 |
-
-(04 예약 주문, 06 쿠폰·마감 세일은 카드만 있고 화면 틀 없음)
+| customer-08.png | 알림이 오지 않는다면 · 알림 설정 |
 
 ## 사장님용 · 폰 화면 (세로 9:19)
 
