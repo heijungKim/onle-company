@@ -217,6 +217,23 @@
     .slide-cards .card { text-align: left; border: 2px solid transparent; cursor: pointer; font: inherit; color: inherit; transition: border-color .2s, transform .2s; }
     .slide-cards .card:hover { transform: translateX(4px); }
     .slide-cards .card.on { border-color: var(--accent); }
+
+    /* 단계 안 탭 (사장님 09 행사 참가) */
+    .tabs { display: inline-flex; flex-wrap: wrap; gap: 4px; padding: 5px; margin-top: 4px; border-radius: 999px; background: var(--bg-deep); }
+    .tab { height: 42px; padding: 0 20px; border: 0; border-radius: 999px; background: transparent; font-weight: 700; font-size: 15px; color: var(--ink-soft); transition: background .2s, color .2s, box-shadow .2s; }
+    .tab:hover { color: var(--accent); }
+    .tab.on { background: var(--card); color: var(--accent); box-shadow: 0 4px 14px rgba(61,49,40,.08); }
+    .tab-panel { display: none; grid-template-columns: 1.15fr .85fr; gap: 56px; align-items: center; margin-top: 28px; }
+    .tab-panel.on { display: grid; animation: tabIn .45s cubic-bezier(.16,1,.3,1); }
+    @keyframes tabIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+    .tab-print-title { display: none; font-size: 15px; font-weight: 800; color: var(--accent); margin-bottom: 10px; }
+
+    /* 폰 캡처가 아닌 일러스트 (비율 그대로, 틀 없이) */
+    .illust { position: relative; justify-self: center; width: min(340px, 100%); border-radius: 24px; overflow: hidden; box-shadow: 0 16px 40px rgba(61,49,40,.12); background: var(--card); }
+    .illust img { width: 100%; height: auto; display: block; }
+    .illust .hint { display: none; }
+    .illust.empty { aspect-ratio: 2 / 3; border: 3px dashed #d8ccb9; box-shadow: none; }
+    .illust.empty .hint { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 13px; color: #b3a596; }
     .slide-cards .opt { display: inline-block; vertical-align: 2px; margin-left: 6px; padding: 1px 8px; border-radius: 999px; background: var(--accent-soft); color: var(--accent-deep); font-size: 11.5px; font-weight: 700; letter-spacing: 0; }
     .callout.verified { margin-top: 14px; padding: 16px 20px; border-left: 4px solid var(--accent); border-radius: 12px; }
     .callout.verified .k { color: var(--accent); margin-bottom: 4px; }
@@ -292,7 +309,8 @@
       .cover .logo { justify-self: start; width: 220px; }
       .role-grid, .cards, .arrows { grid-template-columns: 1fr; }
       .arrows .card + .card::before { content: "↓"; left: 50%; top: -22px; transform: translateX(-50%); }
-      .step, .step.pc-layout { grid-template-columns: 1fr; gap: 28px; }
+      .step, .step.pc-layout, .tab-panel { grid-template-columns: 1fr; gap: 28px; }
+      .illust { justify-self: start; width: min(280px, 100%); }
       .device.phone { width: min(260px, 100%); justify-self: start; }
       .flow { grid-template-columns: repeat(3, 1fr); }
       .contact .grid { grid-template-columns: 1fr; }
@@ -363,7 +381,11 @@
     body.print .faq .a { font-size: 14px; padding: 0 20px 16px; }
     body.print footer { padding: 24px 0 0; font-size: 12px; }
     /* 인쇄: 슬라이드 3장을 나란히 */
-    body.print .step.has-slider { grid-template-columns: 1fr 1.15fr; }
+    body.print .step.has-slider, body.print .tab-panel { grid-template-columns: 1fr 1.15fr; }
+    body.print .tabs { display: none; }
+    body.print .tab-panel { display: grid !important; margin-top: 18px; gap: 24px; break-inside: avoid; }
+    body.print .tab-print-title { display: block; }
+    body.print .illust { width: 170px; box-shadow: none; }
     body.print .slider { width: 100%; }
     body.print .slide-track { display: flex; gap: 10px; aspect-ratio: auto; width: 100%; justify-content: center; overflow: visible; border: 0; border-radius: 0; background: none; }
     body.print .slide-track .slide { position: relative; inset: auto; opacity: 1; transform: none; width: auto; flex: 1 1 0; min-width: 0; max-width: 110px; border: 3px solid #2b2420; border-radius: 26px; aspect-ratio: 9 / 19; overflow: hidden; }
@@ -725,7 +747,7 @@
             </div>
             <p class="note"><b style="color:var(--ink)">영업 시간을 등록해 두면<br />사장님이 따로 알림을 보낼 필요가 없습니다.</b></p>
           </div>
-          <div class="device phone"><img src="images/seller-04.png" alt="" loading="lazy" onerror="this.remove()" /><span class="hint">영업 시간 설정 화면</span></div>
+          <div class="illust"><img src="images/seller-04.png" alt="단골 손님 휴대폰에 뜨는 오픈 알림" loading="lazy" onerror="this.parentNode.classList.add('empty');this.remove()" /><span class="hint">오픈 알림 이미지</span></div>
         </div>
 
         <div class="step has-slider rv">
@@ -773,39 +795,75 @@
           <div class="device phone"><img src="images/seller-07.png" alt="" loading="lazy" onerror="this.remove()" /><span class="hint">쿠폰 발행 화면</span></div>
         </div>
 
-        <div class="step rv" style="display:block">
-          <div class="badge"><b>08</b><span>매출 확인</span></div>
-          <h3>오늘 매출,<br />바로 확인하세요</h3>
-          <div class="rows" style="max-width:720px;margin-top:24px">
-            <div class="row" style="display:block"><b style="color:var(--ink);display:block;margin-bottom:4px">오늘 매출</b>주문 건수와 금액을 실시간으로 확인</div>
-            <div class="row" style="display:block"><b style="color:var(--ink);display:block;margin-bottom:4px">기간별 집계</b>주간·월간으로 묶어 보고 잘 팔린 메뉴를 확인합니다.</div>
-            <div class="row" style="display:block"><b style="color:var(--ink);display:block;margin-bottom:4px">정산</b>간편결제 정산 내역을 확인합니다.</div>
+        <div class="step rv">
+          <div>
+            <div class="badge"><b>08</b><span>매출 확인</span></div>
+            <h3>오늘 매출,<br />바로 확인하세요</h3>
+            <div class="rows" style="margin-top:20px">
+              <div class="row" style="display:block"><b style="color:var(--ink);display:block;margin-bottom:4px">오늘 매출</b>주문 건수와 금액을 실시간으로 확인</div>
+              <div class="row" style="display:block"><b style="color:var(--ink);display:block;margin-bottom:4px">기간별 집계</b>주간·월간으로 묶어 보고 잘 팔린 메뉴를 확인합니다.</div>
+              <div class="row" style="display:block"><b style="color:var(--ink);display:block;margin-bottom:4px">정산</b>간편결제 정산 내역을 확인합니다.</div>
+            </div>
           </div>
+          <div class="device phone"><img src="images/seller-08.png" alt="" loading="lazy" onerror="this.remove()" /><span class="hint">매출 확인 화면</span></div>
         </div>
 
-        <div class="step has-slider rv">
-          <div>
-            <div class="badge"><b>09</b><span>행사 참가</span></div>
-            <h3>행사 참가도<br />앱에서 간편하게</h3>
-            <div class="cards stack slide-cards" style="margin-top:20px">
-              <button type="button" class="card on" data-slide="0"><p class="n">1</p><h4>참가 코드 받기</h4><p>운영사에게 참가 코드를 받습니다.</p></button>
-              <button type="button" class="card" data-slide="1"><p class="n">2</p><h4>코드 입력·신청</h4><p>행사 메뉴에서 코드를 입력해 신청합니다.</p></button>
-              <button type="button" class="card" data-slide="2"><p class="n">3</p><h4>승인·배치 포함</h4><p>승인되면 행사장 배치에 연결됩니다.</p></button>
-            </div>
-            <div class="card soft" style="margin-top:14px;padding:18px 22px"><h4 style="font-size:16px">등록된 서류는 신청서에 자동 첨부됩니다</h4><p style="font-size:14.5px">사업자등록증과 영업신고증이 신청서에 자동으로 첨부되어<br />운영사가 바로 확인할 수 있습니다.</p></div>
+        <div class="step rv tabbed" style="display:block">
+          <div class="badge"><b>09</b><span>행사 참가</span></div>
+          <h3>행사 참가도<br />앱에서 간편하게</h3>
+          <p class="desc">운영사에게 받은 코드로 바로 참가하거나,<br />앱에 올라온 모집 공고를 보고 직접 지원할 수 있어요.</p>
+          <div class="tabs" role="tablist">
+            <button type="button" class="tab on" role="tab" data-tab="0">코드로 참가하기</button>
+            <button type="button" class="tab" role="tab" data-tab="1">모집 공고 보고 참여하기</button>
           </div>
-          <div class="slider">
-            <div class="slide-track">
-              <div class="device phone slide on"><img src="images/seller-09-1.png" alt="" loading="lazy" onerror="this.remove()" /><span class="hint">1 · 참가 코드 받기</span></div>
-              <div class="device phone slide"><img src="images/seller-09-2.png" alt="" loading="lazy" onerror="this.remove()" /><span class="hint">2 · 코드 입력·신청</span></div>
-              <div class="device phone slide"><img src="images/seller-09-3.png" alt="" loading="lazy" onerror="this.remove()" /><span class="hint">3 · 승인·배치</span></div>
+
+          <div class="tab-panel has-slider on" data-panel="0">
+            <div>
+              <p class="tab-print-title">코드로 참가하기</p>
+              <div class="cards stack slide-cards">
+                <button type="button" class="card on" data-slide="0"><p class="n">1</p><h4>참가 코드 받기</h4><p>운영사에게 참가 코드를 받습니다.</p></button>
+                <button type="button" class="card" data-slide="1"><p class="n">2</p><h4>코드 입력·신청</h4><p>행사 메뉴에서 코드를 입력해 신청합니다.</p></button>
+                <button type="button" class="card" data-slide="2"><p class="n">3</p><h4>승인·배치 포함</h4><p>승인되면 행사장 배치에 연결됩니다.</p></button>
+              </div>
             </div>
-            <div class="slider-nav">
-              <button type="button" class="s-prev" aria-label="이전 화면">‹</button>
-              <span class="s-dots"><i class="on"></i><i></i><i></i></span>
-              <button type="button" class="s-next" aria-label="다음 화면">›</button>
+            <div class="slider">
+              <div class="slide-track">
+                <div class="device phone slide on"><img src="images/seller-09-code-1.png" alt="" loading="lazy" onerror="this.remove()" /><span class="hint">1 · 참가 코드 받기</span></div>
+                <div class="device phone slide"><img src="images/seller-09-code-2.png" alt="" loading="lazy" onerror="this.remove()" /><span class="hint">2 · 코드 입력·신청</span></div>
+                <div class="device phone slide"><img src="images/seller-09-code-3.png" alt="" loading="lazy" onerror="this.remove()" /><span class="hint">3 · 승인·배치</span></div>
+              </div>
+              <div class="slider-nav">
+                <button type="button" class="s-prev" aria-label="이전 화면">‹</button>
+                <span class="s-dots"><i class="on"></i><i></i><i></i></span>
+                <button type="button" class="s-next" aria-label="다음 화면">›</button>
+              </div>
             </div>
           </div>
+
+          <div class="tab-panel has-slider" data-panel="1">
+            <div>
+              <p class="tab-print-title">모집 공고 보고 참여하기</p>
+              <div class="cards stack slide-cards">
+                <button type="button" class="card on" data-slide="0"><p class="n">1</p><h4>모집 공고 보기</h4><p>행사 메뉴에서 진행 중인 모집 공고를 확인합니다.</p></button>
+                <button type="button" class="card" data-slide="1"><p class="n">2</p><h4>공고에 지원하기</h4><p>매장 정보·메뉴·사진이 담긴 신청서로 바로 지원합니다.</p></button>
+                <button type="button" class="card" data-slide="2"><p class="n">3</p><h4>선정·승인 알림</h4><p>운영사가 선정하면 알림이 오고 행사장 배치에 연결됩니다.</p></button>
+              </div>
+            </div>
+            <div class="slider">
+              <div class="slide-track">
+                <div class="device phone slide on"><img src="images/seller-09-recruit-1.png" alt="" loading="lazy" onerror="this.remove()" /><span class="hint">1 · 모집 공고 보기</span></div>
+                <div class="device phone slide"><img src="images/seller-09-recruit-2.png" alt="" loading="lazy" onerror="this.remove()" /><span class="hint">2 · 공고에 지원하기</span></div>
+                <div class="device phone slide"><img src="images/seller-09-recruit-3.png" alt="" loading="lazy" onerror="this.remove()" /><span class="hint">3 · 선정·승인 알림</span></div>
+              </div>
+              <div class="slider-nav">
+                <button type="button" class="s-prev" aria-label="이전 화면">‹</button>
+                <span class="s-dots"><i class="on"></i><i></i><i></i></span>
+                <button type="button" class="s-next" aria-label="다음 화면">›</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="card soft" style="margin-top:24px;padding:18px 22px"><h4 style="font-size:16px">등록된 서류는 신청서에 자동 첨부됩니다</h4><p style="font-size:14.5px">두 방법 모두 사업자등록증과 영업신고증이 신청서에 자동으로 첨부되어 운영사가 바로 확인할 수 있습니다.</p></div>
         </div>
 
         <div class="step rv" style="display:block">
@@ -1114,7 +1172,7 @@
       });
 
       // 단계 슬라이드 (카드 클릭·화살표·점·자동 넘김)
-      document.querySelectorAll('.step.has-slider').forEach(function (step) {
+      document.querySelectorAll('.has-slider').forEach(function (step) {
         var slides = step.querySelectorAll('.slide-track .slide');
         var dots = step.querySelectorAll('.s-dots i');
         var cards = step.querySelectorAll('.slide-cards .card');
@@ -1137,6 +1195,18 @@
         step.addEventListener('mouseenter', function () { clearInterval(timer); });
         step.addEventListener('mouseleave', auto);
         auto();
+      });
+
+      // 단계 안 탭 전환
+      document.querySelectorAll('.tabbed').forEach(function (box) {
+        var tabs = box.querySelectorAll('.tab');
+        var panels = box.querySelectorAll('.tab-panel');
+        tabs.forEach(function (t) {
+          t.addEventListener('click', function () {
+            tabs.forEach(function (x) { x.classList.toggle('on', x === t); x.setAttribute('aria-selected', x === t ? 'true' : 'false'); });
+            panels.forEach(function (p) { p.classList.toggle('on', p.dataset.panel === t.dataset.tab); });
+          });
+        });
       });
 
       var io = ('IntersectionObserver' in window) ? new IntersectionObserver(function (es) {
