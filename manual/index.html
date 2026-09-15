@@ -380,6 +380,29 @@
     .pg .faq summary::after { display: none; }
     .pg .dark-sec { margin: 0; }
 
+    /* 화면 이미지가 있는 단계 — 모든 페이지에서 글자 위치·크기를 고정하고, 남은 오른쪽 영역을 이미지로 크게 채운다.
+       (이미지 장수에 따라 가운데 정렬·축소가 달라져 제목이 움직이던 문제) */
+    .pg.step-pg { align-items: flex-start; }
+    .pg.step-pg .pg-in { height: 560px; }
+    .pg-step { display: grid; grid-template-columns: 380px 1fr; gap: 40px; height: 560px; }
+    .pg .pg-text.step { display: block; min-width: 0; padding: 8px 0 0; align-self: start; }
+    .pg .pg-text.step .badge { margin-bottom: 14px; }
+    .pg .pg-text.step h3 { font-size: 34px; margin-bottom: 14px; }
+    .pg .pg-text.step .desc { font-size: 16px; margin-bottom: 16px; }
+    .pg .pg-text.step .tab-print-title { display: block; font-size: 15px; margin: 4px 0 10px; }
+    .pg .pg-text.step .cards.stack { gap: 10px; }
+    .pg .pg-text.step .cards.stack .card { padding: 15px 20px 13px; }
+    .pg .pg-text.step .cards.stack .card .n { margin-bottom: 2px; }
+    .pg .pg-text.step .cards.stack .card h4 { font-size: 16px; margin-bottom: 4px; }
+    .pg .pg-text.step .cards.stack .card p { font-size: 14.5px; line-height: 1.6; }
+    .pg .pg-text.step .card.soft { margin-top: 12px !important; padding: 14px 18px !important; }
+    .pg .pg-text.step .callout { padding: 16px 20px; }
+    .pg .pg-text.step .big-btn { margin: 4px 0 10px; }
+    .pg-media { display: flex; align-items: center; justify-content: center; gap: 20px; height: 560px; min-width: 0; }
+    .pg .pg-media > .device.phone { position: relative; inset: auto; transform: none; flex: none; width: auto; height: var(--ph, 540px); aspect-ratio: 9 / 19; border: 3px solid #2b2420; border-radius: 32px; overflow: hidden; pointer-events: auto; }
+    .pg .pg-media > .illust { width: auto; max-width: 100%; }
+    .pg .pg-media > .illust img { width: auto; max-width: 100%; max-height: 540px; }
+
     /* 페이지 하단 표시 */
     .pg-foot { position: absolute; left: 100px; right: 100px; bottom: 26px; display: flex; justify-content: space-between; font-size: 12px; font-weight: 600; color: #a89a8b; letter-spacing: .02em; }
     .pg.hero-pg .pg-foot { color: rgba(255,255,255,.75); }
@@ -1157,6 +1180,39 @@
           root.appendChild(pg);
         }
 
+        // 화면 이미지가 있는 단계 페이지: 왼쪽 글자(고정 폭·고정 위치) + 오른쪽 이미지(남은 영역을 크게)
+        var MEDIA_W = 1080 - 380 - 40, MEDIA_H = 540, MEDIA_GAP = 20;
+        function addStepPage(textNodes, mediaNodes, label) {
+          var grid = document.createElement('div');
+          grid.className = 'pg-step';
+          var text = document.createElement('div');
+          text.className = 'pg-text step';   // .step 의 번호 배지·제목·설명 스타일을 그대로 쓴다
+          // 제목부(번호·제목·설명)는 고정, 그 아래 카드·안내만 넘칠 때 줄인다
+          var body = document.createElement('div');
+          body.className = 'pg-text-body';
+          textNodes.forEach(function (n) {
+            if (!n) return;
+            var isHead = n.classList && (n.classList.contains('badge') || n.tagName === 'H3' || n.classList.contains('desc'));
+            (isHead && !body.childNodes.length ? text : body).appendChild(n);
+          });
+          text.appendChild(body);
+          var media = document.createElement('div');
+          media.className = 'pg-media';
+          var phones = mediaNodes.filter(function (n) { return n.classList.contains('device'); }).length;
+          if (phones) {
+            // 폰 틀 높이: 장수만큼 가로로 들어가는 최대 크기 (최대 540px)
+            var perW = (MEDIA_W - MEDIA_GAP * (phones - 1)) / phones;
+            media.style.setProperty('--ph', Math.floor(Math.min(MEDIA_H, perW * 19 / 9)) + 'px');
+          }
+          mediaNodes.forEach(function (n) {
+            n.classList.remove('slide', 'on', 'prev');
+            media.appendChild(n);
+          });
+          grid.appendChild(text);
+          grid.appendChild(media);
+          addPage([grid], 'step-pg', label);
+        }
+
         // 탭이 있는 단계는 탭마다 한 장
         function splitTabbed(st, label) {
           var badge = st.querySelector(':scope > .badge');
@@ -1165,15 +1221,12 @@
           var note = st.querySelector(':scope > .card.soft');
           var panels = arr(st.querySelectorAll('.tab-panel'));
           panels.forEach(function (panel, i) {
-            var box = document.createElement('div');
-            box.className = 'step';
-            box.style.display = 'block';
-            box.appendChild(badge.cloneNode(true));
-            box.appendChild(h3.cloneNode(true));
-            if (i === 0 && desc) box.appendChild(desc);
-            box.appendChild(panel);
-            if (i === panels.length - 1 && note) box.appendChild(note);
-            addPage([box], '', label);
+            var left = panel.querySelector(':scope > div:not(.slider)');
+            var nodes = [badge.cloneNode(true), h3.cloneNode(true)];
+            if (i === 0 && desc) nodes.push(desc);
+            arr(left.children).forEach(function (el) { nodes.push(el); });
+            if (i === panels.length - 1 && note) nodes.push(note);
+            addStepPage(nodes, arr(panel.querySelectorAll('.slide-track > .slide')), label);
           });
         }
 
@@ -1186,27 +1239,28 @@
           var slides = arr(st.querySelectorAll('.slide-track > .slide'));
           var cardsBox = left.querySelector('.slide-cards');
           for (var i = 0; i < slides.length; i += 2) {
-            var box = document.createElement('div');
-            box.className = 'step has-slider';
-            var l = document.createElement('div');
+            var nodes = [];
             head.forEach(function (el) {
               if (i > 0 && el.classList.contains('desc')) return;
-              l.appendChild(el.cloneNode(true));
+              nodes.push(el.cloneNode(true));
             });
             var cb = cardsBox.cloneNode(false);
             cards.slice(i, i + 2).forEach(function (c) { cb.appendChild(c); });
-            l.appendChild(cb);
-            if (i + 2 >= slides.length) tail.forEach(function (el) { l.appendChild(el); });
-            var r = document.createElement('div');
-            r.className = 'slider';
-            var tr = document.createElement('div');
-            tr.className = 'slide-track';
-            slides.slice(i, i + 2).forEach(function (s) { tr.appendChild(s); });
-            r.appendChild(tr);
-            box.appendChild(l);
-            box.appendChild(r);
-            addPage([box], '', label);
+            nodes.push(cb);
+            if (i + 2 >= slides.length) tail.forEach(function (el) { nodes.push(el); });
+            addStepPage(nodes, slides.slice(i, i + 2), label);
           }
+        }
+
+        // 한 장짜리 화면·3장 이하 슬라이드 단계
+        function stepWithMedia(st, label) {
+          var left = st.querySelector(':scope > div:not(.slider):not(.device):not(.illust)');
+          var media = st.classList.contains('has-slider')
+            ? arr(st.querySelectorAll('.slide-track > .slide'))
+            : arr(st.querySelectorAll(':scope > .device.phone, :scope > .illust'));
+          if (!left || !media.length) return false;
+          addStepPage(arr(left.children), media, label);
+          return true;
         }
 
         addPage([document.querySelector('.cover')], 'cover-pg', '');
@@ -1225,7 +1279,7 @@
                   steps.forEach(function (st) {
                     if (st.classList.contains('tabbed')) splitTabbed(st, label);
                     else if (st.classList.contains('has-slider') && st.querySelectorAll('.slide-track > .slide').length > 3) splitSlider(st, label);
-                    else addPage([st], '', label);
+                    else if (!stepWithMedia(st, label)) addPage([st], '', label);
                   });
                 } else {
                   addPage(arr(wrap.children), '', label);
@@ -1249,6 +1303,21 @@
             var num = pg.querySelector('.pg-num');
             if (num) num.textContent = (i + 1) + ' / ' + pages.length;
             if (pg.classList.contains('hero-pg')) return;
+            // 이미지 단계 페이지는 전체를 줄이지 않는다 (제목 위치·크기 고정). 넘치면 제목 아래 카드·안내만 줄인다.
+            if (pg.classList.contains('step-pg')) {
+              var text = pg.querySelector('.pg-text'), body = pg.querySelector('.pg-text-body');
+              body.style.zoom = '';
+              // 글자 칸은 쪽 번호 위(아래 여백 안쪽 30px)까지 쓸 수 있다. 줄인 뒤 다시 재서 한 번 더 맞춘다
+              for (var k = 0; k < 3; k++) {
+                var over = text.scrollHeight - 590;
+                if (over <= 0) break;
+                var cur = parseFloat(body.style.zoom) || 1;
+                var bh = body.scrollHeight;
+                var bz = Math.max(0.6, cur * (bh - over) / bh);
+                body.style.zoom = String(Math.floor(bz * 1000) / 1000);
+              }
+              return;
+            }
             var inner = pg.querySelector('.pg-in');
             inner.style.zoom = '';
             // 위 70px · 아래 90px(쪽 번호 자리) 여백을 남기고 맞춘다
