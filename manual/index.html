@@ -331,67 +331,57 @@
       .dl { padding: 30px 24px; }
     }
 
-    /* ---------- print (PDF) ---------- */
-    @page { size: A4; margin: 14mm 12mm; }
-    body.print { background: #fff; }
-    body.print .top, body.print .subnav, body.print .roles, body.print .dl, body.print footer .no-print, body.print .cover .btns { display: none !important; }
-    body.print .cover { padding: 24px 0 16px; }
-    body.print .part { display: block; }
-    body.print .part + .part { break-before: page; }
-    body.print .part-hero { min-height: 220px; padding: 40px; border-radius: 18px; margin-top: 16px; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-    body.print .sec { padding: 36px 0 4px; break-inside: avoid; }
-    body.print .step { padding: 28px 0; break-inside: avoid; gap: 28px; }
-    body.print .device.phone { width: 180px; }
-    body.print .card, body.print .callout, body.print .tbl, body.print .dark-sec { box-shadow: none; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-    body.print .card { border: 1px solid var(--line); }
-    body.print .faq details { border: 1px solid var(--line); box-shadow: none; }
-    body.print .faq summary::after { display: none; }
-    body.print .js .rv, body.print .rv { opacity: 1 !important; transform: none !important; transition: none !important; }
-    body.print .dark-sec { border-radius: 18px; padding: 32px; }
-    body.print .contact { padding: 40px 0 8px; break-inside: avoid; }
-    body.print .cover h1 { font-size: 44px; }
-    body.print .cover .wrap { grid-template-columns: 1.3fr .7fr; gap: 24px; }
-    body.print .cover .logo { width: 170px; justify-self: end; }
-    /* A4 폭에서도 화면과 같은 다열 배치를 유지 */
-    body.print .cards { grid-template-columns: repeat(3, 1fr); gap: 12px; }
-    body.print .cards.two { grid-template-columns: repeat(2, 1fr); }
-    body.print .cards.stack { grid-template-columns: 1fr; gap: 8px; }
-    body.print .cards.stack .card { padding: 12px 16px 10px; }
-    body.print .cards.stack .card h4 { font-size: 14px; margin-bottom: 4px; }
-    body.print .cards.stack .card p { font-size: 12.5px; }
-    body.print .cards.stack .card .n { margin-bottom: 2px; }
-    body.print .card { padding: 20px 20px 18px; }
-    body.print .card h4 { font-size: 16px; }
-    body.print .card p { font-size: 13.5px; }
-    body.print .step { grid-template-columns: 1.25fr .75fr; gap: 28px; }
-    body.print .step.pc-layout { grid-template-columns: 1fr 1fr; }
-    body.print .step h3 { font-size: 24px; }
-    body.print .step .desc, body.print .bul li, body.print .row { font-size: 14px; }
-    body.print .device.phone { width: 150px; justify-self: center; }
-    body.print .flow { grid-template-columns: repeat(6, 1fr); gap: 8px; }
-    body.print .flow .box { padding: 16px 6px; }
-    body.print .flow .box b { font-size: 15px; }
-    body.print .flow .f p { font-size: 12px; }
-    body.print .arrows { grid-template-columns: repeat(3, 1fr); }
-    body.print .arrows .card + .card::before { content: "→"; left: -18px; top: 50%; transform: translateY(-50%); }
-    body.print .contact .grid { grid-template-columns: 1.1fr .9fr; }
-    body.print .part-hero { margin-left: 0; margin-right: 0; }
-    body.print .sec-head h2 { font-size: 24px; }
-    body.print .faq summary { font-size: 15px; padding: 14px 20px; }
-    body.print .faq .a { font-size: 14px; padding: 0 20px 16px; }
-    body.print footer { padding: 24px 0 0; font-size: 12px; }
-    /* 인쇄: 슬라이드 3장을 나란히 */
-    body.print .step.has-slider, body.print .tab-panel { grid-template-columns: 1fr 1.15fr; }
-    body.print .tabs { display: none; }
-    body.print .tab-panel { display: grid !important; margin-top: 18px; gap: 24px; break-inside: avoid; }
-    body.print .tab-print-title { display: block; }
-    body.print .illust { width: 170px; box-shadow: none; }
-    body.print .slider { width: 100%; }
-    body.print .slide-track { display: flex; gap: 10px; aspect-ratio: auto; width: 100%; justify-content: center; overflow: visible; border: 0; border-radius: 0; background: none; }
-    body.print .slide-track .slide { position: relative; inset: auto; opacity: 1; transform: none; width: auto; flex: 1 1 0; min-width: 0; max-width: 110px; border: 3px solid #2b2420; border-radius: 26px; aspect-ratio: 9 / 19; overflow: hidden; }
-    body.print .slide-track .slide .hint { font-size: 10px; padding: 8px; }
-    body.print .slider-nav { display: none; }
-    body.print .slide-cards .card.on { border-color: transparent; }
+    /* ---------- print (PDF) ----------
+       원본 매뉴얼 PDF처럼 16:9 가로 페이지(1280×720)에 한 단계씩, 웹 레이아웃을 그대로 크게 담는다.
+       ?print=1 로 열면 스크립트가 표지·각 부 표지·단계·섹션을 한 장씩 .pg 로 옮기고,
+       내용이 페이지보다 크면 그 페이지만 비율대로 줄여 맞춘다. */
+    @page { size: 1280px 720px; margin: 0; }
+    body.print { width: 1280px; margin: 0; background: var(--bg); -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    body.print > *:not(#print-root) { display: none !important; }
+    .pg { position: relative; width: 1280px; height: 720px; overflow: hidden; background: var(--bg); display: flex; align-items: center; justify-content: center; break-after: page; page-break-after: always; }
+    .pg:last-child { break-after: auto; page-break-after: auto; }
+    .pg-in { width: 1136px; }
+    .pg .rv { opacity: 1 !important; transform: none !important; transition: none !important; }
+    .pg .wrap { max-width: none; padding: 0; }
+    .pg .sec, .pg .contact, .pg .cover { padding: 0; }
+    .pg .card, .pg .callout, .pg .row, .pg .chip, .pg .tbl, .pg .faq details { box-shadow: 0 6px 20px rgba(61,49,40,.05); }
+
+    /* 표지 */
+    .pg.cover-pg .cover .wrap { grid-template-columns: 1.2fr 1fr; gap: 48px; }
+    .pg.cover-pg .cover h1 { font-size: 64px; }
+    .pg.cover-pg .cover .lede { font-size: 22px; }
+    .pg.cover-pg .cover .logo { width: 380px; }
+
+    /* 부 표지 — 페이지 전체를 채움 */
+    .pg.hero-pg .pg-in { width: 1280px; }
+    .pg .part-hero { margin: 0; max-width: none; width: 1280px; height: 720px; border-radius: 0; padding: 0 104px; }
+    .pg .part-hero h2 { font-size: 64px; }
+    .pg .part-hero p { font-size: 24px; max-width: 640px; }
+
+    /* 단계 */
+    .pg .step { padding: 0; margin: 0; border-top: 0; grid-template-columns: 1.1fr .9fr; gap: 64px; }
+    .pg .step.pc-layout { grid-template-columns: 1fr 1.25fr; gap: 56px; }
+    .pg .step h3 { font-size: 38px; }
+    .pg .device.phone { width: 280px; }
+    .pg .illust { width: 360px; }
+    .pg .sec-head h2 { font-size: 34px; }
+
+    /* 슬라이드·탭은 펼쳐서 나란히 */
+    .pg .step.has-slider, .pg .tab-panel { grid-template-columns: .8fr 1.2fr; gap: 48px; }
+    .pg .tabs, .pg .slider-nav { display: none; }
+    .pg .tab-panel { display: grid !important; margin-top: 20px; animation: none; }
+    .pg .tab-print-title { display: block; font-size: 17px; margin-bottom: 14px; }
+    .pg .slider { width: 100%; }
+    .pg .slide-track { display: flex; gap: 16px; justify-content: center; width: 100%; aspect-ratio: auto; overflow: visible; border: 0; border-radius: 0; background: none; }
+    .pg .slide-track .slide { position: relative; inset: auto; transform: none; width: auto; flex: 1 1 0; min-width: 0; max-width: 250px; aspect-ratio: 9 / 19; border: 3px solid #2b2420; border-radius: 30px; overflow: hidden; }
+    .pg .step.has-slider > *, .pg .tab-panel > * { min-width: 0; }
+    .pg .slide-cards .card, .pg .slide-cards .card.on { border-color: transparent; }
+    .pg .faq summary::after { display: none; }
+    .pg .dark-sec { margin: 0; }
+
+    /* 페이지 하단 표시 */
+    .pg-foot { position: absolute; left: 72px; right: 72px; bottom: 20px; display: flex; justify-content: space-between; font-size: 12px; font-weight: 600; color: #a89a8b; letter-spacing: .02em; }
+    .pg.hero-pg .pg-foot { color: rgba(255,255,255,.75); }
   </style>
 </head>
 <body>
@@ -1140,11 +1130,133 @@
 
       if (isPrint) {
         document.body.classList.add('print');
-        document.querySelectorAll('.part').forEach(function (p) {
-          p.style.display = (role === 'all' || p.dataset.role === role) ? 'block' : 'none';
-        });
         document.querySelectorAll('.faq details').forEach(function (d) { d.open = true; });
+        buildPrintPages(role);
         return; // 인쇄 모드에서는 탭·애니메이션 없음
+      }
+
+      // 16:9 페이지로 재구성 (표지 → 각 부 표지 → 섹션·단계 한 장씩)
+      function buildPrintPages(role) {
+        var PART_NAME = { customer: '1부 · 손님용', seller: '2부 · 푸드트럭 사장님용', organizer: '3부 · 행사 운영사용' };
+        var root = document.createElement('div');
+        root.id = 'print-root';
+        var arr = function (list) { return Array.prototype.slice.call(list); };
+
+        function addPage(nodes, cls, label) {
+          var pg = document.createElement('section');
+          pg.className = 'pg' + (cls ? ' ' + cls : '');
+          var inner = document.createElement('div');
+          inner.className = 'pg-in';
+          nodes.forEach(function (n) { if (n) inner.appendChild(n); });
+          pg.appendChild(inner);
+          var foot = document.createElement('div');
+          foot.className = 'pg-foot';
+          foot.innerHTML = '<span>오늘 왔어요! 사용 매뉴얼' + (label ? ' · ' + label : '') + '</span><span class="pg-num"></span>';
+          pg.appendChild(foot);
+          root.appendChild(pg);
+        }
+
+        // 탭이 있는 단계는 탭마다 한 장
+        function splitTabbed(st, label) {
+          var badge = st.querySelector(':scope > .badge');
+          var h3 = st.querySelector(':scope > h3');
+          var desc = st.querySelector(':scope > .desc');
+          var note = st.querySelector(':scope > .card.soft');
+          var panels = arr(st.querySelectorAll('.tab-panel'));
+          panels.forEach(function (panel, i) {
+            var box = document.createElement('div');
+            box.className = 'step';
+            box.style.display = 'block';
+            box.appendChild(badge.cloneNode(true));
+            box.appendChild(h3.cloneNode(true));
+            if (i === 0 && desc) box.appendChild(desc);
+            box.appendChild(panel);
+            if (i === panels.length - 1 && note) box.appendChild(note);
+            addPage([box], '', label);
+          });
+        }
+
+        // 화면이 4장 이상인 슬라이드 단계는 2장씩 나눠 페이지를 넘긴다 (이미지를 크게 유지)
+        function splitSlider(st, label) {
+          var left = st.querySelector(':scope > div:not(.slider)');
+          var head = arr(left.children).filter(function (el) { return !el.classList.contains('slide-cards') && !el.classList.contains('callout'); });
+          var tail = arr(left.children).filter(function (el) { return el.classList.contains('callout'); });
+          var cards = arr(left.querySelectorAll('.slide-cards > .card'));
+          var slides = arr(st.querySelectorAll('.slide-track > .slide'));
+          var cardsBox = left.querySelector('.slide-cards');
+          for (var i = 0; i < slides.length; i += 2) {
+            var box = document.createElement('div');
+            box.className = 'step has-slider';
+            var l = document.createElement('div');
+            head.forEach(function (el) {
+              if (i > 0 && el.classList.contains('desc')) return;
+              l.appendChild(el.cloneNode(true));
+            });
+            var cb = cardsBox.cloneNode(false);
+            cards.slice(i, i + 2).forEach(function (c) { cb.appendChild(c); });
+            l.appendChild(cb);
+            if (i + 2 >= slides.length) tail.forEach(function (el) { l.appendChild(el); });
+            var r = document.createElement('div');
+            r.className = 'slider';
+            var tr = document.createElement('div');
+            tr.className = 'slide-track';
+            slides.slice(i, i + 2).forEach(function (s) { tr.appendChild(s); });
+            r.appendChild(tr);
+            box.appendChild(l);
+            box.appendChild(r);
+            addPage([box], '', label);
+          }
+        }
+
+        addPage([document.querySelector('.cover')], 'cover-pg', '');
+
+        arr(document.querySelectorAll('article.part'))
+          .filter(function (p) { return role === 'all' || p.dataset.role === role; })
+          .forEach(function (part) {
+            var label = PART_NAME[part.dataset.role];
+            arr(part.children).forEach(function (ch) {
+              if (ch.classList.contains('part-hero')) { addPage([ch], 'hero-pg', label); return; }
+              if (ch.tagName === 'SECTION') {
+                if (ch.classList.contains('contact')) { addPage([ch], '', label); return; }
+                var wrap = ch.querySelector(':scope > .wrap') || ch;
+                var steps = arr(wrap.querySelectorAll(':scope > .step'));
+                if (steps.length) {
+                  steps.forEach(function (st) {
+                    if (st.classList.contains('tabbed')) splitTabbed(st, label);
+                    else if (st.classList.contains('has-slider') && st.querySelectorAll('.slide-track > .slide').length > 3) splitSlider(st, label);
+                    else addPage([st], '', label);
+                  });
+                } else {
+                  addPage(arr(wrap.children), '', label);
+                }
+                return;
+              }
+              if (ch.classList.contains('wrap')) {
+                arr(ch.children).forEach(function (c) {
+                  if (!c.classList.contains('dl')) addPage([c], '', label);
+                });
+              }
+            });
+          });
+
+        document.body.appendChild(root);
+
+        // 넘치는 페이지만 비율대로 줄여 맞추고, 쪽 번호를 매긴다
+        function fit() {
+          var pages = arr(root.querySelectorAll('.pg'));
+          pages.forEach(function (pg, i) {
+            var num = pg.querySelector('.pg-num');
+            if (num) num.textContent = (i + 1) + ' / ' + pages.length;
+            if (pg.classList.contains('hero-pg')) return;
+            var inner = pg.querySelector('.pg-in');
+            inner.style.zoom = '';
+            var z = Math.min(1, (720 - 104) / inner.scrollHeight, 1136 / inner.scrollWidth);
+            if (z < 1) inner.style.zoom = String(Math.floor(z * 1000) / 1000);
+          });
+        }
+        fit();
+        window.addEventListener('load', fit);
+        if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
       }
 
       document.documentElement.classList.add('js');
